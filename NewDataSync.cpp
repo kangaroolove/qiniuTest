@@ -8,6 +8,9 @@
 
 NewDataSync::NewDataSync()
 {
+    m_localList = NULL;
+    m_remoteList = NULL;
+
     QString dir("C:/Users/kangaroo/Desktop/qiniu SDK");
     m_fileCompare = new FileCompare;
     m_localList = getLocalFile("FT1JN3PC", dir, SyncOperateType::UPLOAD);
@@ -16,6 +19,16 @@ NewDataSync::NewDataSync()
 NewDataSync::~NewDataSync()
 {
     delete m_fileCompare;
+    if (m_localList)
+    {
+        m_localList->clear();
+        m_localList = NULL;
+    }
+    if (m_remoteList)
+    {
+        m_remoteList->clear();
+        m_remoteList = NULL;
+    }
 }
 
 QList<FileStat> *NewDataSync::getLocalFile(QString caseId, QString path, SyncOperateType type)
@@ -59,6 +72,7 @@ QList<FileStat> *NewDataSync::getLocalFile(QString caseId, QString path, SyncOpe
         if (type == SyncOperateType::UPLOAD)
         {
             fileStatItem.hash = getMd5(it.fileInfo().absoluteFilePath());
+            fileStatItem.fileId = getFileId(caseId, it.fileInfo().absoluteFilePath());
         }
     }
 
@@ -73,7 +87,7 @@ QString NewDataSync::getFileUrl(const QString &fileName, const QString &caseId, 
     QString fileUrl = fileName;
     fileUrl.remove(0, position);
     fileUrl.replace(dir, caseToUpper);
-    qDebug()<<fileUrl;
+    //qDebug()<<fileUrl;
 
     return fileUrl;
 }
@@ -103,4 +117,12 @@ QByteArray NewDataSync::getMd5(const QString &fileName)
 
     return md5;
 }
+
+QString NewDataSync::getFileId(const QString &caseId, const QString &fileName)
+{
+//    switch ()
+//    QString fileId("%1-%2-%3").arg(caseId);
+    return NULL;
+}
+
 

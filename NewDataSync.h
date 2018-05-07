@@ -23,9 +23,12 @@ public:
 private:
     FileCompare *m_fileCompare;
     QList<FileStat> *m_localList;
+    QList<FileStat> *m_remoteList;
     QList<FileStat>* getLocalFile(QString caseId, QString path, SyncOperateType type);
+    QList<FileStat>* getRemoteFile(QString caseId);
     QString getFileUrl(const QString &fileName, const QString& caseId, const QString &dir);
     QByteArray getMd5(const QString& fileName);
+    QString getFileId(const QString& caseId, const QString& fileName);
 };
 
 #endif // NEWDATASNC_H

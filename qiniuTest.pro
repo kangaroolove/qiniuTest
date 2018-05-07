@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -16,11 +16,13 @@ SOURCES += main.cpp\
         dialog.cpp \
     FileStat.cpp \
     FileCompare.cpp \
-    NewDataSync.cpp
+    NewDataSync.cpp \
+    NewRequest.cpp
 
 HEADERS  += dialog.h \
     FileStat.h \
     FileCompare.h \
-    NewDataSync.h
+    NewDataSync.h \
+    NewRequest.h
 
 FORMS    += dialog.ui
