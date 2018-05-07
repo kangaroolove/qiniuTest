@@ -1,33 +1,65 @@
 #include "FileCompare.h"
-#include <QDir>
+#include <QDirIterator>
 #include <QMessageBox>
+#include <QDebug>
 
-FileCompare::FileCompare(SyncOperateType type, QString caseId, QString dirString)
+FileCompare::FileCompare()
 {
 }
 
-QList<FileStat>* FileCompare::getLocalFile(QString caseId, QString dirString, SyncOperateType type)
+QList<FileStat>* FileCompare::getLocalFile(QString caseId, QString path, SyncOperateType type)
 {
-    QDir dir(dirString);
+    QDir dir(path);
     if (!dir.exists())
     {
-        QMessageBox::warning(null,
-                             "警告",
-                             "目录不存在",
-                             QMessageBox::Ok,
-                             QMessageBox::Ok);
     }
 
-    QFileInfo fileInfo = dir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs);
-    QList<FileStat> list = new QList<FileStat>;
+    QStringList list = path.split("/");
+    qDebug()<<list.last();
 
-    for (int i = 0; i < fileInfo.size(); ++i)
+    QList<FileStat> *localList = new QList<FileStat>;
+    FileStat fileStatItem;
+
+    QDirIterator it(path,
+                    QDir::NoDotAndDotDot | QDir::NoSymLinks | QDir::Files,
+                    QDirIterator::Subdirectories);
+    while (it.hasNext())
     {
-        QDebug()<<fileInfo[i];
+        it.next();
+        qDebug()<<it.fileInfo().absoluteFilePath();
+        fileStatItem.fileUrl = getFileUrl(it.fileInfo().absoluteFilePath(), caseId, list.last());
+        fileStatItem.createTime = it.fileInfo().created();
+        fileStatItem.updateTime = it.fileInfo().lastModified();
     }
+
+    return localList;
 }
 
+QString FileCompare::getFileUrl(const QString& fileName, const QString& caseId, const QString& dir)
+{
+//    QStringList list = fileName.split(dir);
+//    for (int i = 0; i < list.size(); ++i)
+//    {
+//        qDebug()<<list[i];
+//    }
+    QString caseToUpper = caseId.toUpper();
+
+    int position = fileName.indexOf(dir);
+    QString temp = fileName;
+    qDebug()<<"position"<<position;
+    temp.remove(0, position);
+    temp.replace(dir, caseToUpper);
+    qDebug()<<temp;
+//    fileUrl.append(caseToUpper);
+//    fileUrl.append("/");
+
+    //qDebug()<<fileUrl;
+
+    return fileName;
+}
+
+/*
 QList<FileStat>* FileCompare::makeFileCompare(SyncOperateType type, QList<FileStat> *local, QList<FileStat> *remote)
 {
 
-}
+}*/

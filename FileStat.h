@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QDateTime>
+
 class FileStat
 {
 public:
@@ -13,7 +14,6 @@ public:
     QDateTime updateTime;
     QByteArray hash;
     QString fileUrl;
-    void clear();
 };
 
 #endif // FILESTAT_H

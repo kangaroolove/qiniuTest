@@ -1,7 +1,10 @@
 #ifndef DIALOG_H
 #define DIALOG_H
 
+#include "NewDataSync.h"
 #include <QDialog>
+
+class NewDataSync;
 
 namespace Ui {
 class Dialog;
@@ -17,6 +20,7 @@ public:
 
 private:
     Ui::Dialog *ui;
+    NewDataSync *m_newDataSync;
 };
 
 #endif // DIALOG_H

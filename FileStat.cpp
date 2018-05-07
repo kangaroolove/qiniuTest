@@ -4,7 +4,3 @@ FileStat::FileStat()
 {
 
 }
-
-void FileStat::clear()
-{
-}

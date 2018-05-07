@@ -6,9 +6,11 @@ Dialog::Dialog(QWidget *parent) :
     ui(new Ui::Dialog)
 {
     ui->setupUi(this);
+    m_newDataSync = new NewDataSync;
 }
 
 Dialog::~Dialog()
 {
     delete ui;
+    delete m_newDataSync;
 }

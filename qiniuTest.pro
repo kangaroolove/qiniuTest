@@ -16,11 +16,11 @@ SOURCES += main.cpp\
         dialog.cpp \
     FileStat.cpp \
     FileCompare.cpp \
-    NewDataSnc.cpp
+    NewDataSync.cpp
 
 HEADERS  += dialog.h \
     FileStat.h \
     FileCompare.h \
-    NewDataSnc.h
+    NewDataSync.h
 
 FORMS    += dialog.ui
