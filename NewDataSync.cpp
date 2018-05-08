@@ -14,6 +14,14 @@ NewDataSync::NewDataSync()
     m_operateType = SyncOperateType::NO;
 
     m_fileCompare = new FileCompare;
+
+    m_upload = new NewUploadThread;
+    m_upload->moveToThread(&m_uploadThread);
+    connect(this, SIGNAL(startUpload(QList<FileStat>*,QString&)), m_upload, SLOT(onUploadStart(QList<FileStat>*,QString&)));
+    connect(m_upload, SIGNAL(uploadedFile()), this, SIGNAL(uploadedFile()));
+    connect(m_upload, SIGNAL(uploadAllFileSuccessfully()), this, SIGNAL(uploadAllFileSuccessfully()));
+    connect(m_upload, SIGNAL(uploadFileFailed(QList<FileStat>*)), this, SIGNAL(uploadFileFailed(QList<FileStat>*)));
+    m_uploadThread.start();
 }
 
 NewDataSync::~NewDataSync()
@@ -26,13 +34,18 @@ NewDataSync::~NewDataSync()
     if (m_localList)
     {
         m_localList->clear();
+        delete m_localList;
         m_localList = NULL;
     }
     if (m_remoteList)
     {
         m_remoteList->clear();
+        delete m_remoteList;
         m_remoteList = NULL;
     }
+
+    m_uploadThread.quit();
+    m_uploadThread.wait();
 }
 
 void NewDataSync::setOperateType(SyncOperateType type)
@@ -54,12 +67,14 @@ void NewDataSync::start()
     if (m_localList)
     {
         m_localList->clear();
+        delete m_localList;
         m_localList = NULL;
     }
 
     if (m_remoteList)
     {
         m_remoteList->clear();
+        delete m_remoteList;
         m_remoteList = NULL;
     }
     QString dir("C:/Users/pangkuanxin/Desktop/abc");
@@ -171,13 +186,6 @@ QByteArray NewDataSync::getMd5(const QString &fileName)
     //qDebug()<<md5;
 
     return md5;
-}
-
-QString NewDataSync::getFileId(const QString &caseId, const QString &fileName)
-{
-//    switch ()
-//    QString fileId("%1-%2-%3").arg(caseId);
-    return NULL;
 }
 
 QString NewDataSync::getUuid()

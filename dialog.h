@@ -17,7 +17,10 @@ class Dialog : public QDialog
 public:
     explicit Dialog(QWidget *parent = 0);
     ~Dialog();
-
+public slots:
+    void onFileUploaded();
+    void onAllFileUploadSuccessfully();
+    void onFileUploadFailed(QList<FileStat> *uploadFailedList);
 private:
     Ui::Dialog *ui;
     NewDataSync *m_newDataSync;

@@ -9,11 +9,11 @@ class FileStat
 public:
     FileStat();
     QString fileName;
-    QString fileId;
     QDateTime createTime;
     QDateTime updateTime;
     QByteArray hash;
     QString fileUrl;
+    int errorCode;
 };
 
 #endif // FILESTAT_H

@@ -4,7 +4,9 @@
 #include "FileCompare.h"
 #include "FileStat.h"
 #include "NewRequest.h"
+#include "NewUploadThread.h"
 #include <QObject>
+#include <QThread>
 
 #define MD5_READ_MAX_SIZE   4096
 
@@ -16,24 +18,32 @@ enum SyncOperateType
 };
 
 class FileCompare;
-class NewDataSync
+class NewDataSync : public QObject
 {
+    Q_OBJECT
 public:
     NewDataSync();
     ~NewDataSync();
     void setOperateType(SyncOperateType type);
     void start();
+signals:
+    void startUpload(QList<FileStat> *uploadFileList, QString &token);
+    void uploadedFile();
+    void uploadAllFileSuccessfully();
+    void uploadFileFailed(QList<FileStat> *uploadFailedList);
 private:
     SyncOperateType m_operateType;
     FileCompare *m_fileCompare;
     QList<FileStat> *m_localList;
     QList<FileStat> *m_remoteList;
     NewRequest m_request;
+    QThread m_uploadThread;
+    QThread m_downloadThread;
+    NewUploadThread *m_upload;
     QList<FileStat>* getLocalFile(QString caseId, const QString& path, SyncOperateType type);
     QList<FileStat>* getRemoteFile(QString caseId);
     QString getFileUrl(const QString &fileName, const QString& caseId, const QString &dir);
     QByteArray getMd5(const QString& fileName);
-    QString getFileId(const QString& caseId, const QString& fileName);
     QString getUuid();
 };
 

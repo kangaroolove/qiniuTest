@@ -9,6 +9,7 @@
 #include "../dialog.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
+#include <QtCore/QList>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'dialog.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
@@ -19,8 +20,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Dialog_t {
-    QByteArrayData data[1];
-    char stringdata0[7];
+    QByteArrayData data[7];
+    char stringdata0[104];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -29,10 +30,19 @@ struct qt_meta_stringdata_Dialog_t {
     )
 static const qt_meta_stringdata_Dialog_t qt_meta_stringdata_Dialog = {
     {
-QT_MOC_LITERAL(0, 0, 6) // "Dialog"
+QT_MOC_LITERAL(0, 0, 6), // "Dialog"
+QT_MOC_LITERAL(1, 7, 14), // "onFileUploaded"
+QT_MOC_LITERAL(2, 22, 0), // ""
+QT_MOC_LITERAL(3, 23, 27), // "onAllFileUploadSuccessfully"
+QT_MOC_LITERAL(4, 51, 18), // "onFileUploadFailed"
+QT_MOC_LITERAL(5, 70, 16), // "QList<FileStat>*"
+QT_MOC_LITERAL(6, 87, 16) // "uploadFailedList"
 
     },
-    "Dialog"
+    "Dialog\0onFileUploaded\0\0"
+    "onAllFileUploadSuccessfully\0"
+    "onFileUploadFailed\0QList<FileStat>*\0"
+    "uploadFailedList"
 };
 #undef QT_MOC_LITERAL
 
@@ -42,22 +52,38 @@ static const uint qt_meta_data_Dialog[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       0,    0, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        0,       // signalCount
 
+ // slots: name, argc, parameters, tag, flags
+       1,    0,   29,    2, 0x0a /* Public */,
+       3,    0,   30,    2, 0x0a /* Public */,
+       4,    1,   31,    2, 0x0a /* Public */,
+
+ // slots: parameters
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 5,    6,
+
        0        // eod
 };
 
 void Dialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
-    Q_UNUSED(_o);
-    Q_UNUSED(_id);
-    Q_UNUSED(_c);
-    Q_UNUSED(_a);
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        Dialog *_t = static_cast<Dialog *>(_o);
+        Q_UNUSED(_t)
+        switch (_id) {
+        case 0: _t->onFileUploaded(); break;
+        case 1: _t->onAllFileUploadSuccessfully(); break;
+        case 2: _t->onFileUploadFailed((*reinterpret_cast< QList<FileStat>*(*)>(_a[1]))); break;
+        default: ;
+        }
+    }
 }
 
 const QMetaObject Dialog::staticMetaObject = {
@@ -84,6 +110,15 @@ int Dialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     _id = QDialog::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        if (_id < 3)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 3;
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        if (_id < 3)
+            *reinterpret_cast<int*>(_a[0]) = -1;
+        _id -= 3;
+    }
     return _id;
 }
 QT_END_MOC_NAMESPACE
