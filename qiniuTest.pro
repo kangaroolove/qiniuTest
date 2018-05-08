@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = qiniuTest
 TEMPLATE = app
-
+LIBS += -L. -lqiniu -lcurllib -llibeay32 -lssleay32 -lopenldap
 
 SOURCES += main.cpp\
         dialog.cpp \
@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     NewDataSync.cpp \
     NewRequest.cpp \
     Json.cpp \
-    https.cpp
+    https.cpp \
+    NewUploadThread.cpp
 
 HEADERS  += dialog.h \
     FileStat.h \
@@ -27,6 +28,7 @@ HEADERS  += dialog.h \
     NewDataSync.h \
     NewRequest.h \
     Json.h \
-    https.h
+    https.h \
+    NewUploadThread.h
 
 FORMS    += dialog.ui
