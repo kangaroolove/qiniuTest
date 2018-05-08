@@ -4,6 +4,7 @@
 #include<QNetworkAccessManager>
 #include<QTimer>
 #include <QUrl>
+#include "FileStat.h"
 
 #define TIMER_INTERVAL  5000
 #define URL "http://172.18.169.111:3080"
@@ -22,6 +23,7 @@ public:
     NewRequest();
     ~NewRequest();
     QString getToken();
+    QList<FileStat>* getRemoteList();
 private:
     QTimer m_timeoutTimer;
     void startTimer();

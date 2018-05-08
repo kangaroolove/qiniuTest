@@ -18,10 +18,14 @@ QString NewRequest::getToken()
     Https http;
     Json json;
     http.SetUrl(url);
-    QByteArray reply = http.Get();
     QString message;
+
+    startTimer();
+    QByteArray reply = http.Get();
+
     if (json.analysisJson(reply, message) == true)
     {
+        stopTimer();
         return json.getToken(reply);
     }
     else
@@ -35,6 +39,30 @@ QString NewRequest::getToken()
         return QString::null;
     }
 }
+
+//QList<FileStat> *NewRequest::getRemoteList()
+//{
+//    QUrl url = initUrl();
+//    Https http;
+//    Json json;
+//    http.SetUrl(url);
+//    QByteArray reply = http.Post();
+//    QString message;
+//    if (json.analysisJson(reply, message) == true)
+//    {
+
+//    }
+//    else
+//    {
+//        QMessageBox::warning(NULL,
+//                             "Warning",
+//                             message,
+//                             QMessageBox::Ok,
+//                             QMessageBox::Ok);
+
+//        return QString::null;
+//    }
+//}
 
 void NewRequest::startTimer()
 {
