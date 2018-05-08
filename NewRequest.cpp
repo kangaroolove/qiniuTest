@@ -1,19 +1,38 @@
 #include "NewRequest.h"
+#include "https.h"
+#include "Json.h"
+#include <QMessageBox>
 
 NewRequest::NewRequest()
 {
-    m_manager = NULL;
-    m_manager = new QNetworkAccessManager;
-
     connect(&m_timeoutTimer, SIGNAL(timeout()), this, SLOT(onTimerTimeout()));
 }
 
 NewRequest::~NewRequest()
 {
-    if (m_manager)
+}
+
+QString NewRequest::getToken()
+{
+    QUrl url = initUrl(GET_TOKEN);
+    Https http;
+    Json json;
+    http.SetUrl(url);
+    QByteArray reply = http.Get();
+    QString message;
+    if (json.analysisJson(reply, message) == true)
     {
-        delete m_manager;
-        m_manager = NULL;
+        return json.getToken(reply);
+    }
+    else
+    {
+        QMessageBox::warning(NULL,
+                             "Warning",
+                             message,
+                             QMessageBox::Ok,
+                             QMessageBox::Ok);
+
+        return QString::null;
     }
 }
 
@@ -31,6 +50,17 @@ void NewRequest::stopTimer()
     {
         m_timeoutTimer.stop();
     }
+}
+
+QUrl NewRequest::initUrl(QString cmd)
+{
+    QUrl url = QString("%1%2").arg(URL).arg(cmd);
+    return url;
+}
+
+void NewRequest::get()
+{
+
 }
 
 void NewRequest::onTimerTimeout()

@@ -7,6 +7,7 @@ Dialog::Dialog(QWidget *parent) :
 {
     ui->setupUi(this);
     m_newDataSync = new NewDataSync;
+    m_newDataSync->start();
 }
 
 Dialog::~Dialog()

@@ -10,25 +10,52 @@ NewDataSync::NewDataSync()
 {
     m_localList = NULL;
     m_remoteList = NULL;
+    m_operateType = SyncOperateType::NO;
 
-    QString dir("C:/Users/kangaroo/Desktop/qiniu SDK");
     m_fileCompare = new FileCompare;
-    m_localList = getLocalFile("FT1JN3PC", dir, SyncOperateType::UPLOAD);
 }
 
 NewDataSync::~NewDataSync()
 {
-    delete m_fileCompare;
+    if (m_fileCompare)
+    {
+        delete m_fileCompare;
+        m_fileCompare = NULL;
+    }
     if (m_localList)
     {
         m_localList->clear();
+        delete m_localList;
         m_localList = NULL;
     }
     if (m_remoteList)
     {
         m_remoteList->clear();
+        delete m_remoteList;
         m_remoteList = NULL;
     }
+}
+
+void NewDataSync::setOperateType(SyncOperateType type)
+{
+    switch (type)
+    {
+    case SyncOperateType::UPLOAD:
+    case SyncOperateType::DOWNLOAD:
+    case SyncOperateType::NO:
+        m_operateType = type;
+        break;
+    default:
+        break;
+    }
+}
+
+void NewDataSync::start()
+{
+//    QString dir("C:/Users/kangaroo/Desktop/qiniu SDK");
+//    m_localList = getLocalFile("FT1JN3PC", dir, m_operateType);
+      QString token = m_request.getToken();
+      qDebug()<<"token"<<token;
 }
 
 QList<FileStat> *NewDataSync::getLocalFile(QString caseId, QString path, SyncOperateType type)

@@ -17,12 +17,16 @@ SOURCES += main.cpp\
     FileStat.cpp \
     FileCompare.cpp \
     NewDataSync.cpp \
-    NewRequest.cpp
+    NewRequest.cpp \
+    Json.cpp \
+    https.cpp
 
 HEADERS  += dialog.h \
     FileStat.h \
     FileCompare.h \
     NewDataSync.h \
-    NewRequest.h
+    NewRequest.h \
+    Json.h \
+    https.h
 
 FORMS    += dialog.ui

@@ -3,6 +3,7 @@
 
 #include "FileCompare.h"
 #include "FileStat.h"
+#include "NewRequest.h"
 #include <QObject>
 
 #define MD5_READ_MAX_SIZE   4096
@@ -20,10 +21,14 @@ class NewDataSync
 public:
     NewDataSync();
     ~NewDataSync();
+    void setOperateType(SyncOperateType type);
+    void start();
 private:
+    SyncOperateType m_operateType;
     FileCompare *m_fileCompare;
     QList<FileStat> *m_localList;
     QList<FileStat> *m_remoteList;
+    NewRequest m_request;
     QList<FileStat>* getLocalFile(QString caseId, QString path, SyncOperateType type);
     QList<FileStat>* getRemoteFile(QString caseId);
     QString getFileUrl(const QString &fileName, const QString& caseId, const QString &dir);
