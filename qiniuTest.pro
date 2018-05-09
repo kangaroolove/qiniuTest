@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     NewRequest.cpp \
     Json.cpp \
     https.cpp \
-    NewUploadThread.cpp
+    NewUploadThread.cpp \
+    NewDownloadThread.cpp
 
 HEADERS  += dialog.h \
     FileStat.h \
@@ -29,6 +30,7 @@ HEADERS  += dialog.h \
     NewRequest.h \
     Json.h \
     https.h \
-    NewUploadThread.h
+    NewUploadThread.h \
+    NewDownloadThread.h
 
 FORMS    += dialog.ui

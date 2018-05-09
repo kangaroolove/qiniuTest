@@ -18,10 +18,20 @@ NewDataSync::NewDataSync()
     m_upload = new NewUploadThread;
     m_upload->moveToThread(&m_uploadThread);
     connect(this, SIGNAL(startUpload(QList<FileStat>*,QString&)), m_upload, SLOT(onUploadStart(QList<FileStat>*,QString&)));
-    connect(m_upload, SIGNAL(uploadedFile()), this, SIGNAL(uploadedFile()));
+    connect(m_upload, SIGNAL(uploadFileSuccessfully()), this, SIGNAL(uploadFileSuccessfully()));
     connect(m_upload, SIGNAL(uploadAllFileSuccessfully()), this, SIGNAL(uploadAllFileSuccessfully()));
     connect(m_upload, SIGNAL(uploadFileFailed(QList<FileStat>*)), this, SIGNAL(uploadFileFailed(QList<FileStat>*)));
+    connect(m_upload, SIGNAL(refreshProgressBar()), this, SIGNAL(refreshProgressBar()));
     m_uploadThread.start();
+
+    m_download = new NewDownloadThread;
+    m_download->moveToThread(&m_downloadThread);
+    connect(this, SIGNAL(startDownload(QList<FileStat>*,QString&)), m_download, SLOT(onDownloadStart(QList<FileStat>*,QString&)));
+    connect(m_download, SIGNAL(downloadFileSuccessfully()), this, SIGNAL(downloadFileSuccessfully()));
+    connect(m_download, SIGNAL(downloadAllFileSuccessfully()), this, SIGNAL(downloadAllFileSuccessfully()));
+    connect(m_download, SIGNAL(downloadFileFailed(QList<FileStat>*)), this, SIGNAL(downloadFileFailed(QList<FileStat>*)));
+    connect(m_download, SIGNAL(refreshProgressBar()), this, SIGNAL(refreshProgressBar()));
+    m_downloadThread.start();
 }
 
 NewDataSync::~NewDataSync()
@@ -46,6 +56,9 @@ NewDataSync::~NewDataSync()
 
     m_uploadThread.quit();
     m_uploadThread.wait();
+
+    m_downloadThread.quit();
+    m_downloadThread.wait();
 }
 
 void NewDataSync::setOperateType(SyncOperateType type)
@@ -90,6 +103,7 @@ void NewDataSync::start()
    // QString token = m_request.getToken();
     //qDebug()<<"token"<<token;
     m_remoteList = getRemoteFile("20180508");
+    //m_fileCompare->makeFileCompare(m_operateType, m_localList, m_remoteList);
 }
 
 QList<FileStat> *NewDataSync::getLocalFile(QString caseId, const QString &path, SyncOperateType type)

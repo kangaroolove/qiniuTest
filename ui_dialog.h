@@ -49,7 +49,7 @@ public:
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         progressBar = new QProgressBar(Dialog);
         progressBar->setObjectName(QStringLiteral("progressBar"));
-        progressBar->setValue(24);
+        progressBar->setValue(0);
 
         gridLayout->addWidget(progressBar, 2, 0, 1, 5);
 
@@ -120,8 +120,8 @@ public:
         lineEdit->setToolTip(QString());
 #endif // QT_NO_TOOLTIP
         lineEdit->setPlaceholderText(QApplication::translate("Dialog", "\350\257\267\350\276\223\345\205\245\344\270\200\344\270\252\347\227\205\345\216\206\345\217\267", 0));
-        btn_upload->setText(QApplication::translate("Dialog", "PushButton", 0));
-        btn_download->setText(QApplication::translate("Dialog", "PushButton", 0));
+        btn_upload->setText(QApplication::translate("Dialog", "\344\270\212\344\274\240", 0));
+        btn_download->setText(QApplication::translate("Dialog", "\344\270\213\350\275\275", 0));
         btn_dir->setText(QApplication::translate("Dialog", "PushButton", 0));
     } // retranslateUi
 

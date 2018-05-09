@@ -53,9 +53,11 @@ void NewUploadThread::onUploadStart(QList<FileStat> *uploadFileList, QString &to
             qDebug()<<QString("hash: %1").arg(putRet.hash);
             if ((strcmp(putRet.key, charFileUrl.data()) == 0 && (strcmp(putRet.hash, hash) == 0)))
             {
-                emit uploadedFile();
+                emit uploadFileSuccessfully();
             }
         }
+
+        emit refreshProgressBar();
 
         Qiniu_Free(uptoken);
         Qiniu_Client_Cleanup(&client);

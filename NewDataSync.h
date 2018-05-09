@@ -5,6 +5,7 @@
 #include "FileStat.h"
 #include "NewRequest.h"
 #include "NewUploadThread.h"
+#include "NewDownloadThread.h"
 #include <QObject>
 #include <QThread>
 
@@ -28,9 +29,16 @@ public:
     void start();
 signals:
     void startUpload(QList<FileStat> *uploadFileList, QString &token);
-    void uploadedFile();
+    void startDownload(QList<FileStat> *uploadFileList, QString &token);
+
+    void uploadFileSuccessfully();
     void uploadAllFileSuccessfully();
     void uploadFileFailed(QList<FileStat> *uploadFailedList);
+
+    void downloadFileSuccessfully();
+    void downloadAllFileSuccessfully();
+    void downloadFileFailed(QList<FileStat> *uploadFailedList);
+    void refreshProgressBar();
 private:
     SyncOperateType m_operateType;
     FileCompare *m_fileCompare;
@@ -40,6 +48,7 @@ private:
     QThread m_uploadThread;
     QThread m_downloadThread;
     NewUploadThread *m_upload;
+    NewDownloadThread *m_download;
     QList<FileStat>* getLocalFile(QString caseId, const QString& path, SyncOperateType type);
     QList<FileStat>* getRemoteFile(QString caseId);
     QString getFileUrl(const QString &fileName, const QString& caseId, const QString &dir);

@@ -11,9 +11,10 @@ public:
     explicit NewUploadThread(QObject *parent = 0);
 
 signals:
-    void uploadedFile();
+    void uploadFileSuccessfully();
     void uploadAllFileSuccessfully();
     void uploadFileFailed(QList<FileStat> *uploadFailedList);
+    void refreshProgressBar();
 public slots:
     void onUploadStart(QList<FileStat> *uploadFileList, QString &token);
 private:
