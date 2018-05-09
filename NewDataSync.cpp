@@ -100,10 +100,20 @@ void NewDataSync::start()
         qDebug()<<m_localList->at(i).fileUrl;
         qDebug()<<m_localList->at(i).hash;
     }
-   // QString token = m_request.getToken();
+
+    QString token = m_request.getToken();
     //qDebug()<<"token"<<token;
     m_remoteList = getRemoteFile("20180508");
-    //m_fileCompare->makeFileCompare(m_operateType, m_localList, m_remoteList);
+    QList<FileStat> *list = m_fileCompare->makeFileCompare(m_operateType, m_localList, m_remoteList);
+
+    if (m_operateType == SyncOperateType::UPLOAD)
+    {
+        emit startUpload(list, token);
+    }
+    else if (m_operateType == SyncOperateType::DOWNLOAD)
+    {
+        emit startDownload(list, token);
+    }
 }
 
 QList<FileStat> *NewDataSync::getLocalFile(QString caseId, const QString &path, SyncOperateType type)
