@@ -5,8 +5,11 @@ NewDownloadThread::NewDownloadThread(QObject *parent) : QObject(parent)
 
 }
 
-void NewDownloadThread::onDownloadStart(QList<FileStat> *uploadFileList, QString &token)
+void NewDownloadThread::onDownloadStart(QList<FileStat> *downloadFileList)
 {
+    for (int i = 0; i < downloadFileList->size(); ++i)
+    {
 
+    }
 }
 

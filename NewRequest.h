@@ -6,7 +6,6 @@
 #include <QUrl>
 #include "FileStat.h"
 
-#define TIMER_INTERVAL  5000
 #define URL "http://172.18.169.111:3080"
 #define GET_TOKEN   "/aligner/client/file/qiNiuToken"
 
@@ -25,15 +24,8 @@ public:
     QString getToken();
     QList<FileStat>* getRemoteList();
 private:
-    QTimer m_timeoutTimer;
-    void startTimer();
-    void stopTimer();
     QUrl initUrl(QString cmd);
-    void initSsl();
-    void get();
-    void post();
-public slots:
-    void onTimerTimeout();
+    QSslConfiguration initSsl();
 };
 
 #endif // NEWREQUEST_H

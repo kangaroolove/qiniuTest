@@ -20,8 +20,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_NewDownloadThread_t {
-    QByteArrayData data[12];
-    char stringdata0[190];
+    QByteArrayData data[10];
+    char stringdata0[179];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -36,20 +36,17 @@ QT_MOC_LITERAL(2, 43, 0), // ""
 QT_MOC_LITERAL(3, 44, 27), // "downloadAllFileSuccessfully"
 QT_MOC_LITERAL(4, 72, 18), // "downloadFileFailed"
 QT_MOC_LITERAL(5, 91, 16), // "QList<FileStat>*"
-QT_MOC_LITERAL(6, 108, 16), // "uploadFailedList"
-QT_MOC_LITERAL(7, 125, 18), // "refreshProgressBar"
-QT_MOC_LITERAL(8, 144, 15), // "onDownloadStart"
-QT_MOC_LITERAL(9, 160, 14), // "uploadFileList"
-QT_MOC_LITERAL(10, 175, 8), // "QString&"
-QT_MOC_LITERAL(11, 184, 5) // "token"
+QT_MOC_LITERAL(6, 108, 18), // "downloadFailedList"
+QT_MOC_LITERAL(7, 127, 18), // "refreshProgressBar"
+QT_MOC_LITERAL(8, 146, 15), // "onDownloadStart"
+QT_MOC_LITERAL(9, 162, 16) // "downloadFileList"
 
     },
     "NewDownloadThread\0downloadFileSuccessfully\0"
     "\0downloadAllFileSuccessfully\0"
     "downloadFileFailed\0QList<FileStat>*\0"
-    "uploadFailedList\0refreshProgressBar\0"
-    "onDownloadStart\0uploadFileList\0QString&\0"
-    "token"
+    "downloadFailedList\0refreshProgressBar\0"
+    "onDownloadStart\0downloadFileList"
 };
 #undef QT_MOC_LITERAL
 
@@ -73,7 +70,7 @@ static const uint qt_meta_data_NewDownloadThread[] = {
        7,    0,   44,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       8,    2,   45,    2, 0x0a /* Public */,
+       8,    1,   45,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -82,7 +79,7 @@ static const uint qt_meta_data_NewDownloadThread[] = {
     QMetaType::Void,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 5, 0x80000000 | 10,    9,   11,
+    QMetaType::Void, 0x80000000 | 5,    9,
 
        0        // eod
 };
@@ -97,7 +94,7 @@ void NewDownloadThread::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
         case 1: _t->downloadAllFileSuccessfully(); break;
         case 2: _t->downloadFileFailed((*reinterpret_cast< QList<FileStat>*(*)>(_a[1]))); break;
         case 3: _t->refreshProgressBar(); break;
-        case 4: _t->onDownloadStart((*reinterpret_cast< QList<FileStat>*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 4: _t->onDownloadStart((*reinterpret_cast< QList<FileStat>*(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {

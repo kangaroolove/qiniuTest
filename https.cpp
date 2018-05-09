@@ -1,29 +1,29 @@
 #include "https.h"
-
+#include <QDebug>
 
 Https::Https(QObject *parent) : QObject(parent)
 {
 
 }
 
-void Https::SetUrl(const QUrl& url)
+void Https::setUrl(const QUrl& url)
 {
     this->url = url;
     request.setUrl(url);
 }
 
-QUrl Https::GetUrl()
+QUrl Https::getUrl()
 {
     return url;
 }
 
-void Https::SetSslConfiguration(const QSslConfiguration & config)
+void Https::setSslConfiguration(const QSslConfiguration & config)
 {
     this->sslConfig = config;
     request.setSslConfiguration(sslConfig);
 }
 
-void Https::SetRawHeaders(QMap<QString, QString> & headerList)
+void Https::setRawHeaders(QMap<QString, QString> & headerList)
 {
     if (headerList.isEmpty())
     {
@@ -43,35 +43,67 @@ QList<QNetworkCookie> Https::GetAllCookies()
     return tempList;
 }
 
-QByteArray Https::Get()
+QByteArray Https::get()
 {
+    QTimer timer;
+    timer.setInterval(TIMER_INTERVAL);
+    timer.setSingleShot(true);
+
     QEventLoop loop;
-    connect(&manager, SIGNAL(finished(QNetworkReply*)),
-            &loop, SLOT(quit()));
+    connect(&timer, SIGNAL(timeout()), &loop, SLOT(quit()));
+    connect(&manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
     reply = manager.get(request);
+    timer.start();
 
     loop.exec();
 
-    return GetReply();
+    if (timer.isActive())
+    {
+        timer.stop();
+        return getReply();
+    }
+    else
+    {
+        disconnect(&manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
+        reply->abort();
+        reply->deleteLater();
+        qDebug()<<"timeout";
+        return NULL;
+    }
 }
 
-QByteArray Https::Post(QByteArray & byteArray)
+QByteArray Https::post(QByteArray & byteArray)
 {
+    QTimer timer;
+    timer.setInterval(TIMER_INTERVAL);
+    timer.setSingleShot(true);
+
     QEventLoop loop;
-    connect(&manager, SIGNAL(finished(QNetworkReply*)),
-            &loop, SLOT(quit()));
+    connect(&manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
     reply = manager.post(request, byteArray);
+    timer.start();
 
     loop.exec();
 
-    return GetReply();
+    if (timer.isActive())
+    {
+        timer.stop();
+        return getReply();
+    }
+    else
+    {
+        disconnect(&manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
+        reply->abort();
+        reply->deleteLater();
+        qDebug()<<"timeout";
+        return NULL;
+    }
 }
 
-QByteArray Https::GetReply()
+QByteArray Https::getReply()
 {
     if (reply->error() == QNetworkReply::NoError)
     {
-        QTextCodec * pCodec = QTextCodec::codecForName("utf8");
         reply->deleteLater();
         return reply->readAll();
     }

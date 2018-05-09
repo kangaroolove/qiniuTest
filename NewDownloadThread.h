@@ -13,10 +13,10 @@ public:
 signals:
     void downloadFileSuccessfully();
     void downloadAllFileSuccessfully();
-    void downloadFileFailed(QList<FileStat> *uploadFailedList);
+    void downloadFileFailed(QList<FileStat> *downloadFailedList);
     void refreshProgressBar();
 public slots:
-    void onDownloadStart(QList<FileStat> *uploadFileList, QString &token);
+    void onDownloadStart(QList<FileStat> *downloadFileList);
 private:
     QList<FileStat> *m_downloadFailedList;
 };

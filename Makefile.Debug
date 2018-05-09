@@ -52,12 +52,14 @@ SOURCES       = main.cpp \
 		Json.cpp \
 		https.cpp \
 		NewUploadThread.cpp \
-		NewDownloadThread.cpp debug\moc_dialog.cpp \
+		NewDownloadThread.cpp \
+		DownloadTask.cpp debug\moc_dialog.cpp \
 		debug\moc_NewDataSync.cpp \
 		debug\moc_NewRequest.cpp \
 		debug\moc_https.cpp \
 		debug\moc_NewUploadThread.cpp \
-		debug\moc_NewDownloadThread.cpp
+		debug\moc_NewDownloadThread.cpp \
+		debug\moc_DownloadTask.cpp
 OBJECTS       = debug\main.obj \
 		debug\dialog.obj \
 		debug\FileStat.obj \
@@ -68,12 +70,14 @@ OBJECTS       = debug\main.obj \
 		debug\https.obj \
 		debug\NewUploadThread.obj \
 		debug\NewDownloadThread.obj \
+		debug\DownloadTask.obj \
 		debug\moc_dialog.obj \
 		debug\moc_NewDataSync.obj \
 		debug\moc_NewRequest.obj \
 		debug\moc_https.obj \
 		debug\moc_NewUploadThread.obj \
-		debug\moc_NewDownloadThread.obj
+		debug\moc_NewDownloadThread.obj \
+		debug\moc_DownloadTask.obj
 
 DIST          =  dialog.h \
 		FileStat.h \
@@ -83,7 +87,8 @@ DIST          =  dialog.h \
 		Json.h \
 		https.h \
 		NewUploadThread.h \
-		NewDownloadThread.h main.cpp \
+		NewDownloadThread.h \
+		DownloadTask.h main.cpp \
 		dialog.cpp \
 		FileStat.cpp \
 		FileCompare.cpp \
@@ -92,7 +97,8 @@ DIST          =  dialog.h \
 		Json.cpp \
 		https.cpp \
 		NewUploadThread.cpp \
-		NewDownloadThread.cpp
+		NewDownloadThread.cpp \
+		DownloadTask.cpp
 QMAKE_TARGET  = qiniuTest
 DESTDIR        = debug\ #avoid trailing-slash linebreak
 TARGET         = qiniuTest.exe
@@ -161,7 +167,7 @@ dist:
 	$(ZIP) qiniuTest.zip $(SOURCES) $(DIST) qiniuTest.pro D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\features\spec_pre.prf D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\common\msvc-desktop.conf D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\qconfig.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_3dcollision.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_3dcollision_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_3dcore.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_3dcore_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_3dinput.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_3dinput_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_3dlogic.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_3dlogic_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_3dquick.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_3dquick_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_3dquickrenderer.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_3dquickrenderer_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_3drenderer.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_3drenderer_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_axbase.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_axbase_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_axcontainer.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_axcontainer_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_axserver.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_axserver_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_bluetooth.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_bluetooth_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_bootstrap_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_clucene_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_concurrent.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_concurrent_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_core.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_core_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_dbus.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_dbus_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_declarative.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_declarative_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_designer.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_designer_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_designercomponents_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_enginio.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_enginio_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_gui.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_gui_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_help.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_help_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_location.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_location_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_multimedia.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_multimedia_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_multimediawidgets.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_multimediawidgets_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_network.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_network_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_nfc.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_nfc_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_opengl.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_opengl_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_openglextensions.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_openglextensions_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_platformsupport_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_positioning.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_positioning_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_printsupport.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_printsupport_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_qml.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_qml_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_qmldevtools_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_qmltest.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_qmltest_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_quick.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_quick_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_quickparticles_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_quickwidgets.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_quickwidgets_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_script.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_script_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_scripttools.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_scripttools_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_sensors.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_sensors_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_serialport.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_serialport_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_sql.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_sql_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_svg.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_svg_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_testlib.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_testlib_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_uiplugin.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_uitools.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_uitools_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_webchannel.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_webchannel_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_webengine.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_webengine_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_webenginecore.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_webenginecore_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_webenginewidgets.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_webenginewidgets_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_webkit.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_webkit_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_webkitwidgets.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_webkitwidgets_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_websockets.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_websockets_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_webview_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_widgets.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_widgets_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_winextras.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_winextras_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_xml.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_xml_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_xmlpatterns.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\modules\qt_lib_xmlpatterns_private.pri D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\features\qt_functions.prf D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\features\qt_config.prf D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\features\win32\qt_config.prf D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\win32-msvc2013\qmake.conf D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\features\spec_post.prf D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\features\exclusive_builds.prf D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\features\default_pre.prf D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\features\win32\default_pre.prf D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\features\resolve_config.prf D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\features\exclusive_builds_post.prf D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\features\default_post.prf D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\features\build_pass.prf D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\features\win32\rtti.prf D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\features\c++11.prf D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\features\precompile_header.prf D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\features\warn_on.prf D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\features\qt.prf D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\features\resources.prf D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\features\moc.prf D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\features\win32\opengl.prf D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\features\uic.prf D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\features\win32\windows.prf D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\features\testcase_targets.prf D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\features\exceptions.prf D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\features\yacc.prf D:\Qt\Qt5.5.1\5.5\msvc2013\mkspecs\features\lex.prf qiniuTest.pro D:/Qt/Qt5.5.1/5.5/msvc2013/lib/qtmaind.prl D:/Qt/Qt5.5.1/5.5/msvc2013/lib/Qt5Widgetsd.prl D:/Qt/Qt5.5.1/5.5/msvc2013/lib/Qt5Guid.prl D:/Qt/Qt5.5.1/5.5/msvc2013/lib/Qt5Networkd.prl D:/Qt/Qt5.5.1/5.5/msvc2013/lib/Qt5Cored.prl  NO_PCH_SOURCES RESOURCES HEADERS SOURCES OBJECTIVE_SOURCES FORMS YACCSOURCES YACCSOURCES LEXSOURCES 
 
 clean: compiler_clean 
-	-$(DEL_FILE) debug\main.obj debug\dialog.obj debug\FileStat.obj debug\FileCompare.obj debug\NewDataSync.obj debug\NewRequest.obj debug\Json.obj debug\https.obj debug\NewUploadThread.obj debug\NewDownloadThread.obj debug\moc_dialog.obj debug\moc_NewDataSync.obj debug\moc_NewRequest.obj debug\moc_https.obj debug\moc_NewUploadThread.obj debug\moc_NewDownloadThread.obj
+	-$(DEL_FILE) debug\main.obj debug\dialog.obj debug\FileStat.obj debug\FileCompare.obj debug\NewDataSync.obj debug\NewRequest.obj debug\Json.obj debug\https.obj debug\NewUploadThread.obj debug\NewDownloadThread.obj debug\DownloadTask.obj debug\moc_dialog.obj debug\moc_NewDataSync.obj debug\moc_NewRequest.obj debug\moc_https.obj debug\moc_NewUploadThread.obj debug\moc_NewDownloadThread.obj debug\moc_DownloadTask.obj
 	-$(DEL_FILE) debug\qiniuTest.exp debug\qiniuTest.ilk debug\qiniuTest.idb
 
 distclean: clean 
@@ -179,9 +185,9 @@ compiler_no_pch_compiler_make_all:
 compiler_no_pch_compiler_clean:
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: debug\moc_dialog.cpp debug\moc_NewDataSync.cpp debug\moc_NewRequest.cpp debug\moc_https.cpp debug\moc_NewUploadThread.cpp debug\moc_NewDownloadThread.cpp
+compiler_moc_header_make_all: debug\moc_dialog.cpp debug\moc_NewDataSync.cpp debug\moc_NewRequest.cpp debug\moc_https.cpp debug\moc_NewUploadThread.cpp debug\moc_NewDownloadThread.cpp debug\moc_DownloadTask.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) debug\moc_dialog.cpp debug\moc_NewDataSync.cpp debug\moc_NewRequest.cpp debug\moc_https.cpp debug\moc_NewUploadThread.cpp debug\moc_NewDownloadThread.cpp
+	-$(DEL_FILE) debug\moc_dialog.cpp debug\moc_NewDataSync.cpp debug\moc_NewRequest.cpp debug\moc_https.cpp debug\moc_NewUploadThread.cpp debug\moc_NewDownloadThread.cpp debug\moc_DownloadTask.cpp
 debug\moc_dialog.cpp: NewDataSync.h \
 		FileCompare.h \
 		FileStat.h \
@@ -888,6 +894,71 @@ debug\moc_NewDownloadThread.cpp: FileStat.h \
 		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qobject_impl.h \
 		NewDownloadThread.h
 	D:\Qt\Qt5.5.1\5.5\msvc2013\bin\moc.exe $(DEFINES) -D_MSC_VER=1800 -D_WIN32 -ID:/Qt/Qt5.5.1/5.5/msvc2013/mkspecs/win32-msvc2013 -IE:/qtworkspace/qiniuTest -ID:/Qt/Qt5.5.1/5.5/msvc2013/include -ID:/Qt/Qt5.5.1/5.5/msvc2013/include/QtWidgets -ID:/Qt/Qt5.5.1/5.5/msvc2013/include/QtGui -ID:/Qt/Qt5.5.1/5.5/msvc2013/include/QtANGLE -ID:/Qt/Qt5.5.1/5.5/msvc2013/include/QtNetwork -ID:/Qt/Qt5.5.1/5.5/msvc2013/include/QtCore NewDownloadThread.h -o debug\moc_NewDownloadThread.cpp
+
+debug\moc_DownloadTask.cpp: FileStat.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\QString \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qstring.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qchar.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qglobal.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qconfig.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qfeatures.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qsystemdetection.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qprocessordetection.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qcompilerdetection.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qtypeinfo.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qtypetraits.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qsysinfo.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qlogging.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qflags.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qatomic.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qbasicatomic.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qatomic_bootstrap.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qgenericatomic.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qatomic_cxx11.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qatomic_gcc.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qatomic_msvc.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qatomic_armv7.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qatomic_armv6.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qatomic_armv5.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qatomic_ia64.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qatomic_mips.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qatomic_x86.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qatomic_unix.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qglobalstatic.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qmutex.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qnumeric.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qbytearray.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qrefcount.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qnamespace.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qarraydata.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qstringbuilder.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\QDateTime \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qdatetime.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qshareddata.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qhash.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qiterator.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qlist.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qalgorithms.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qbytearraylist.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qstringlist.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qregexp.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qstringmatcher.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qpair.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\QObject \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qobject.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qobjectdefs.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qobjectdefs_impl.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qcoreevent.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qscopedpointer.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qmetatype.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qvarlengtharray.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qcontainerfwd.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qisenum.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qobject_impl.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\QRunnable \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qrunnable.h \
+		DownloadTask.h
+	D:\Qt\Qt5.5.1\5.5\msvc2013\bin\moc.exe $(DEFINES) -D_MSC_VER=1800 -D_WIN32 -ID:/Qt/Qt5.5.1/5.5/msvc2013/mkspecs/win32-msvc2013 -IE:/qtworkspace/qiniuTest -ID:/Qt/Qt5.5.1/5.5/msvc2013/include -ID:/Qt/Qt5.5.1/5.5/msvc2013/include/QtWidgets -ID:/Qt/Qt5.5.1/5.5/msvc2013/include/QtGui -ID:/Qt/Qt5.5.1/5.5/msvc2013/include/QtANGLE -ID:/Qt/Qt5.5.1/5.5/msvc2013/include/QtNetwork -ID:/Qt/Qt5.5.1/5.5/msvc2013/include/QtCore DownloadTask.h -o debug\moc_DownloadTask.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -2273,6 +2344,70 @@ debug\NewDownloadThread.obj: NewDownloadThread.cpp NewDownloadThread.h \
 		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qisenum.h \
 		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qobject_impl.h
 
+debug\DownloadTask.obj: DownloadTask.cpp DownloadTask.h \
+		FileStat.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\QString \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qstring.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qchar.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qglobal.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qconfig.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qfeatures.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qsystemdetection.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qprocessordetection.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qcompilerdetection.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qtypeinfo.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qtypetraits.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qsysinfo.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qlogging.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qflags.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qatomic.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qbasicatomic.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qatomic_bootstrap.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qgenericatomic.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qatomic_cxx11.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qatomic_gcc.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qatomic_msvc.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qatomic_armv7.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qatomic_armv6.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qatomic_armv5.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qatomic_ia64.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qatomic_mips.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qatomic_x86.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qatomic_unix.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qglobalstatic.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qmutex.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qnumeric.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qbytearray.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qrefcount.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qnamespace.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qarraydata.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qstringbuilder.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\QDateTime \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qdatetime.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qshareddata.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qhash.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qiterator.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qlist.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qalgorithms.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qbytearraylist.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qstringlist.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qregexp.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qstringmatcher.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qpair.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\QObject \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qobject.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qobjectdefs.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qobjectdefs_impl.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qcoreevent.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qscopedpointer.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qmetatype.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qvarlengtharray.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qcontainerfwd.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qisenum.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qobject_impl.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\QRunnable \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qrunnable.h
+
 debug\moc_dialog.obj: debug\moc_dialog.cpp 
 
 debug\moc_NewDataSync.obj: debug\moc_NewDataSync.cpp 
@@ -2284,6 +2419,8 @@ debug\moc_https.obj: debug\moc_https.cpp
 debug\moc_NewUploadThread.obj: debug\moc_NewUploadThread.cpp 
 
 debug\moc_NewDownloadThread.obj: debug\moc_NewDownloadThread.cpp 
+
+debug\moc_DownloadTask.obj: debug\moc_DownloadTask.cpp 
 
 ####### Install
 

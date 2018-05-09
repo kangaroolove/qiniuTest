@@ -5,7 +5,6 @@
 
 NewRequest::NewRequest()
 {
-    connect(&m_timeoutTimer, SIGNAL(timeout()), this, SLOT(onTimerTimeout()));
 }
 
 NewRequest::~NewRequest()
@@ -17,15 +16,13 @@ QString NewRequest::getToken()
     QUrl url = initUrl(GET_TOKEN);
     Https http;
     Json json;
-    http.SetUrl(url);
+    http.setUrl(url);
     QString message;
 
-    startTimer();
-    QByteArray reply = http.Get();
+    QByteArray reply = http.get();
 
     if (json.analysisJson(reply, message) == true)
     {
-        stopTimer();
         return json.getToken(reply);
     }
     else
@@ -64,35 +61,18 @@ QString NewRequest::getToken()
 //    }
 //}
 
-void NewRequest::startTimer()
-{
-    if (!m_timeoutTimer.isActive())
-    {
-        m_timeoutTimer.start(TIMER_INTERVAL);
-    }
-}
-
-void NewRequest::stopTimer()
-{
-    if (m_timeoutTimer.isActive())
-    {
-        m_timeoutTimer.stop();
-    }
-}
-
 QUrl NewRequest::initUrl(QString cmd)
 {
     QUrl url = QString("%1%2").arg(URL).arg(cmd);
     return url;
 }
 
-void NewRequest::get()
+QSslConfiguration NewRequest::initSsl()
 {
+    QSslConfiguration sslConfig = QSslConfiguration::defaultConfiguration();
+    sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+    sslConfig.setProtocol(QSsl::TlsV1_2);
 
-}
-
-void NewRequest::onTimerTimeout()
-{
-
+    return sslConfig;
 }
 
