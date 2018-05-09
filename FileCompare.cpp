@@ -7,19 +7,16 @@ FileCompare::FileCompare()
 
 QList<FileStat>* FileCompare::makeFileCompare(SyncOperateType type, QList<FileStat> *local, QList<FileStat> *remote)
 {
-    if (type == SyncOperateType::NO)
+    switch (type)
     {
-        return NULL;
-    }
-
-    if (type == SyncOperateType::UPLOAD)
-    {
-        return getUploadList(local, remote);
-    }
-
-    if (type == SyncOperateType::DOWNLOAD)
-    {
-        return getDownloadList(local, remote);
+        case SyncOperateType::NO:
+            return NULL;
+        case SyncOperateType::UPLOAD:
+            return getUploadList(local, remote);
+        case SyncOperateType::DOWNLOAD:
+            return getDownloadList(local, remote);
+        default:
+            return NULL;
     }
 }
 

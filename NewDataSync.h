@@ -29,7 +29,7 @@ public:
     void start();
 signals:
     void startUpload(QList<FileStat> *uploadFileList, QString &token);
-    void startDownload(QList<FileStat> *uploadFileList, QString &token);
+    void startDownload(QList<FileStat> *downloadFileList, QString &token);
 
     void uploadFileSuccessfully();
     void uploadAllFileSuccessfully();

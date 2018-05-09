@@ -12,6 +12,12 @@ NewUploadThread::NewUploadThread(QObject *parent) : QObject(parent)
 
 void NewUploadThread::onUploadStart(QList<FileStat> *uploadFileList, QString &token)
 {
+    if (token.isNull())
+    {
+        qDebug()<<"token is null";
+        return;
+    }
+
     m_uploadFailedList->clear();
     delete m_uploadFailedList;
     m_uploadFailedList = NULL;

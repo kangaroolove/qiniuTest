@@ -13,6 +13,7 @@ bool Json::analysisJson(const QByteArray& reply, QString& message)
 {
     if (reply.isNull())
     {
+        message.append("reply is null");
         return false;
     }
 

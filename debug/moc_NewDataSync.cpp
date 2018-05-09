@@ -20,8 +20,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_NewDataSync_t {
-    QByteArrayData data[16];
-    char stringdata0[260];
+    QByteArrayData data[17];
+    char stringdata0[277];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -38,21 +38,23 @@ QT_MOC_LITERAL(4, 42, 14), // "uploadFileList"
 QT_MOC_LITERAL(5, 57, 8), // "QString&"
 QT_MOC_LITERAL(6, 66, 5), // "token"
 QT_MOC_LITERAL(7, 72, 13), // "startDownload"
-QT_MOC_LITERAL(8, 86, 22), // "uploadFileSuccessfully"
-QT_MOC_LITERAL(9, 109, 25), // "uploadAllFileSuccessfully"
-QT_MOC_LITERAL(10, 135, 16), // "uploadFileFailed"
-QT_MOC_LITERAL(11, 152, 16), // "uploadFailedList"
-QT_MOC_LITERAL(12, 169, 24), // "downloadFileSuccessfully"
-QT_MOC_LITERAL(13, 194, 27), // "downloadAllFileSuccessfully"
-QT_MOC_LITERAL(14, 222, 18), // "downloadFileFailed"
-QT_MOC_LITERAL(15, 241, 18) // "refreshProgressBar"
+QT_MOC_LITERAL(8, 86, 16), // "downloadFileList"
+QT_MOC_LITERAL(9, 103, 22), // "uploadFileSuccessfully"
+QT_MOC_LITERAL(10, 126, 25), // "uploadAllFileSuccessfully"
+QT_MOC_LITERAL(11, 152, 16), // "uploadFileFailed"
+QT_MOC_LITERAL(12, 169, 16), // "uploadFailedList"
+QT_MOC_LITERAL(13, 186, 24), // "downloadFileSuccessfully"
+QT_MOC_LITERAL(14, 211, 27), // "downloadAllFileSuccessfully"
+QT_MOC_LITERAL(15, 239, 18), // "downloadFileFailed"
+QT_MOC_LITERAL(16, 258, 18) // "refreshProgressBar"
 
     },
     "NewDataSync\0startUpload\0\0QList<FileStat>*\0"
     "uploadFileList\0QString&\0token\0"
-    "startDownload\0uploadFileSuccessfully\0"
-    "uploadAllFileSuccessfully\0uploadFileFailed\0"
-    "uploadFailedList\0downloadFileSuccessfully\0"
+    "startDownload\0downloadFileList\0"
+    "uploadFileSuccessfully\0uploadAllFileSuccessfully\0"
+    "uploadFileFailed\0uploadFailedList\0"
+    "downloadFileSuccessfully\0"
     "downloadAllFileSuccessfully\0"
     "downloadFileFailed\0refreshProgressBar"
 };
@@ -74,23 +76,23 @@ static const uint qt_meta_data_NewDataSync[] = {
  // signals: name, argc, parameters, tag, flags
        1,    2,   59,    2, 0x06 /* Public */,
        7,    2,   64,    2, 0x06 /* Public */,
-       8,    0,   69,    2, 0x06 /* Public */,
-       9,    0,   70,    2, 0x06 /* Public */,
-      10,    1,   71,    2, 0x06 /* Public */,
-      12,    0,   74,    2, 0x06 /* Public */,
-      13,    0,   75,    2, 0x06 /* Public */,
-      14,    1,   76,    2, 0x06 /* Public */,
-      15,    0,   79,    2, 0x06 /* Public */,
+       9,    0,   69,    2, 0x06 /* Public */,
+      10,    0,   70,    2, 0x06 /* Public */,
+      11,    1,   71,    2, 0x06 /* Public */,
+      13,    0,   74,    2, 0x06 /* Public */,
+      14,    0,   75,    2, 0x06 /* Public */,
+      15,    1,   76,    2, 0x06 /* Public */,
+      16,    0,   79,    2, 0x06 /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3, 0x80000000 | 5,    4,    6,
-    QMetaType::Void, 0x80000000 | 3, 0x80000000 | 5,    4,    6,
+    QMetaType::Void, 0x80000000 | 3, 0x80000000 | 5,    8,    6,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 3,   11,
+    QMetaType::Void, 0x80000000 | 3,   12,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 3,   11,
+    QMetaType::Void, 0x80000000 | 3,   12,
     QMetaType::Void,
 
        0        // eod
