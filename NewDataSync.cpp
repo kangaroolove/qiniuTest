@@ -105,12 +105,14 @@ void NewDataSync::start(const QString &caseId, const QString &path)
         m_remoteList = NULL;
     }
 
-    m_localList = getLocalFile(caseId, path, m_operateType, m_suffixType);
+    //m_localList = getLocalFile(caseId, path, m_operateType, m_suffixType);
     if (m_localList)
     {
         for (int i = 0; i < m_localList->size(); ++i)
         {
             qDebug()<<"fileName:"<<m_localList->at(i).fileName;
+            qDebug()<<"filePath:"<<m_localList->at(i).filePath;
+            qDebug()<<"fileType:"<<m_localList->at(i).fileType;
             qDebug()<<"createTime:"<<m_localList->at(i).createTime;
             qDebug()<<"updateTime:"<<m_localList->at(i).updateTime;
             qDebug()<<"fileUrl:"<<m_localList->at(i).fileUrl;
@@ -121,6 +123,19 @@ void NewDataSync::start(const QString &caseId, const QString &path)
     //QString token = m_request.getToken();
     //qDebug()<<"token"<<token;
     m_remoteList = getRemoteFile(caseId);
+    if (m_remoteList)
+    {
+        for (int i = 0; i < m_remoteList->size(); ++i)
+        {
+            qDebug()<<"fileName:"<<m_remoteList->at(i).fileName;
+            qDebug()<<"filePath:"<<m_remoteList->at(i).filePath;
+            qDebug()<<"fileType:"<<m_remoteList->at(i).fileType;
+            qDebug()<<"createTime:"<<m_remoteList->at(i).createTime;
+            qDebug()<<"updateTime:"<<m_remoteList->at(i).updateTime;
+            qDebug()<<"fileUrl:"<<m_remoteList->at(i).fileUrl;
+            qDebug()<<"hash:"<<m_remoteList->at(i).hash;
+        }
+    }
     //QList<FileStat> *list = m_fileCompare->makeFileCompare(m_operateType, m_localList, m_remoteList);
 
 //    if (m_operateType == SyncOperateType::UPLOAD)
@@ -173,12 +188,14 @@ QList<FileStat> *NewDataSync::getLocalFile(const QString &caseId, const QString 
     while (it.hasNext())
     {
         it.next();
-        fileStatItem.fileName = it.fileInfo().absoluteFilePath();
+        fileStatItem.fileName = it.fileName();
+        fileStatItem.filePath = it.filePath();
+        fileStatItem.fileType = getFileType(it.fileInfo());
         fileStatItem.createTime = it.fileInfo().created();
         fileStatItem.updateTime = it.fileInfo().lastModified();
         if (type == SyncOperateType::UPLOAD)
         {
-            fileStatItem.fileUrl = getFileUrl(it.fileInfo().absoluteFilePath(), caseId, list.last());
+            fileStatItem.fileUrl = getFileUrl(it.filePath(), caseId, list.last());
             fileStatItem.hash = getMd5(it.fileInfo().absoluteFilePath());
         }
         localList->push_back(fileStatItem);
@@ -187,10 +204,9 @@ QList<FileStat> *NewDataSync::getLocalFile(const QString &caseId, const QString 
     return localList;
 }
 
-QList<FileStat> *NewDataSync::getRemoteFile(QString caseId)
+QList<FileStat> *NewDataSync::getRemoteFile(const QString &caseId)
 {
-    QList<FileStat>* remoteList = new QList<FileStat>;
-    return remoteList;
+    return m_request.getRemoteList(caseId);
 }
 
 QString NewDataSync::getFileUrl(const QString &fileName, const QString &caseId, const QString &dir)
@@ -243,5 +259,103 @@ QString NewDataSync::getUuid()
 
     return uuid;
 }
+
+FileType NewDataSync::getFileType(const QFileInfo &fileInfo)
+{
+    QString suffix = fileInfo.suffix();
+    QString fileName = fileInfo.fileName();
+
+    if (suffix == "rtd")
+    {
+        return FileType::TOOTH_RTD;
+    }
+    else if (suffix == "rttsd")
+    {
+        return FileType::TOOTH_RTTSD;
+    }
+    else if (suffix == "srtd")
+    {
+        return FileType::TOOTH_SRTD;
+    }
+    else if (suffix == "stl")
+    {
+        if (fileName == "s0.stl")
+        {
+            return FileType::WEB_UP_STL;
+        }
+        else if (fileName == "ss0.stl")
+        {
+            return FileType::COMPRESSED_UPPER_STL;
+        }
+        else if (fileName == "sx0.stl")
+        {
+            return FileType::WEB_LOW_STL;
+        }
+        else if (fileName == "x0.stl")
+        {
+            return FileType::COMPRESSED_LOWER_STL;
+        }
+        else
+        {
+            return FileType::OTHER_FILE;
+        }
+    }
+    else if (suffix == "dat")
+    {
+        if (fileName == "AngleCalBowData.dat")
+        {
+            return FileType::ANGLE_CAL_BOW_DATA;
+        }
+        else if (fileName == "CduCreateTeethBase.dat")
+        {
+            return FileType::CDU_CREATE_TEETH_BASE;
+        }
+        else if (fileName == "CduTeethWidthData.dat")
+        {
+            return FileType::CDU_TEETH_WIDTH_DATA;
+        }
+        else if (fileName == "DentalArchData.dat")
+        {
+            return FileType::DENTAL_ARCH_DATA;
+        }
+        else if (fileName == "EnvironmentStateBeforeClose.dat")
+        {
+            return FileType::ENVIRONMENT_STATE_BEFORE_CLOSE;
+        }
+        else if (fileName == "OcclusalPlaneData.dat")
+        {
+            return FileType::OCCLUSAL_PLANE_DATA;
+        }
+        else if (fileName == "CduEnvironmentStateSave.dat")
+        {
+            return FileType::ENVIRONMENT_STATE_SAVE;
+        }
+        else
+        {
+            return FileType::OTHER_FILE;
+        }
+    }
+    else if (suffix == "rtp")
+    {
+        if (fileName.indexOf("Lower") != -1)
+        {
+            return FileType::LOWER_RTP;
+        }
+        else if (fileName.indexOf("Upper") != -1)
+        {
+            return FileType::UPPER_RTP;
+        }
+        else
+        {
+            return FileType::OTHER_FILE;
+        }
+    }
+    else
+    {
+        return FileType::OTHER_FILE;
+    }
+}
+
+
 
 

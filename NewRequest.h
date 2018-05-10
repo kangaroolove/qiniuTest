@@ -8,6 +8,7 @@
 
 #define URL "http://172.18.169.111:3080"
 #define GET_TOKEN   "/aligner/client/file/qiNiuToken"
+#define GET_REMOTE_FILE_LIST    "/aligner/client/file/originalModel/"
 
 enum RequestType
 {
@@ -22,9 +23,10 @@ public:
     NewRequest();
     ~NewRequest();
     QString getToken();
-    QList<FileStat>* getRemoteList();
+    QList<FileStat>* getRemoteList(const QString &caseId);
 private:
-    QUrl initUrl(QString cmd);
+    QUrl initUrl(const QString &cmd);
+    QUrl initUrl(const QString &cmd, const QString &caseId);
     QSslConfiguration initSsl();
 };
 

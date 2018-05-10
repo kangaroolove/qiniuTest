@@ -8,6 +8,7 @@
 #include "NewDownloadThread.h"
 #include <QObject>
 #include <QThread>
+#include <QFileInfo>
 
 #define MD5_READ_MAX_SIZE   4096
 
@@ -51,10 +52,11 @@ private:
     NewDownloadThread *m_download;
     QStringList m_suffixType;
     QList<FileStat>* getLocalFile(const QString &caseId, const QString& path, const SyncOperateType &type, const QStringList &suffix);
-    QList<FileStat>* getRemoteFile(QString caseId);
+    QList<FileStat>* getRemoteFile(const QString &caseId);
     QString getFileUrl(const QString &fileName, const QString& caseId, const QString &dir);
     QByteArray getMd5(const QString& fileName);
     QString getUuid();
+    FileType getFileType(const QFileInfo &fileInfo);
 };
 
 #endif // NEWDATASNC_H

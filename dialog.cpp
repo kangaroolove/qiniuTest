@@ -26,6 +26,9 @@ Dialog::Dialog(QWidget *parent) :
     connect(m_newDataSync, SIGNAL(downloadAllFileSuccessfully()), this, SLOT(onAllFileDownloadSuccessfully()));
     connect(m_newDataSync, SIGNAL(downloadFileFailed(QList<FileStat>*)), this, SLOT(onFileDownloadFailed(QList<FileStat>*)));
     connect(m_newDataSync, SIGNAL(refreshProgressBar()), this, SLOT(onProgressBarRefresh()));
+
+    ui->lab_dir->setText("C:/1");
+    ui->txt_caseId->setText("2018050100");
 }
 
 Dialog::~Dialog()

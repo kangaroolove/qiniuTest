@@ -37,33 +37,39 @@ QString NewRequest::getToken()
     }
 }
 
-//QList<FileStat> *NewRequest::getRemoteList()
-//{
-//    QUrl url = initUrl();
-//    Https http;
-//    Json json;
-//    http.SetUrl(url);
-//    QByteArray reply = http.Post();
-//    QString message;
-//    if (json.analysisJson(reply, message) == true)
-//    {
+QList<FileStat> *NewRequest::getRemoteList(const QString &caseId)
+{
+    QUrl url = initUrl(GET_REMOTE_FILE_LIST, caseId);
+    Https http;
+    Json json;
+    http.setUrl(url);
+    QByteArray reply = http.get();
+    QString message;
+    if (json.analysisJson(reply, message) == true)
+    {
+        return json.getRemoteList(reply);
+    }
+    else
+    {
+        QMessageBox::warning(NULL,
+                             "Warning",
+                             message,
+                             QMessageBox::Ok,
+                             QMessageBox::Ok);
 
-//    }
-//    else
-//    {
-//        QMessageBox::warning(NULL,
-//                             "Warning",
-//                             message,
-//                             QMessageBox::Ok,
-//                             QMessageBox::Ok);
+        return NULL;
+    }
+}
 
-//        return QString::null;
-//    }
-//}
-
-QUrl NewRequest::initUrl(QString cmd)
+QUrl NewRequest::initUrl(const QString &cmd)
 {
     QUrl url = QString("%1%2").arg(URL).arg(cmd);
+    return url;
+}
+
+QUrl NewRequest::initUrl(const QString &cmd, const QString &caseId)
+{
+    QUrl url(QString("%1%2%3").arg(URL).arg(cmd).arg(caseId));
     return url;
 }
 

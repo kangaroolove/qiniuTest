@@ -6,7 +6,8 @@
 
 enum FileType
 {
-    BASE_DATA = 1,
+    OTHER_FILE = 0,
+    BASE_DATA,
     MEASURE_DATA,
     WEB_UP_STL,
     WEB_LOW_STL,
@@ -38,6 +39,7 @@ enum FileType
     OCCLUSAL_PLANE_DATA,
     LOWER_RTP,
     UPPER_RTP,
+    ENVIRONMENT_STATE_SAVE,
 };
 
 class FileStat
@@ -45,11 +47,12 @@ class FileStat
 public:
     FileStat();
     QString fileName;
+    QString filePath;
     QDateTime createTime;
     QDateTime updateTime;
     QByteArray hash;
     QString fileUrl;
-    FileType fileType;
+    int fileType;
     int errorCode;
 };
 
