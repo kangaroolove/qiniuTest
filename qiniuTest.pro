@@ -36,3 +36,6 @@ HEADERS  += dialog.h \
     DownloadTask.h
 
 FORMS    += dialog.ui
+
+RESOURCES += \
+    resource.qrc

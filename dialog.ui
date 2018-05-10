@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>365</width>
-    <height>130</height>
+    <width>354</width>
+    <height>116</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,16 +21,32 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
+   <item row="1" column="1" colspan="4">
+    <widget class="QLabel" name="lab_dir">
+     <property name="styleSheet">
+      <string notr="true">QPushButton{
+border: 1px solid #E7E8EA;
+border-radius: 4px;
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" colspan="3">
+    <widget class="QLineEdit" name="txt_caseId">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="text">
-      <string>病历号：</string>
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="placeholderText">
+      <string>请输入一个病历号</string>
      </property>
     </widget>
    </item>
@@ -47,33 +63,53 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="1" colspan="4">
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1" colspan="3">
-    <widget class="QLineEdit" name="lineEdit">
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+      <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="toolTip">
-      <string/>
-     </property>
-     <property name="placeholderText">
-      <string>请输入一个病历号</string>
+     <property name="text">
+      <string>病历号：</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="1">
-    <widget class="QPushButton" name="btn_upload">
-     <property name="text">
-      <string>上传</string>
+   <item row="0" column="4">
+    <widget class="QPushButton" name="btn_dir">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>23</width>
+       <height>23</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>23</width>
+       <height>23</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton{
+border:0px;
+}</string>
+     </property>
+     <property name="icon">
+      <iconset resource="resource.qrc">
+       <normaloff>:/resource/文件夹.png</normaloff>:/resource/文件夹.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>23</width>
+       <height>23</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -84,10 +120,10 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="4">
-    <widget class="QPushButton" name="btn_dir">
+   <item row="4" column="1">
+    <widget class="QPushButton" name="btn_upload">
      <property name="text">
-      <string>PushButton</string>
+      <string>上传</string>
      </property>
     </widget>
    </item>
@@ -97,7 +133,7 @@
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
+      <enum>QSizePolicy::Expanding</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
@@ -110,6 +146,8 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -26,7 +26,7 @@ public:
     NewDataSync();
     ~NewDataSync();
     void setOperateType(SyncOperateType type);
-    void start();
+    void start(const QString &caseId, const QString &path);
 signals:
     void startUpload(QList<FileStat> *uploadFileList, QString &token);
     void startDownload(QList<FileStat> *downloadFileList, QString &token);
@@ -49,7 +49,8 @@ private:
     QThread m_downloadThread;
     NewUploadThread *m_upload;
     NewDownloadThread *m_download;
-    QList<FileStat>* getLocalFile(QString caseId, const QString& path, SyncOperateType type);
+    QStringList m_suffixType;
+    QList<FileStat>* getLocalFile(const QString &caseId, const QString& path, const SyncOperateType &type, const QStringList &suffix);
     QList<FileStat>* getRemoteFile(QString caseId);
     QString getFileUrl(const QString &fileName, const QString& caseId, const QString &dir);
     QByteArray getMd5(const QString& fileName);

@@ -13,6 +13,9 @@ NewDataSync::NewDataSync()
     m_remoteList = NULL;
     m_operateType = SyncOperateType::NO;
 
+    m_suffixType.clear();
+    m_suffixType<<QString("*.stl")<<QString("*.rtd")<<QString("*.rttsd")<<QString("*.srtd")<<QString("*.dat")<<QString("*.rtp");
+
     m_fileCompare = new FileCompare;
 
     m_upload = new NewUploadThread;
@@ -26,7 +29,7 @@ NewDataSync::NewDataSync()
 
     m_download = new NewDownloadThread;
     m_download->moveToThread(&m_downloadThread);
-    connect(this, SIGNAL(startDownload(QList<FileStat>*,QString&)), m_download, SLOT(onDownloadStart(QList<FileStat>*,QString&)));
+    connect(this, SIGNAL(startDownload(QList<FileStat>*,QString&)), m_download, SLOT(onDownloadStart(QList<FileStat>*)));
     connect(m_download, SIGNAL(downloadFileSuccessfully()), this, SIGNAL(downloadFileSuccessfully()));
     connect(m_download, SIGNAL(downloadAllFileSuccessfully()), this, SIGNAL(downloadAllFileSuccessfully()));
     connect(m_download, SIGNAL(downloadFileFailed(QList<FileStat>*)), this, SIGNAL(downloadFileFailed(QList<FileStat>*)));
@@ -75,8 +78,19 @@ void NewDataSync::setOperateType(SyncOperateType type)
     }
 }
 
-void NewDataSync::start()
+void NewDataSync::start(const QString &caseId, const QString &path)
 {
+    if (caseId.isEmpty() || path.isEmpty())
+    {
+        QMessageBox::warning(NULL,
+                             "Warning",
+                             "Please enter caseId and path",
+                             QMessageBox::Ok,
+                             QMessageBox::Ok);
+
+        return;
+    }
+
     if (m_localList)
     {
         m_localList->clear();
@@ -90,34 +104,42 @@ void NewDataSync::start()
         delete m_remoteList;
         m_remoteList = NULL;
     }
-    QString dir("C:/Users/pangkuanxin/Desktop/abc");
-    m_localList = getLocalFile("20180508", dir, UPLOAD);
-    for (int i = 0; i < m_localList->size(); ++i)
+
+    m_localList = getLocalFile(caseId, path, m_operateType, m_suffixType);
+    if (m_localList)
     {
-        qDebug()<<m_localList->at(i).fileName;
-        qDebug()<<m_localList->at(i).createTime;
-        qDebug()<<m_localList->at(i).updateTime;
-        qDebug()<<m_localList->at(i).fileUrl;
-        qDebug()<<m_localList->at(i).hash;
+        for (int i = 0; i < m_localList->size(); ++i)
+        {
+            qDebug()<<"fileName:"<<m_localList->at(i).fileName;
+            qDebug()<<"createTime:"<<m_localList->at(i).createTime;
+            qDebug()<<"updateTime:"<<m_localList->at(i).updateTime;
+            qDebug()<<"fileUrl:"<<m_localList->at(i).fileUrl;
+            qDebug()<<"hash:"<<m_localList->at(i).hash;
+        }
     }
 
-    QString token = m_request.getToken();
+    //QString token = m_request.getToken();
     //qDebug()<<"token"<<token;
-    m_remoteList = getRemoteFile("20180508");
-    QList<FileStat> *list = m_fileCompare->makeFileCompare(m_operateType, m_localList, m_remoteList);
+    m_remoteList = getRemoteFile(caseId);
+    //QList<FileStat> *list = m_fileCompare->makeFileCompare(m_operateType, m_localList, m_remoteList);
 
-    if (m_operateType == SyncOperateType::UPLOAD)
-    {
-        emit startUpload(list, token);
-    }
-    else if (m_operateType == SyncOperateType::DOWNLOAD)
-    {
-        emit startDownload(list, token);
-    }
+//    if (m_operateType == SyncOperateType::UPLOAD)
+//    {
+//        emit startUpload(list, token);
+//    }
+//    else if (m_operateType == SyncOperateType::DOWNLOAD)
+//    {
+//        emit startDownload(list, token);
+//    }
 }
 
-QList<FileStat> *NewDataSync::getLocalFile(QString caseId, const QString &path, SyncOperateType type)
+QList<FileStat> *NewDataSync::getLocalFile(const QString &caseId, const QString &path, const SyncOperateType &type, const QStringList &suffix)
 {
+    if (type == SyncOperateType::NO)
+    {
+        return NULL;
+    }
+
     QDir dir(path);
     if (!dir.exists())
     {
@@ -145,6 +167,7 @@ QList<FileStat> *NewDataSync::getLocalFile(QString caseId, const QString &path, 
     FileStat fileStatItem;
 
     QDirIterator it(path,
+                    suffix,
                     QDir::NoDotAndDotDot | QDir::NoSymLinks | QDir::Files,
                     QDirIterator::Subdirectories);
     while (it.hasNext())

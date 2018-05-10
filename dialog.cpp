@@ -1,6 +1,7 @@
 #include "dialog.h"
 #include "ui_dialog.h"
 #include <QMessageBox>
+#include <QFileDialog>
 
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
@@ -13,6 +14,10 @@ Dialog::Dialog(QWidget *parent) :
     m_downloadCount = 0;
     m_downloadSuccessfulCount = 0;
 
+    connect(ui->btn_dir, SIGNAL(clicked(bool)), this, SLOT(onBtnDirClicked()));
+    connect(ui->btn_upload, SIGNAL(clicked(bool)), this, SLOT(onBtnUploadClicked()));
+    connect(ui->btn_download, SIGNAL(clicked(bool)), this, SLOT(onBtnDownloadClicked()));
+
     m_newDataSync = new NewDataSync;
     connect(m_newDataSync, SIGNAL(uploadFileSuccessfully()), this, SLOT(onFileUploadSuccessfully()));
     connect(m_newDataSync, SIGNAL(uploadAllFileSuccessfully()), this, SLOT(onAllFileUploadSuccessfully()));
@@ -21,7 +26,6 @@ Dialog::Dialog(QWidget *parent) :
     connect(m_newDataSync, SIGNAL(downloadAllFileSuccessfully()), this, SLOT(onAllFileDownloadSuccessfully()));
     connect(m_newDataSync, SIGNAL(downloadFileFailed(QList<FileStat>*)), this, SLOT(onFileDownloadFailed(QList<FileStat>*)));
     connect(m_newDataSync, SIGNAL(refreshProgressBar()), this, SLOT(onProgressBarRefresh()));
-    m_newDataSync->start();
 }
 
 Dialog::~Dialog()
@@ -108,4 +112,33 @@ void Dialog::onFileDownloadFailed(QList<FileStat> *downloadFailedList)
                          message,
                          QMessageBox::Ok,
                          QMessageBox::Ok);
+}
+
+void Dialog::onBtnUploadClicked()
+{
+    qDebug()<<"upload";
+    QString path = ui->lab_dir->text();
+    QString caseId = ui->txt_caseId->text();
+
+    m_newDataSync->setOperateType(UPLOAD);
+    m_newDataSync->start(caseId, path);
+}
+
+void Dialog::onBtnDownloadClicked()
+{
+    qDebug()<<"download";
+    QString path = ui->lab_dir->text();
+    QString caseId = ui->txt_caseId->text();
+
+    m_newDataSync->setOperateType(DOWNLOAD);
+    m_newDataSync->start(caseId, path);
+}
+
+void Dialog::onBtnDirClicked()
+{
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
+                                                    ".",
+                                                    QFileDialog::ShowDirsOnly
+                                                    | QFileDialog::DontResolveSymlinks);
+    ui->lab_dir->setText(dir);
 }

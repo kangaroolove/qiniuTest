@@ -25,6 +25,9 @@ public slots:
     void onFileDownloadSuccessfully();
     void onAllFileDownloadSuccessfully();
     void onFileDownloadFailed(QList<FileStat> *downloadFailedList);
+    void onBtnUploadClicked();
+    void onBtnDownloadClicked();
+    void onBtnDirClicked();
 private:
     Ui::Dialog *ui;
     NewDataSync *m_newDataSync;
