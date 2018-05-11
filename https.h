@@ -15,6 +15,7 @@ public:
     QUrl getUrl();
     void setSslConfiguration(const QSslConfiguration & config);
     void setRawHeaders(QMap<QString, QString> & headerList);
+    void setRawHeader(const QByteArray &headerName, const QByteArray &headerValue);
     void setRawHeaders(QString& url, QMap<QString, QString> & headerList);
     QList<QNetworkCookie> GetAllCookies();
     QByteArray get();

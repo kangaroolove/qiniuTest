@@ -7,8 +7,9 @@
 #include "FileStat.h"
 
 #define URL "http://172.18.169.111:2080"
-#define GET_TOKEN   "/aligner/client/file/qiNiuToken"
+#define GET_TOKEN   "/aligner/client/qiNiuToken"
 #define GET_REMOTE_FILE_LIST    "/aligner/client/originalModel/"
+#define UPDATE_REMOTE_SQL   "/aligner/client/file"
 
 enum RequestType
 {
@@ -24,6 +25,7 @@ public:
     ~NewRequest();
     QString getToken();
     QList<FileStat>* getRemoteList(const QString &caseId);
+    void updateRemoteSql(QByteArray &data);
 private:
     QUrl initUrl(const QString &cmd);
     QUrl initUrl(const QString &cmd, const QString &caseId);

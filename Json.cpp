@@ -122,12 +122,13 @@ QList<FileStat> *Json::getRemoteList(const QByteArray &reply)
                                     //qDebug()<<"fileUrl:"<<fileStat.fileUrl;
                                 }
                             }
-                            if (object.contains("create_time"))
+                            if (object.contains("update_time"))
                             {
-                                QJsonValue value = object.value("create_time");
+                                QJsonValue value = object.value("update_time");
                                 if (value.isDouble())
                                 {
-                                    fileStat.updateTime = QDateTime::fromString(value.toVariant().toString(), DATE_TIME_FOMAT);
+                                    qDebug()<<value.toDouble();
+                                    fileStat.updateTime = QDateTime::fromTime_t(value.toDouble());
                                 }
                             }
                             if (object.contains("fileTypeKey_id"))
@@ -157,6 +158,27 @@ QList<FileStat> *Json::getRemoteList(const QByteArray &reply)
     }
 
     return NULL;
+}
+
+QByteArray Json::generateJson(QMap<QString, QString> &map)
+{
+    if (map.isEmpty())
+    {
+        qDebug()<<"map is null";
+        return NULL;
+    }
+
+    QJsonObject object;
+    QMap<QString, QString>::iterator it;
+    for(it = map.begin(); it != map.end(); ++it)
+    {
+         object.insert(it.key().toUtf8(), QString(it.value().toUtf8()));
+    }
+
+    QJsonDocument document;
+    document.setObject(object);
+
+    return document.toJson(QJsonDocument::Compact);
 }
 
 

@@ -831,6 +831,9 @@ release\moc_NewUploadThread.cpp: FileStat.h \
 		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qregexp.h \
 		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qstringmatcher.h \
 		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qpair.h \
+		NewRequest.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtNetwork\QNetworkAccessManager \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtNetwork\qnetworkaccessmanager.h \
 		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\QObject \
 		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qobject.h \
 		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qobjectdefs.h \
@@ -842,6 +845,39 @@ release\moc_NewUploadThread.cpp: FileStat.h \
 		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qcontainerfwd.h \
 		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qisenum.h \
 		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qobject_impl.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtNetwork\QSslConfiguration \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtNetwork\qsslconfiguration.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtNetwork\qsslsocket.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtNetwork\qtcpsocket.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtNetwork\qabstractsocket.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qiodevice.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qdebug.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qmap.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qtextstream.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qlocale.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qvariant.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qvector.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qpoint.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qset.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qcontiguouscache.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtNetwork\qsslerror.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtNetwork\qsslcertificate.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qcryptographichash.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qsharedpointer.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qsharedpointer_impl.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtNetwork\qssl.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\QFlags \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtNetwork\QSslPreSharedKeyAuthenticator \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtNetwork\qsslpresharedkeyauthenticator.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\QtGlobal \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\QSharedDataPointer \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\QMetaType \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\QTimer \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qtimer.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qbasictimer.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\QUrl \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qurl.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qurlquery.h \
 		NewUploadThread.h
 	D:\Qt\Qt5.5.1\5.5\msvc2013\bin\moc.exe $(DEFINES) -D_MSC_VER=1800 -D_WIN32 -ID:/Qt/Qt5.5.1/5.5/msvc2013/mkspecs/win32-msvc2013 -IE:/qtworkspace/qiniuTest -ID:/Qt/Qt5.5.1/5.5/msvc2013/include -ID:/Qt/Qt5.5.1/5.5/msvc2013/include/QtWidgets -ID:/Qt/Qt5.5.1/5.5/msvc2013/include/QtGui -ID:/Qt/Qt5.5.1/5.5/msvc2013/include/QtANGLE -ID:/Qt/Qt5.5.1/5.5/msvc2013/include/QtNetwork -ID:/Qt/Qt5.5.1/5.5/msvc2013/include/QtCore NewUploadThread.h -o release\moc_NewUploadThread.cpp
 
@@ -2284,6 +2320,9 @@ release\NewUploadThread.obj: NewUploadThread.cpp NewUploadThread.h \
 		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qregexp.h \
 		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qstringmatcher.h \
 		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qpair.h \
+		NewRequest.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtNetwork\QNetworkAccessManager \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtNetwork\qnetworkaccessmanager.h \
 		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\QObject \
 		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qobject.h \
 		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qobjectdefs.h \
@@ -2295,6 +2334,39 @@ release\NewUploadThread.obj: NewUploadThread.cpp NewUploadThread.h \
 		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qcontainerfwd.h \
 		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qisenum.h \
 		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qobject_impl.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtNetwork\QSslConfiguration \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtNetwork\qsslconfiguration.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtNetwork\qsslsocket.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtNetwork\qtcpsocket.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtNetwork\qabstractsocket.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qiodevice.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qdebug.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qmap.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qtextstream.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qlocale.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qvariant.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qvector.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qpoint.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qset.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qcontiguouscache.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtNetwork\qsslerror.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtNetwork\qsslcertificate.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qcryptographichash.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qsharedpointer.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qsharedpointer_impl.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtNetwork\qssl.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\QFlags \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtNetwork\QSslPreSharedKeyAuthenticator \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtNetwork\qsslpresharedkeyauthenticator.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\QtGlobal \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\QSharedDataPointer \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\QMetaType \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\QTimer \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qtimer.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qbasictimer.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\QUrl \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qurl.h \
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qurlquery.h \
 		qiniu\resumable_io.h \
 		qiniu\http.h \
 		qiniu\base.h \
@@ -2303,17 +2375,7 @@ release\NewUploadThread.obj: NewUploadThread.cpp NewUploadThread.h \
 		qiniu\io.h \
 		qiniu\reader.h \
 		qiniu\rs.h \
-		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\QDebug \
-		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qdebug.h \
-		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qmap.h \
-		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qtextstream.h \
-		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qiodevice.h \
-		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qlocale.h \
-		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qvariant.h \
-		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qvector.h \
-		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qpoint.h \
-		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qset.h \
-		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\qcontiguouscache.h
+		D:\Qt\Qt5.5.1\5.5\msvc2013\include\QtCore\QDebug
 
 release\NewDownloadThread.obj: NewDownloadThread.cpp NewDownloadThread.h \
 		FileStat.h \

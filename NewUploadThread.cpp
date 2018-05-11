@@ -10,6 +10,11 @@ NewUploadThread::NewUploadThread(QObject *parent) : QObject(parent)
 
 }
 
+void NewUploadThread::setCaseId(const QString &caseId)
+{
+    m_caseId = caseId;
+}
+
 void NewUploadThread::onUploadStart(QList<FileStat> *uploadFileList, QString &token)
 {
     if (token.isNull())
@@ -60,6 +65,9 @@ void NewUploadThread::onUploadStart(QList<FileStat> *uploadFileList, QString &to
             if ((strcmp(putRet.key, charFileUrl.data()) == 0 && (strcmp(putRet.hash, hash) == 0)))
             {
                 emit uploadFileSuccessfully();
+                QMap<QString, QString>map = initUpdateMap(m_caseId, uploadFileList->at(i));
+                QByteArray data = m_json.generateJson(map);
+                m_request.updateRemoteSql(data);
             }
         }
 
@@ -77,5 +85,16 @@ void NewUploadThread::onUploadStart(QList<FileStat> *uploadFileList, QString &to
     {
         emit uploadAllFileSuccessfully();
     }
+}
+
+QMap<QString, QString> NewUploadThread::initUpdateMap(const QString &caseId, const FileStat &fileStat)
+{
+    QMap<QString, QString>map;
+    map.insert("caseinfoId", caseId);
+    map.insert("updateTime", QString(fileStat.updateTime.toTime_t()));
+    map.insert("filetypekeyId", QString::number(fileStat.fileType));
+    map.insert("filename", fileStat.fileUrl);
+
+    return map;
 }
 

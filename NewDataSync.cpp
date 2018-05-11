@@ -105,25 +105,25 @@ void NewDataSync::start(const QString &caseId, const QString &path)
         m_remoteList = NULL;
     }
 
-    m_localList = getLocalFile(caseId, path, m_operateType, m_suffixType);
-    if (m_localList)
-    {
-        for (int i = 0; i < m_localList->size(); ++i)
-        {
-            qDebug()<<"fileName:"<<m_localList->at(i).fileName;
-            qDebug()<<"webName:"<<m_localList->at(i).webName;
-            qDebug()<<"filePath:"<<m_localList->at(i).filePath;
-            qDebug()<<"fileType:"<<m_localList->at(i).fileType;
-            qDebug()<<"createTime:"<<m_localList->at(i).createTime;
-            qDebug()<<"updateTime:"<<m_localList->at(i).updateTime;
-            qDebug()<<"fileUrl:"<<m_localList->at(i).fileUrl;
-            qDebug()<<"hash:"<<m_localList->at(i).hash;
-        }
-    }
-    else
-    {
-        return;
-    }
+//    m_localList = getLocalFile(caseId, path, m_operateType, m_suffixType);
+//    if (m_localList)
+//    {
+//        for (int i = 0; i < m_localList->size(); ++i)
+//        {
+//            qDebug()<<"fileName:"<<m_localList->at(i).fileName;
+//            qDebug()<<"webName:"<<m_localList->at(i).webName;
+//            qDebug()<<"filePath:"<<m_localList->at(i).filePath;
+//            qDebug()<<"fileType:"<<m_localList->at(i).fileType;
+//            qDebug()<<"createTime:"<<m_localList->at(i).createTime;
+//            qDebug()<<"updateTime:"<<m_localList->at(i).updateTime;
+//            qDebug()<<"fileUrl:"<<m_localList->at(i).fileUrl;
+//            qDebug()<<"hash:"<<m_localList->at(i).hash;
+//        }
+//    }
+//    else
+//    {
+//        return;
+//    }
 
     qDebug()<<"////////////////////////////////////////////////////////////////////////////////////////////////////////";
     m_remoteList = getRemoteFile(caseId);
@@ -146,28 +146,33 @@ void NewDataSync::start(const QString &caseId, const QString &path)
         return;
     }
 
-    qDebug()<<"**********************************************************************************************************";
-    QList<FileStat> *list = m_fileCompare->makeFileCompare(m_operateType, m_localList, m_remoteList);
-    if (list)
-    {
-        for (int i = 0; i < list->size(); ++i)
-        {
-            qDebug()<<"fileName:"<<list->at(i).fileName;
-            qDebug()<<"webName:"<<list->at(i).webName;
-            qDebug()<<"filePath:"<<list->at(i).filePath;
-            qDebug()<<"fileType:"<<list->at(i).fileType;
-            qDebug()<<"createTime:"<<list->at(i).createTime;
-            qDebug()<<"updateTime:"<<list->at(i).updateTime;
-            qDebug()<<"fileUrl:"<<list->at(i).fileUrl;
-            qDebug()<<"hash:"<<list->at(i).hash;
-        }
-    }
+//    qDebug()<<"**********************************************************************************************************";
+//    QList<FileStat> *list = m_fileCompare->makeFileCompare(m_operateType, m_localList, m_remoteList);
+//    if (list)
+//    {
+//        for (int i = 0; i < list->size(); ++i)
+//        {
+//            qDebug()<<"fileName:"<<list->at(i).fileName;
+//            qDebug()<<"webName:"<<list->at(i).webName;
+//            qDebug()<<"filePath:"<<list->at(i).filePath;
+//            qDebug()<<"fileType:"<<list->at(i).fileType;
+//            qDebug()<<"createTime:"<<list->at(i).createTime;
+//            qDebug()<<"updateTime:"<<list->at(i).updateTime;
+//            qDebug()<<"fileUrl:"<<list->at(i).fileUrl;
+//            qDebug()<<"hash:"<<list->at(i).hash;
+//        }
+//    }
 
 //    if (m_operateType == SyncOperateType::UPLOAD)
 //    {
-    //QString token = m_request.getToken();
-    //qDebug()<<"token"<<token;
-//        emit startUpload(list, token);
+//        QString token = m_request.getToken();
+//        if (token.isEmpty())
+//        {
+//            qDebug()<<"token is null";
+//            return;
+//        }
+//        qDebug()<<"token"<<token;
+//        //emit startUpload(list, token);
 //    }
 //    else if (m_operateType == SyncOperateType::DOWNLOAD)
 //    {

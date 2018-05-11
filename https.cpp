@@ -37,6 +37,11 @@ void Https::setRawHeaders(QMap<QString, QString> & headerList)
     }
 }
 
+void Https::setRawHeader(const QByteArray &headerName, const QByteArray &headerValue)
+{
+    request.setRawHeader(headerName, headerValue);
+}
+
 QList<QNetworkCookie> Https::GetAllCookies()
 {
     QList<QNetworkCookie> tempList = cookieList;

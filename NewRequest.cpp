@@ -61,6 +61,29 @@ QList<FileStat> *NewRequest::getRemoteList(const QString &caseId)
     }
 }
 
+void NewRequest::updateRemoteSql(QByteArray &data)
+{
+    QUrl url = initUrl(UPDATE_REMOTE_SQL);
+    Https http;
+    Json json;
+    http.setUrl(url);
+    http.setRawHeader("Content-Type", "application/json");
+    QByteArray reply = http.post(data);
+    QString message;
+    if (json.analysisJson(reply, message) == true)
+    {
+
+    }
+    else
+    {
+        QMessageBox::warning(NULL,
+                             "Warning",
+                             message,
+                             QMessageBox::Ok,
+                             QMessageBox::Ok);
+    }
+}
+
 QUrl NewRequest::initUrl(const QString &cmd)
 {
     QUrl url = QString("%1%2").arg(URL).arg(cmd);
