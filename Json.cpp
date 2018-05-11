@@ -143,7 +143,7 @@ QList<FileStat> *Json::getRemoteList(const QByteArray &reply)
                                 QJsonValue value = object.value("fileName");
                                 if (value.isString())
                                 {
-                                    fileStat.fileName = value.toString();
+                                    fileStat.webName = value.toString();
                                 }
                             }
                         }

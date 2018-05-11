@@ -57,6 +57,8 @@ private:
     QByteArray getMd5(const QString& fileName);
     QString getUuid();
     FileType getFileType(const QFileInfo &fileInfo);
+    QList<FileStat>* initFileName(QList<FileStat> *list);
+    QString getFileName(const QString &webName, const int &fileType);
 };
 
 #endif // NEWDATASNC_H

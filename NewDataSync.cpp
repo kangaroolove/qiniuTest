@@ -105,12 +105,13 @@ void NewDataSync::start(const QString &caseId, const QString &path)
         m_remoteList = NULL;
     }
 
-    //m_localList = getLocalFile(caseId, path, m_operateType, m_suffixType);
+    m_localList = getLocalFile(caseId, path, m_operateType, m_suffixType);
     if (m_localList)
     {
         for (int i = 0; i < m_localList->size(); ++i)
         {
             qDebug()<<"fileName:"<<m_localList->at(i).fileName;
+            qDebug()<<"webName:"<<m_localList->at(i).webName;
             qDebug()<<"filePath:"<<m_localList->at(i).filePath;
             qDebug()<<"fileType:"<<m_localList->at(i).fileType;
             qDebug()<<"createTime:"<<m_localList->at(i).createTime;
@@ -119,15 +120,19 @@ void NewDataSync::start(const QString &caseId, const QString &path)
             qDebug()<<"hash:"<<m_localList->at(i).hash;
         }
     }
+    else
+    {
+        return;
+    }
 
-    //QString token = m_request.getToken();
-    //qDebug()<<"token"<<token;
+    qDebug()<<"////////////////////////////////////////////////////////////////////////////////////////////////////////";
     m_remoteList = getRemoteFile(caseId);
     if (m_remoteList)
     {
         for (int i = 0; i < m_remoteList->size(); ++i)
         {
             qDebug()<<"fileName:"<<m_remoteList->at(i).fileName;
+            qDebug()<<"webName:"<<m_remoteList->at(i).webName;
             qDebug()<<"filePath:"<<m_remoteList->at(i).filePath;
             qDebug()<<"fileType:"<<m_remoteList->at(i).fileType;
             qDebug()<<"createTime:"<<m_remoteList->at(i).createTime;
@@ -136,10 +141,32 @@ void NewDataSync::start(const QString &caseId, const QString &path)
             qDebug()<<"hash:"<<m_remoteList->at(i).hash;
         }
     }
-    //QList<FileStat> *list = m_fileCompare->makeFileCompare(m_operateType, m_localList, m_remoteList);
+    else
+    {
+        return;
+    }
+
+    qDebug()<<"**********************************************************************************************************";
+    QList<FileStat> *list = m_fileCompare->makeFileCompare(m_operateType, m_localList, m_remoteList);
+    if (list)
+    {
+        for (int i = 0; i < list->size(); ++i)
+        {
+            qDebug()<<"fileName:"<<list->at(i).fileName;
+            qDebug()<<"webName:"<<list->at(i).webName;
+            qDebug()<<"filePath:"<<list->at(i).filePath;
+            qDebug()<<"fileType:"<<list->at(i).fileType;
+            qDebug()<<"createTime:"<<list->at(i).createTime;
+            qDebug()<<"updateTime:"<<list->at(i).updateTime;
+            qDebug()<<"fileUrl:"<<list->at(i).fileUrl;
+            qDebug()<<"hash:"<<list->at(i).hash;
+        }
+    }
 
 //    if (m_operateType == SyncOperateType::UPLOAD)
 //    {
+    //QString token = m_request.getToken();
+    //qDebug()<<"token"<<token;
 //        emit startUpload(list, token);
 //    }
 //    else if (m_operateType == SyncOperateType::DOWNLOAD)
@@ -206,7 +233,9 @@ QList<FileStat> *NewDataSync::getLocalFile(const QString &caseId, const QString 
 
 QList<FileStat> *NewDataSync::getRemoteFile(const QString &caseId)
 {
-    return m_request.getRemoteList(caseId);
+    QList<FileStat> *list = m_request.getRemoteList(caseId);
+    initFileName(list);
+    return list;
 }
 
 QString NewDataSync::getFileUrl(const QString &fileName, const QString &caseId, const QString &dir)
@@ -289,11 +318,11 @@ FileType NewDataSync::getFileType(const QFileInfo &fileInfo)
         }
         else if (fileName == "sx0.stl")
         {
-            return FileType::WEB_LOW_STL;
+            return FileType::COMPRESSED_LOWER_STL;
         }
         else if (fileName == "x0.stl")
         {
-            return FileType::COMPRESSED_LOWER_STL;
+            return FileType::WEB_LOW_STL;
         }
         else
         {
@@ -328,7 +357,7 @@ FileType NewDataSync::getFileType(const QFileInfo &fileInfo)
         }
         else if (fileName == "CduEnvironmentStateSave.dat")
         {
-            return FileType::ENVIRONMENT_STATE_SAVE;
+            return FileType::CDU_ENVIRONMENT_STATE_SAVE;
         }
         else
         {
@@ -353,6 +382,91 @@ FileType NewDataSync::getFileType(const QFileInfo &fileInfo)
     else
     {
         return FileType::OTHER_FILE;
+    }
+}
+
+QList<FileStat> *NewDataSync::initFileName(QList<FileStat> *list)
+{
+    if (list)
+    {
+        for (int i = 0; i < list->size(); ++i)
+        {
+            (*list)[i].fileName = getFileName(list->at(i).webName, list->at(i).fileType);
+        }
+    }
+
+    return list;
+}
+
+QString NewDataSync::getFileName(const QString &webName, const int &fileType)
+{
+    switch (fileType)
+    {
+        case FileType::WEB_UP_STL:
+        {
+            return "s0.stl";
+        }
+        case FileType::WEB_LOW_STL:
+        {
+            return "x0.stl";
+        }
+        case FileType::COMPRESSED_UPPER_STL:
+        {
+            return "ss0.stl";
+        }
+        case FileType::COMPRESSED_LOWER_STL:
+        {
+            return "sx0.stl";
+        }
+        case FileType::ANGLE_CAL_BOW_DATA:
+        {
+            return "AngleCalBowData.dat";
+        }
+        case FileType::CDU_TEETH_WIDTH_DATA:
+        {
+            return "CduTeethWidthData.dat";
+        }
+        case FileType::CDU_CREATE_TEETH_BASE:
+        {
+            return "CduCreateTeethBase.dat";
+        }
+        case FileType::DENTAL_ARCH_DATA:
+        {
+            return "DentalArchData.dat";
+        }
+        case FileType::ENVIRONMENT_STATE_BEFORE_CLOSE:
+        {
+            return "EnvironmentStateBeforeClose.dat";
+        }
+        case FileType::OCCLUSAL_PLANE_DATA:
+        {
+            return "OcclusalPlaneData.dat";
+        }
+        case FileType::CDU_ENVIRONMENT_STATE_SAVE:
+        {
+            return "CduEnvironmentStateSave.dat";
+        }
+        case FileType::TOOTH_RTD:
+        case FileType::TOOTH_RTTSD:
+        case FileType::TOOTH_SRTD:
+        case FileType::UPPER_RTP:
+        case FileType::LOWER_RTP:
+        {
+            QStringList list = webName.split("-");
+            if (list.size() > 0)
+            {
+                QFileInfo fileInfo(list.first());
+                return fileInfo.fileName();
+            }
+            else
+            {
+                return "Undefine";
+            }
+        }
+        default:
+        {
+            return "Undefine";
+        }
     }
 }
 

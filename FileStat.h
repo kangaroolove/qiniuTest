@@ -4,6 +4,8 @@
 #include <QString>
 #include <QDateTime>
 
+#define DATE_TIME_FOMAT   "yyyy-MM-dd,hh-mm-ss"
+
 enum FileType
 {
     OTHER_FILE = 0,
@@ -39,18 +41,23 @@ enum FileType
     OCCLUSAL_PLANE_DATA,
     LOWER_RTP,
     UPPER_RTP,
-    ENVIRONMENT_STATE_SAVE,
+    CDU_ENVIRONMENT_STATE_SAVE,
 };
 
 class FileStat
 {
 public:
     FileStat();
+    // 不带路径的文件名
     QString fileName;
+    // web端的命名方式
+    QString webName;
+    // 文件路径
     QString filePath;
     QDateTime createTime;
     QDateTime updateTime;
     QByteArray hash;
+    // 对于上传是带路径、fileType、uuid,对于下载就是下载的url
     QString fileUrl;
     int fileType;
     int errorCode;

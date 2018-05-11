@@ -4,8 +4,6 @@
 #include "FileStat.h"
 #include<QByteArray>
 
-#define DATE_TIME_FOMAT   "yyyy-MM-dd,hh-mm-ss"
-
 class Json
 {
 public:
