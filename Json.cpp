@@ -127,8 +127,7 @@ QList<FileStat> *Json::getRemoteList(const QByteArray &reply)
                                 QJsonValue value = object.value("update_time");
                                 if (value.isDouble())
                                 {
-                                    qDebug()<<value.toDouble();
-                                    fileStat.updateTime = QDateTime::fromTime_t(value.toDouble());
+                                    fileStat.updateTime = QDateTime::fromMSecsSinceEpoch(value.toVariant().toLongLong());
                                 }
                             }
                             if (object.contains("fileTypeKey_id"))

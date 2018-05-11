@@ -26,6 +26,7 @@ Dialog::Dialog(QWidget *parent) :
     connect(m_newDataSync, SIGNAL(downloadAllFileSuccessfully()), this, SLOT(onAllFileDownloadSuccessfully()));
     connect(m_newDataSync, SIGNAL(downloadFileFailed(QList<FileStat>*)), this, SLOT(onFileDownloadFailed(QList<FileStat>*)));
     connect(m_newDataSync, SIGNAL(refreshProgressBar()), this, SLOT(onProgressBarRefresh()));
+    connect(m_newDataSync, SIGNAL(setProgressBarMaxValue(int)), this, SLOT(onProgressBarMaxValueSet(int)));
 
     ui->lab_dir->setText("C:/Users/pangkuanxin/Desktop/FT1JN3PC");
     ui->txt_caseId->setText("2018050016");
@@ -144,4 +145,10 @@ void Dialog::onBtnDirClicked()
                                                     QFileDialog::ShowDirsOnly
                                                     | QFileDialog::DontResolveSymlinks);
     ui->lab_dir->setText(dir);
+}
+
+void Dialog::onProgressBarMaxValueSet(int value)
+{
+    ui->progressBar->setValue(0);
+    ui->progressBar->setMaximum(value);
 }

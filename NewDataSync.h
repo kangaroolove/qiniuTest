@@ -40,6 +40,7 @@ signals:
     void downloadAllFileSuccessfully();
     void downloadFileFailed(QList<FileStat> *uploadFailedList);
     void refreshProgressBar();
+    void setProgressBarMaxValue(int);
 private:
     SyncOperateType m_operateType;
     FileCompare *m_fileCompare;
