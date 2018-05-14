@@ -28,7 +28,7 @@ public slots:
     void onBtnUploadClicked();
     void onBtnDownloadClicked();
     void onBtnDirClicked();
-    void onProgressBarMaxValueSet(int value);
+    void onProgressBarMaxValueSet(int value, SyncOperateType type);
 private:
     Ui::Dialog *ui;
     NewDataSync *m_newDataSync;

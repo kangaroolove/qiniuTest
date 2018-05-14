@@ -20,7 +20,7 @@ NewDataSync::NewDataSync()
 
     m_upload = new NewUploadThread;
     m_upload->moveToThread(&m_uploadThread);
-    connect(this, SIGNAL(startUpload(QList<FileStat>*,QString&)), m_upload, SLOT(onUploadStart(QList<FileStat>*,QString&)));
+    connect(this, SIGNAL(startUpload(QList<FileStat>*,QString)), m_upload, SLOT(onUploadStart(QList<FileStat>*,QString)));
     connect(m_upload, SIGNAL(uploadFileSuccessfully()), this, SIGNAL(uploadFileSuccessfully()));
     connect(m_upload, SIGNAL(uploadAllFileSuccessfully()), this, SIGNAL(uploadAllFileSuccessfully()));
     connect(m_upload, SIGNAL(uploadFileFailed(QList<FileStat>*)), this, SIGNAL(uploadFileFailed(QList<FileStat>*)));
@@ -105,25 +105,25 @@ void NewDataSync::start(const QString &caseId, const QString &path)
         m_remoteList = NULL;
     }
 
-//    m_localList = getLocalFile(caseId, path, m_operateType, m_suffixType);
-//    if (m_localList)
-//    {
-//        for (int i = 0; i < m_localList->size(); ++i)
-//        {
-//            qDebug()<<"fileName:"<<m_localList->at(i).fileName;
-//            qDebug()<<"webName:"<<m_localList->at(i).webName;
-//            qDebug()<<"filePath:"<<m_localList->at(i).filePath;
-//            qDebug()<<"fileType:"<<m_localList->at(i).fileType;
-//            qDebug()<<"createTime:"<<m_localList->at(i).createTime;
-//            qDebug()<<"updateTime:"<<m_localList->at(i).updateTime;
-//            qDebug()<<"fileUrl:"<<m_localList->at(i).fileUrl;
-//            qDebug()<<"hash:"<<m_localList->at(i).hash;
-//        }
-//    }
-//    else
-//    {
-//        return;
-//    }
+    m_localList = getLocalFile(caseId, path, m_operateType, m_suffixType);
+    if (m_localList)
+    {
+        for (int i = 0; i < m_localList->size(); ++i)
+        {
+            qDebug()<<"fileName:"<<m_localList->at(i).fileName;
+            qDebug()<<"webName:"<<m_localList->at(i).webName;
+            qDebug()<<"filePath:"<<m_localList->at(i).filePath;
+            qDebug()<<"fileType:"<<m_localList->at(i).fileType;
+            qDebug()<<"createTime:"<<m_localList->at(i).createTime;
+            qDebug()<<"updateTime:"<<m_localList->at(i).updateTime;
+            qDebug()<<"fileUrl:"<<m_localList->at(i).fileUrl;
+            qDebug()<<"hash:"<<m_localList->at(i).hash;
+        }
+    }
+    else
+    {
+        return;
+    }
 
     qDebug()<<"////////////////////////////////////////////////////////////////////////////////////////////////////////";
     m_remoteList = getRemoteFile(caseId);
@@ -150,7 +150,7 @@ void NewDataSync::start(const QString &caseId, const QString &path)
     QList<FileStat> *list = m_fileCompare->makeFileCompare(m_operateType, m_localList, m_remoteList);
     if (list)
     {
-        emit setProgressBarMaxValue(list->size());
+        emit setProgressBarMaxValue(list->size(), m_operateType);
         for (int i = 0; i < list->size(); ++i)
         {
             qDebug()<<"fileName:"<<list->at(i).fileName;
@@ -173,6 +173,7 @@ void NewDataSync::start(const QString &caseId, const QString &path)
             return;
         }
         qDebug()<<"token"<<token;
+        m_upload->setCaseId(caseId);
         emit startUpload(list, token);
     }
 //    else if (m_operateType == SyncOperateType::DOWNLOAD)
@@ -455,8 +456,6 @@ QString NewDataSync::getFileName(const QString &webName, const int &fileType)
         case FileType::TOOTH_RTD:
         case FileType::TOOTH_RTTSD:
         case FileType::TOOTH_SRTD:
-        case FileType::UPPER_RTP:
-        case FileType::LOWER_RTP:
         {
             QStringList list = webName.split("-");
             if (list.size() > 0)
@@ -467,6 +466,16 @@ QString NewDataSync::getFileName(const QString &webName, const int &fileType)
             else
             {
                 return "Undefine";
+            }
+        }
+        case FileType::UPPER_RTP:
+        case FileType::LOWER_RTP:
+        {
+            QStringList list = webName.split("-");
+            if (list.size() > 1)
+            {
+                QFileInfo fileInfo(list.first() + list[1]);
+                return fileInfo.fileName();
             }
         }
         default:

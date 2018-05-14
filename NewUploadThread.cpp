@@ -7,7 +7,8 @@
 
 NewUploadThread::NewUploadThread(QObject *parent) : QObject(parent)
 {
-
+    m_uploadFailedList = NULL;
+    Qiniu_Global_Init(-1);
 }
 
 void NewUploadThread::setCaseId(const QString &caseId)
@@ -15,7 +16,7 @@ void NewUploadThread::setCaseId(const QString &caseId)
     m_caseId = caseId;
 }
 
-void NewUploadThread::onUploadStart(QList<FileStat> *uploadFileList, QString &token)
+void NewUploadThread::onUploadStart(QList<FileStat> *uploadFileList, QString token)
 {
     if (token.isNull())
     {
@@ -23,9 +24,13 @@ void NewUploadThread::onUploadStart(QList<FileStat> *uploadFileList, QString &to
         return;
     }
 
-    m_uploadFailedList->clear();
-    delete m_uploadFailedList;
-    m_uploadFailedList = NULL;
+    if (m_uploadFailedList)
+    {
+        m_uploadFailedList->clear();
+        delete m_uploadFailedList;
+        m_uploadFailedList = NULL;
+    }
+
     m_uploadFailedList = new QList<FileStat>;
 
     QByteArray charFileUrl;
@@ -40,11 +45,13 @@ void NewUploadThread::onUploadStart(QList<FileStat> *uploadFileList, QString &to
         Qiniu_Rio_PutExtra putExtra;
 
         charFileUrl = uploadFileList->at(i).fileUrl.toLatin1();
-        charLocalFile = uploadFileList->at(i).fileName.toLatin1();
+        charLocalFile = uploadFileList->at(i).filePath.toLatin1();
 
         char *key = charFileUrl.data();
         char *localFile = charLocalFile.data();
-        const char *hash = uploadFileList->at(i).hash.data();
+
+        qDebug()<<"key:"<<key;
+        qDebug()<<"localFile:"<<localFile;
 
         Qiniu_Zero(putExtra);
 
@@ -54,26 +61,26 @@ void NewUploadThread::onUploadStart(QList<FileStat> *uploadFileList, QString &to
         Qiniu_Error error = Qiniu_Rio_PutFile(&client, &putRet, uptoken, key, localFile, &putExtra);
         if (error.code != 200)
         {
-            qDebug()<<error.code;
+            qDebug()<<"error:"<<error.code;
+            qDebug()<<"message:"<<error.message;
             (*uploadFileList)[i].errorCode = error.code;
             m_uploadFailedList->push_back(uploadFileList->at(i));
         }
         else
         {
             qDebug()<<QString("key: %1").arg(putRet.key);
-            qDebug()<<QString("hash: %1").arg(putRet.hash);
-            if ((strcmp(putRet.key, charFileUrl.data()) == 0 && (strcmp(putRet.hash, hash) == 0)))
+            //qDebug()<<QString("return hash: %1").arg(putRet.hash);
+            if (strcmp(putRet.key, charFileUrl.data()) == 0)
             {
+                qDebug()<<"equal";
                 emit uploadFileSuccessfully();
-                QMap<QString, QString>map = initUpdateMap(m_caseId, uploadFileList->at(i));
-                QByteArray data = m_json.generateJson(map);
+                QByteArray data = m_json.generateJson(m_caseId, uploadFileList->at(i));
                 m_request.updateRemoteSql(data);
             }
         }
 
         emit refreshProgressBar();
 
-        Qiniu_Free(uptoken);
         Qiniu_Client_Cleanup(&client);
     }
 
@@ -91,7 +98,7 @@ QMap<QString, QString> NewUploadThread::initUpdateMap(const QString &caseId, con
 {
     QMap<QString, QString>map;
     map.insert("caseinfoId", caseId);
-    map.insert("updateTime", QString(fileStat.updateTime.toTime_t()));
+    map.insert("updateTime", QString::number(fileStat.updateTime.toMSecsSinceEpoch()));
     map.insert("filetypekeyId", QString::number(fileStat.fileType));
     map.insert("filename", fileStat.fileUrl);
 

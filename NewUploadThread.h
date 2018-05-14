@@ -18,7 +18,7 @@ signals:
     void uploadFileFailed(QList<FileStat> *uploadFailedList);
     void refreshProgressBar();
 public slots:
-    void onUploadStart(QList<FileStat> *uploadFileList, QString &token);
+    void onUploadStart(QList<FileStat> *uploadFileList, QString token);
 private:
     QString m_caseId;
     QList<FileStat> *m_uploadFailedList;

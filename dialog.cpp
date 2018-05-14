@@ -26,9 +26,9 @@ Dialog::Dialog(QWidget *parent) :
     connect(m_newDataSync, SIGNAL(downloadAllFileSuccessfully()), this, SLOT(onAllFileDownloadSuccessfully()));
     connect(m_newDataSync, SIGNAL(downloadFileFailed(QList<FileStat>*)), this, SLOT(onFileDownloadFailed(QList<FileStat>*)));
     connect(m_newDataSync, SIGNAL(refreshProgressBar()), this, SLOT(onProgressBarRefresh()));
-    connect(m_newDataSync, SIGNAL(setProgressBarMaxValue(int)), this, SLOT(onProgressBarMaxValueSet(int)));
+    connect(m_newDataSync, SIGNAL(setProgressBarMaxValue(int, SyncOperateType)), this, SLOT(onProgressBarMaxValueSet(int, SyncOperateType)));
 
-    ui->lab_dir->setText("C:/Users/pangkuanxin/Desktop/FT1JN3PC");
+    ui->lab_dir->setText("C:/Users/pangkuanxin/Desktop/abc");
     ui->txt_caseId->setText("2018050016");
 }
 
@@ -124,6 +124,8 @@ void Dialog::onBtnUploadClicked()
     QString path = ui->lab_dir->text();
     QString caseId = ui->txt_caseId->text();
 
+    ui->progressBar->setValue(0);
+
     m_newDataSync->setOperateType(UPLOAD);
     m_newDataSync->start(caseId, path);
 }
@@ -133,6 +135,8 @@ void Dialog::onBtnDownloadClicked()
     qDebug()<<"download";
     QString path = ui->lab_dir->text();
     QString caseId = ui->txt_caseId->text();
+
+    ui->progressBar->setValue(0);
 
     m_newDataSync->setOperateType(DOWNLOAD);
     m_newDataSync->start(caseId, path);
@@ -147,8 +151,37 @@ void Dialog::onBtnDirClicked()
     ui->lab_dir->setText(dir);
 }
 
-void Dialog::onProgressBarMaxValueSet(int value)
+void Dialog::onProgressBarMaxValueSet(int value, SyncOperateType type)
 {
-    ui->progressBar->setValue(0);
-    ui->progressBar->setMaximum(value);
+    if (value == 0)
+    {
+        QString message;
+        if (type == SyncOperateType::UPLOAD)
+        {
+            message.append("Latest, do not need to upload");
+        }
+        else if (type == SyncOperateType::DOWNLOAD)
+        {
+            message.append("Latest, do not need to download");
+        }
+
+        QMessageBox::information(this,
+                                 "information",
+                                 message,
+                                 QMessageBox::Ok,
+                                 QMessageBox::Ok);
+    }
+    else
+    {
+        if (type == SyncOperateType::UPLOAD)
+        {
+            m_uploadCount = value;
+        }
+        else if (type == SyncOperateType::DOWNLOAD)
+        {
+            m_downloadCount = value;
+        }
+        ui->progressBar->setValue(0);
+        ui->progressBar->setMaximum(value);
+    }
 }

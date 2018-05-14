@@ -20,8 +20,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_NewUploadThread_t {
-    QByteArrayData data[12];
-    char stringdata0[180];
+    QByteArrayData data[11];
+    char stringdata0[171];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -40,15 +40,14 @@ QT_MOC_LITERAL(6, 100, 16), // "uploadFailedList"
 QT_MOC_LITERAL(7, 117, 18), // "refreshProgressBar"
 QT_MOC_LITERAL(8, 136, 13), // "onUploadStart"
 QT_MOC_LITERAL(9, 150, 14), // "uploadFileList"
-QT_MOC_LITERAL(10, 165, 8), // "QString&"
-QT_MOC_LITERAL(11, 174, 5) // "token"
+QT_MOC_LITERAL(10, 165, 5) // "token"
 
     },
     "NewUploadThread\0uploadFileSuccessfully\0"
     "\0uploadAllFileSuccessfully\0uploadFileFailed\0"
     "QList<FileStat>*\0uploadFailedList\0"
     "refreshProgressBar\0onUploadStart\0"
-    "uploadFileList\0QString&\0token"
+    "uploadFileList\0token"
 };
 #undef QT_MOC_LITERAL
 
@@ -81,7 +80,7 @@ static const uint qt_meta_data_NewUploadThread[] = {
     QMetaType::Void,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 5, 0x80000000 | 10,    9,   11,
+    QMetaType::Void, 0x80000000 | 5, QMetaType::QString,    9,   10,
 
        0        // eod
 };

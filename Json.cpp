@@ -159,23 +159,18 @@ QList<FileStat> *Json::getRemoteList(const QByteArray &reply)
     return NULL;
 }
 
-QByteArray Json::generateJson(QMap<QString, QString> &map)
+QByteArray Json::generateJson(const QString &caseId, const FileStat &FileStat)
 {
-    if (map.isEmpty())
-    {
-        qDebug()<<"map is null";
-        return NULL;
-    }
-
     QJsonObject object;
-    QMap<QString, QString>::iterator it;
-    for(it = map.begin(); it != map.end(); ++it)
-    {
-         object.insert(it.key().toUtf8(), QString(it.value().toUtf8()));
-    }
+    object.insert("caseinfoId", caseId);
+    object.insert("updateTime", FileStat.updateTime.toMSecsSinceEpoch());
+    object.insert("filetypekeyId", FileStat.fileType);
+    object.insert("filename", FileStat.fileUrl);
 
     QJsonDocument document;
     document.setObject(object);
+
+    qDebug()<<object;
 
     return document.toJson(QJsonDocument::Compact);
 }

@@ -29,7 +29,7 @@ public:
     void setOperateType(SyncOperateType type);
     void start(const QString &caseId, const QString &path);
 signals:
-    void startUpload(QList<FileStat> *uploadFileList, QString &token);
+    void startUpload(QList<FileStat> *uploadFileList, QString token);
     void startDownload(QList<FileStat> *downloadFileList, QString &token);
 
     void uploadFileSuccessfully();
@@ -40,7 +40,7 @@ signals:
     void downloadAllFileSuccessfully();
     void downloadFileFailed(QList<FileStat> *uploadFailedList);
     void refreshProgressBar();
-    void setProgressBarMaxValue(int);
+    void setProgressBarMaxValue(int, SyncOperateType type);
 private:
     SyncOperateType m_operateType;
     FileCompare *m_fileCompare;

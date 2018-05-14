@@ -12,7 +12,7 @@ public:
     bool analysisJson(const QByteArray& reply, QString& message);
     QString getToken(const QByteArray &reply);
     QList<FileStat>* getRemoteList(const QByteArray &reply);
-    QByteArray generateJson(QMap<QString, QString> &map);
+    QByteArray generateJson(const QString &caseId, const FileStat &FileStat);
 };
 
 #endif // JSON_H
