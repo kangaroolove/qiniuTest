@@ -28,7 +28,7 @@ Dialog::Dialog(QWidget *parent) :
     connect(m_newDataSync, SIGNAL(refreshProgressBar()), this, SLOT(onProgressBarRefresh()));
     connect(m_newDataSync, SIGNAL(setProgressBarMaxValue(int, SyncOperateType)), this, SLOT(onProgressBarMaxValueSet(int, SyncOperateType)));
 
-    ui->lab_dir->setText("C:/Users/pangkuanxin/Desktop/abc");
+    ui->lab_dir->setText("C:/Users/pangkuanxin/Desktop/1");
     ui->txt_caseId->setText("2018050016");
 }
 

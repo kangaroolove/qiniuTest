@@ -84,6 +84,40 @@ void NewRequest::updateRemoteSql(QByteArray &data)
     }
 }
 
+bool NewRequest::downloadFile(const QString &url, const QString &filePath)
+{
+    QFileInfo fileInfo(filePath);
+    QDir dir(fileInfo.absolutePath());
+    if (!dir.exists())
+    {
+        dir.mkpath(dir.path());
+    }
+
+    QFile file(filePath + TEMP_FILE_SUFFIX);
+    if (!file.open(QIODevice::WriteOnly))
+    {
+        qDebug()<<"file open failed";
+        return false;
+    }
+    QString newUrl("http://");
+    newUrl.append(url);
+    Https http;
+    http.setUrl(QUrl(newUrl));
+    qDebug()<<newUrl;
+    file.write(http.get());
+    file.flush();
+    file.close();
+
+    if (file.size() > 0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 QUrl NewRequest::initUrl(const QString &cmd)
 {
     QUrl url = QString("%1%2").arg(URL).arg(cmd);

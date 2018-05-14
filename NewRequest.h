@@ -6,6 +6,8 @@
 #include <QUrl>
 #include "FileStat.h"
 
+#define TEMP_FILE_SUFFIX    "temp"
+
 #define URL "http://172.18.169.111:3080"
 #define GET_TOKEN   "/aligner/client/qiNiuToken"
 #define GET_REMOTE_FILE_LIST    "/aligner/client/originalModel/"
@@ -26,6 +28,7 @@ public:
     QString getToken();
     QList<FileStat>* getRemoteList(const QString &caseId);
     void updateRemoteSql(QByteArray &data);
+    bool downloadFile(const QString &url, const QString &filePath);
 private:
     QUrl initUrl(const QString &cmd);
     QUrl initUrl(const QString &cmd, const QString &caseId);

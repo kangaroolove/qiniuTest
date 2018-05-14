@@ -90,7 +90,7 @@ void NewUploadThread::onUploadStart(QList<FileStat> *uploadFileList, QString tok
     }
     else
     {
-        emit uploadAllFileSuccessfully();
+        //emit uploadAllFileSuccessfully();
     }
 }
 

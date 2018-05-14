@@ -2,6 +2,7 @@
 #define DOWNLOADTASK_H
 
 #include "FileStat.h"
+#include "NewRequest.h"
 #include <QObject>
 #include <QRunnable>
 
@@ -17,6 +18,7 @@ public slots:
 
 private:
     FileStat m_fileStat;
+    NewRequest m_request;
 };
 
 #endif // DOWNLOADTASK_H

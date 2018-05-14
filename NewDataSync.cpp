@@ -29,7 +29,7 @@ NewDataSync::NewDataSync()
 
     m_download = new NewDownloadThread;
     m_download->moveToThread(&m_downloadThread);
-    connect(this, SIGNAL(startDownload(QList<FileStat>*,QString&)), m_download, SLOT(onDownloadStart(QList<FileStat>*)));
+    connect(this, SIGNAL(startDownload(QList<FileStat>*)), m_download, SLOT(onDownloadStart(QList<FileStat>*)));
     connect(m_download, SIGNAL(downloadFileSuccessfully()), this, SIGNAL(downloadFileSuccessfully()));
     connect(m_download, SIGNAL(downloadAllFileSuccessfully()), this, SIGNAL(downloadAllFileSuccessfully()));
     connect(m_download, SIGNAL(downloadFileFailed(QList<FileStat>*)), this, SIGNAL(downloadFileFailed(QList<FileStat>*)));
@@ -126,7 +126,7 @@ void NewDataSync::start(const QString &caseId, const QString &path)
     }
 
     qDebug()<<"////////////////////////////////////////////////////////////////////////////////////////////////////////";
-    m_remoteList = getRemoteFile(caseId);
+    m_remoteList = getRemoteFile(caseId, path);
     if (m_remoteList)
     {
         for (int i = 0; i < m_remoteList->size(); ++i)
@@ -180,10 +180,10 @@ void NewDataSync::start(const QString &caseId, const QString &path)
         m_upload->setCaseId(caseId);
         emit startUpload(list, token);
     }
-//    else if (m_operateType == SyncOperateType::DOWNLOAD)
-//    {
-//        emit startDownload(list, token);
-//    }
+    else if (m_operateType == SyncOperateType::DOWNLOAD)
+    {
+        emit startDownload(list);
+    }
 }
 
 QList<FileStat> *NewDataSync::getLocalFile(const QString &caseId, const QString &path, const SyncOperateType &type, const QStringList &suffix)
@@ -242,11 +242,87 @@ QList<FileStat> *NewDataSync::getLocalFile(const QString &caseId, const QString 
     return localList;
 }
 
-QList<FileStat> *NewDataSync::getRemoteFile(const QString &caseId)
+QList<FileStat> *NewDataSync::getRemoteFile(const QString &caseId, const QString &path)
 {
     QList<FileStat> *list = m_request.getRemoteList(caseId);
-    initFileName(list);
+    initFile(list, path, caseId);
     return list;
+}
+
+QString NewDataSync::getFilePath(const QString &webName, const int &fileType, const QString &path, const QString &caseId)
+{
+    switch (fileType)
+    {
+        case BASE_DATA:
+        case MEASURE_DATA:
+        case WEB_UP_STL:
+        {
+            QString filePath = path;
+            filePath.append("/");
+            filePath.append(caseId);
+            filePath.append("/s0.stl");
+            return filePath;
+        }
+        case WEB_LOW_STL:
+        {
+            QString filePath = path;
+            filePath.append("/");
+            filePath.append(caseId);
+            filePath.append("/x0.stl");
+            return filePath;
+        }
+        case WEB_ATTACHMENT_FIRST_FILE:
+        case WEB_ATTACHMENT_SECOND_FILE:
+        case WEB_ATTACHMENT_THIRD_FILE:
+        case PDF:
+        case FACE_FRONTAL:
+        case FACE_FRONTAL_SMILE:
+        case FACE_RIGHT_45_DEGREES:
+        case FACE_RIGHT_90_DEGREES:
+        case MOUTH_FRONTAL:
+        case MOUTH_UP:
+        case MOUTH_DOWN:
+        case MOUTH_LEFT:
+        case MOUTH_RIGHT:
+        case X_RAY_FRONTAL:
+        case X_RAY_PROFILE:
+        case TOOTH_RTD:
+        case TOOTH_RTTSD:
+        case TOOTH_SRTD:
+        case COMPRESSED_UPPER_STL:
+        case COMPRESSED_LOWER_STL:
+        case ANGLE_CAL_BOW_DATA:
+        case CDU_TEETH_WIDTH_DATA:
+        case CDU_CREATE_TEETH_BASE:
+        case DENTAL_ARCH_DATA:
+        case ENVIRONMENT_STATE_BEFORE_CLOSE:
+        case OCCLUSAL_PLANE_DATA:
+        case CDU_ENVIRONMENT_STATE_SAVE:
+        {
+            QString filePath = path;
+            QStringList list = webName.split("-");
+            if (list.size() > 0)
+            {
+                filePath.append(list.first());
+                return filePath;
+            }
+        }
+        case UPPER_RTP:
+        case LOWER_RTP:
+        {
+            QString filePath = path;
+            QStringList list = webName.split("-");
+            if (list.size() > 1)
+            {
+                filePath.append(list.first() + "-" + list[1]);
+                return filePath;
+            }
+        }
+        default:
+        {
+            return QString::null;
+        }
+    }
 }
 
 QString NewDataSync::getFileUrl(const QString &fileName, const QString &caseId, const QString &dir)
@@ -396,13 +472,14 @@ FileType NewDataSync::getFileType(const QFileInfo &fileInfo)
     }
 }
 
-QList<FileStat> *NewDataSync::initFileName(QList<FileStat> *list)
+QList<FileStat> *NewDataSync::initFile(QList<FileStat> *list, const QString &path, const QString &caseId)
 {
     if (list)
     {
         for (int i = 0; i < list->size(); ++i)
         {
             (*list)[i].fileName = getFileName(list->at(i).webName, list->at(i).fileType);
+            (*list)[i].filePath = getFilePath(list->at(i).webName, list->at(i).fileType, path, caseId);
         }
     }
 

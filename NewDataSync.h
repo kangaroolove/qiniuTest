@@ -30,7 +30,7 @@ public:
     void start(const QString &caseId, const QString &path);
 signals:
     void startUpload(QList<FileStat> *uploadFileList, QString token);
-    void startDownload(QList<FileStat> *downloadFileList, QString &token);
+    void startDownload(QList<FileStat> *downloadFileList);
 
     void uploadFileSuccessfully();
     void uploadAllFileSuccessfully();
@@ -53,12 +53,13 @@ private:
     NewDownloadThread *m_download;
     QStringList m_suffixType;
     QList<FileStat>* getLocalFile(const QString &caseId, const QString& path, const SyncOperateType &type, const QStringList &suffix);
-    QList<FileStat>* getRemoteFile(const QString &caseId);
+    QList<FileStat>* getRemoteFile(const QString &caseId, const QString &path);
+    QString getFilePath(const QString &webName, const int &fileType, const QString &path, const QString &caseId);
     QString getFileUrl(const QString &fileName, const QString& caseId, const QString &dir);
     QByteArray getMd5(const QString& fileName);
     QString getUuid();
     FileType getFileType(const QFileInfo &fileInfo);
-    QList<FileStat>* initFileName(QList<FileStat> *list);
+    QList<FileStat>* initFile(QList<FileStat> *list, const QString &path, const QString &caseId);
     QString getFileName(const QString &webName, const int &fileType);
 };
 
