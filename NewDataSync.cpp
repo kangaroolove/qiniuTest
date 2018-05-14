@@ -151,6 +151,10 @@ void NewDataSync::start(const QString &caseId, const QString &path)
     if (list)
     {
         emit setProgressBarMaxValue(list->size(), m_operateType);
+        if (list->size() == 0)
+        {
+            return;
+        }
         for (int i = 0; i < list->size(); ++i)
         {
             qDebug()<<"fileName:"<<list->at(i).fileName;
@@ -474,7 +478,7 @@ QString NewDataSync::getFileName(const QString &webName, const int &fileType)
             QStringList list = webName.split("-");
             if (list.size() > 1)
             {
-                QFileInfo fileInfo(list.first() + list[1]);
+                QFileInfo fileInfo(list.first() + "-" + list[1]);
                 return fileInfo.fileName();
             }
         }
