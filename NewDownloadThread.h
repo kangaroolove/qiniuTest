@@ -17,8 +17,13 @@ signals:
     void refreshProgressBar();
 public slots:
     void onDownloadStart(QList<FileStat> *downloadFileList);
+    void onDownloadFileSucceessfully();
+    void onDownloadFileFailed(FileStat &fileStat);
 private:
     QList<FileStat> *m_downloadFailedList;
+    int m_count;
+    int m_failCount;
+    int m_total;
 };
 
 #endif // NEWDOWNLOADTHREAD_H

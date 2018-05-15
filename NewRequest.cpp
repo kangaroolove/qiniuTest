@@ -104,7 +104,7 @@ bool NewRequest::downloadFile(const QString &url, const QString &filePath)
     Https http;
     http.setUrl(QUrl(newUrl));
     qDebug()<<newUrl;
-    file.write(http.get());
+    file.write(http.downloadFile());
     file.flush();
     file.close();
 

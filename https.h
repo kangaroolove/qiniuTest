@@ -11,6 +11,7 @@ class Https : public QObject
     Q_OBJECT
 public:
     explicit Https(QObject *parent = 0);
+    ~Https();
     void setUrl(const QUrl& url);
     QUrl getUrl();
     void setSslConfiguration(const QSslConfiguration & config);
@@ -20,6 +21,9 @@ public:
     QList<QNetworkCookie> GetAllCookies();
     QByteArray get();
     QByteArray post(QByteArray& byteArray);
+    QByteArray downloadFile();
+public slots:
+    void onDownloadProgress();
 private:
     QUrl url;
     QNetworkRequest request;
@@ -28,6 +32,7 @@ private:
     QNetworkReply* reply;
     QSslConfiguration sslConfig;
     QList<QNetworkCookie> cookieList;
+    QTimer m_timer;
     QByteArray getReply();
 };
 

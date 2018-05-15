@@ -13,12 +13,16 @@ public:
     explicit DownloadTask(FileStat fileStat, QObject *parent = 0);
     void run();
 signals:
-
+    void downloadFileSuccessfully();
+    void downloadAllFileSuccessfully();
+    void downloadFileFailed(FileStat &fileStat);
+    void refreshProgressBar();
 public slots:
 
 private:
     FileStat m_fileStat;
     NewRequest m_request;
+    void modifyDownloadFileTime(const FileStat &fileStat);
 };
 
 #endif // DOWNLOADTASK_H

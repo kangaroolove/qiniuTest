@@ -234,7 +234,7 @@ QList<FileStat> *NewDataSync::getLocalFile(const QString &caseId, const QString 
         if (type == SyncOperateType::UPLOAD)
         {
             fileStatItem.fileUrl = getFileUrl(it.filePath(), caseId, list.last());
-            fileStatItem.hash = getMd5(it.fileInfo().absoluteFilePath());
+            //fileStatItem.hash = getMd5(it.fileInfo().absoluteFilePath());
         }
         localList->push_back(fileStatItem);
     }
