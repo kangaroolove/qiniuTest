@@ -20,8 +20,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_NewDataSync_t {
-    QByteArrayData data[19];
-    char stringdata0[312];
+    QByteArrayData data[21];
+    char stringdata0[348];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -48,7 +48,9 @@ QT_MOC_LITERAL(14, 230, 18), // "downloadFileFailed"
 QT_MOC_LITERAL(15, 249, 18), // "refreshProgressBar"
 QT_MOC_LITERAL(16, 268, 22), // "setProgressBarMaxValue"
 QT_MOC_LITERAL(17, 291, 15), // "SyncOperateType"
-QT_MOC_LITERAL(18, 307, 4) // "type"
+QT_MOC_LITERAL(18, 307, 4), // "type"
+QT_MOC_LITERAL(19, 312, 16), // "sendUploadLatest"
+QT_MOC_LITERAL(20, 329, 18) // "sendDownloadLatest"
 
     },
     "NewDataSync\0startUpload\0\0QList<FileStat>*\0"
@@ -59,7 +61,7 @@ QT_MOC_LITERAL(18, 307, 4) // "type"
     "downloadAllFileSuccessfully\0"
     "downloadFileFailed\0refreshProgressBar\0"
     "setProgressBarMaxValue\0SyncOperateType\0"
-    "type"
+    "type\0sendUploadLatest\0sendDownloadLatest"
 };
 #undef QT_MOC_LITERAL
 
@@ -69,24 +71,26 @@ static const uint qt_meta_data_NewDataSync[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      10,   14, // methods
+      12,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-      10,       // signalCount
+      12,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    2,   64,    2, 0x06 /* Public */,
-       6,    1,   69,    2, 0x06 /* Public */,
-       8,    0,   72,    2, 0x06 /* Public */,
-       9,    0,   73,    2, 0x06 /* Public */,
-      10,    1,   74,    2, 0x06 /* Public */,
-      12,    0,   77,    2, 0x06 /* Public */,
-      13,    0,   78,    2, 0x06 /* Public */,
-      14,    1,   79,    2, 0x06 /* Public */,
-      15,    0,   82,    2, 0x06 /* Public */,
-      16,    2,   83,    2, 0x06 /* Public */,
+       1,    2,   74,    2, 0x06 /* Public */,
+       6,    1,   79,    2, 0x06 /* Public */,
+       8,    0,   82,    2, 0x06 /* Public */,
+       9,    0,   83,    2, 0x06 /* Public */,
+      10,    1,   84,    2, 0x06 /* Public */,
+      12,    0,   87,    2, 0x06 /* Public */,
+      13,    0,   88,    2, 0x06 /* Public */,
+      14,    1,   89,    2, 0x06 /* Public */,
+      15,    0,   92,    2, 0x06 /* Public */,
+      16,    2,   93,    2, 0x06 /* Public */,
+      19,    0,   98,    2, 0x06 /* Public */,
+      20,    0,   99,    2, 0x06 /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3, QMetaType::QString,    4,    5,
@@ -99,6 +103,8 @@ static const uint qt_meta_data_NewDataSync[] = {
     QMetaType::Void, 0x80000000 | 3,   11,
     QMetaType::Void,
     QMetaType::Void, QMetaType::Int, 0x80000000 | 17,    2,   18,
+    QMetaType::Void,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -119,6 +125,8 @@ void NewDataSync::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         case 7: _t->downloadFileFailed((*reinterpret_cast< QList<FileStat>*(*)>(_a[1]))); break;
         case 8: _t->refreshProgressBar(); break;
         case 9: _t->setProgressBarMaxValue((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< SyncOperateType(*)>(_a[2]))); break;
+        case 10: _t->sendUploadLatest(); break;
+        case 11: _t->sendDownloadLatest(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -184,6 +192,18 @@ void NewDataSync::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
                 *result = 9;
             }
         }
+        {
+            typedef void (NewDataSync::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&NewDataSync::sendUploadLatest)) {
+                *result = 10;
+            }
+        }
+        {
+            typedef void (NewDataSync::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&NewDataSync::sendDownloadLatest)) {
+                *result = 11;
+            }
+        }
     }
 }
 
@@ -212,13 +232,13 @@ int NewDataSync::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 10)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 12;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 10)
+        if (_id < 12)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 10;
+        _id -= 12;
     }
     return _id;
 }
@@ -286,5 +306,17 @@ void NewDataSync::setProgressBarMaxValue(int _t1, SyncOperateType _t2)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 9, _a);
+}
+
+// SIGNAL 10
+void NewDataSync::sendUploadLatest()
+{
+    QMetaObject::activate(this, &staticMetaObject, 10, Q_NULLPTR);
+}
+
+// SIGNAL 11
+void NewDataSync::sendDownloadLatest()
+{
+    QMetaObject::activate(this, &staticMetaObject, 11, Q_NULLPTR);
 }
 QT_END_MOC_NAMESPACE

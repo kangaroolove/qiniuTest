@@ -103,7 +103,6 @@ bool NewRequest::downloadFile(const QString &url, const QString &filePath)
     newUrl.append(url);
     Https http;
     http.setUrl(QUrl(newUrl));
-    qDebug()<<newUrl;
     file.write(http.downloadFile());
     file.flush();
     file.close();

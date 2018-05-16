@@ -24,7 +24,6 @@ private:
     QList<FileStat> *m_uploadFailedList;
     NewRequest m_request;
     Json m_json;
-    QMap<QString, QString> initUpdateMap(const QString &caseId, const FileStat &fileStat);
 };
 
 #endif // NEWUPLOADTHREAD_H

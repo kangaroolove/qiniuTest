@@ -40,13 +40,6 @@ void DownloadTask::modifyDownloadFileTime(const FileStat &fileStat)
     qDebug()<<year<<month<<day<<hour<<minute<<second;
 
     struct tm tma = {0}, tmm = {0};
-//    time.tm_year = year;
-//    time.tm_mon = month;
-//    time.tm_mday = day;
-//    time.tm_hour = hour;
-//    time.tm_min = minute;
-//    time.tm_sec = second;
-//    time.tm_isdst = 0;
 
     tma.tm_hour = hour;
     tma.tm_isdst = 0;

@@ -90,18 +90,7 @@ void NewUploadThread::onUploadStart(QList<FileStat> *uploadFileList, QString tok
     }
     else
     {
-        //emit uploadAllFileSuccessfully();
+        emit uploadAllFileSuccessfully();
     }
-}
-
-QMap<QString, QString> NewUploadThread::initUpdateMap(const QString &caseId, const FileStat &fileStat)
-{
-    QMap<QString, QString>map;
-    map.insert("caseinfoId", caseId);
-    map.insert("updateTime", QString::number(fileStat.updateTime.toMSecsSinceEpoch()));
-    map.insert("filetypekeyId", QString::number(fileStat.fileType));
-    map.insert("filename", fileStat.fileUrl);
-
-    return map;
 }
 

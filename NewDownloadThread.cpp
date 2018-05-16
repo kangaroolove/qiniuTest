@@ -28,7 +28,7 @@ void NewDownloadThread::onDownloadStart(QList<FileStat> *downloadFileList)
     for (int i = 0; i < downloadFileList->size(); ++i)
     {
         DownloadTask *task = new DownloadTask(downloadFileList->at(i));
-        connect(task, SIGNAL(downloadFileSuccessfully()), this, SLOT(onDownloadFileSucceessfully()));
+        connect(task, SIGNAL(downloadFileSuccessfully()), this, SLOT(onDownloadFileSucceessfully()), Qt::DirectConnection);
         connect(task, SIGNAL(downloadFileFailed(FileStat &)), this, SLOT(onDownloadFileFailed(FileStat &)));
         threadPool.start(task);
     }

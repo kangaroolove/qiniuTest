@@ -27,11 +27,14 @@ Dialog::Dialog(QWidget *parent) :
     connect(m_newDataSync, SIGNAL(downloadAllFileSuccessfully()), this, SLOT(onAllFileDownloadSuccessfully()));
     connect(m_newDataSync, SIGNAL(downloadFileFailed(QList<FileStat>*)), this, SLOT(onFileDownloadFailed(QList<FileStat>*)));
 
-    connect(m_newDataSync, SIGNAL(refreshProgressBar()), this, SLOT(onProgressBarRefresh()));
+    connect(m_newDataSync, SIGNAL(refreshProgressBar()), this, SLOT(onProgressBarRefresh()), Qt::QueuedConnection);
     connect(m_newDataSync, SIGNAL(setProgressBarMaxValue(int, SyncOperateType)), this, SLOT(onProgressBarMaxValueSet(int, SyncOperateType)));
 
+    connect(m_newDataSync, SIGNAL(sendUploadLatest()), this, SLOT(onUploadLatestSend()));
+    connect(m_newDataSync, SIGNAL(sendDownloadLatest()), this, SLOT(onDownloadLatestSend()));
+
     ui->lab_dir->setText("C:/Users/pangkuanxin/Desktop/1");
-    ui->txt_caseId->setText("2018050016");
+    ui->txt_caseId->setText("2018050001");
 }
 
 Dialog::~Dialog()
@@ -156,35 +159,32 @@ void Dialog::onBtnDirClicked()
 
 void Dialog::onProgressBarMaxValueSet(int value, SyncOperateType type)
 {
-    if (value == 0)
+    if (type == SyncOperateType::UPLOAD)
     {
-        QString message;
-        if (type == SyncOperateType::UPLOAD)
-        {
-            message.append("Latest, do not need to upload");
-        }
-        else if (type == SyncOperateType::DOWNLOAD)
-        {
-            message.append("Latest, do not need to download");
-        }
+        m_uploadCount = value;
+    }
+    else if (type == SyncOperateType::DOWNLOAD)
+    {
+        m_downloadCount = value;
+    }
+    ui->progressBar->setValue(0);
+    ui->progressBar->setMaximum(value);
+}
 
-        QMessageBox::information(this,
-                                 "information",
-                                 message,
-                                 QMessageBox::Ok,
-                                 QMessageBox::Ok);
-    }
-    else
-    {
-        if (type == SyncOperateType::UPLOAD)
-        {
-            m_uploadCount = value;
-        }
-        else if (type == SyncOperateType::DOWNLOAD)
-        {
-            m_downloadCount = value;
-        }
-        ui->progressBar->setValue(0);
-        ui->progressBar->setMaximum(value);
-    }
+void Dialog::onUploadLatestSend()
+{
+    QMessageBox::information(this,
+                             "information",
+                             "Latest, do not need to upload",
+                             QMessageBox::Ok,
+                             QMessageBox::Ok);
+}
+
+void Dialog::onDownloadLatestSend()
+{
+    QMessageBox::information(this,
+                             "information",
+                             "Latest, do not need to download",
+                             QMessageBox::Ok,
+                             QMessageBox::Ok);
 }

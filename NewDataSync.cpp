@@ -30,10 +30,10 @@ NewDataSync::NewDataSync()
     m_download = new NewDownloadThread;
     m_download->moveToThread(&m_downloadThread);
     connect(this, SIGNAL(startDownload(QList<FileStat>*)), m_download, SLOT(onDownloadStart(QList<FileStat>*)));
-    connect(m_download, SIGNAL(downloadFileSuccessfully()), this, SIGNAL(downloadFileSuccessfully()));
-    connect(m_download, SIGNAL(downloadAllFileSuccessfully()), this, SIGNAL(downloadAllFileSuccessfully()));
+    connect(m_download, SIGNAL(downloadFileSuccessfully()), this, SIGNAL(downloadFileSuccessfully()), Qt::QueuedConnection);
+    connect(m_download, SIGNAL(downloadAllFileSuccessfully()), this, SIGNAL(downloadAllFileSuccessfully()), Qt::QueuedConnection);
     connect(m_download, SIGNAL(downloadFileFailed(QList<FileStat>*)), this, SIGNAL(downloadFileFailed(QList<FileStat>*)));
-    connect(m_download, SIGNAL(refreshProgressBar()), this, SIGNAL(refreshProgressBar()));
+    connect(m_download, SIGNAL(refreshProgressBar()), this, SIGNAL(refreshProgressBar()), Qt::QueuedConnection);
     m_downloadThread.start();
 }
 
@@ -117,7 +117,7 @@ void NewDataSync::start(const QString &caseId, const QString &path)
             qDebug()<<"createTime:"<<m_localList->at(i).createTime;
             qDebug()<<"updateTime:"<<m_localList->at(i).updateTime;
             qDebug()<<"fileUrl:"<<m_localList->at(i).fileUrl;
-            qDebug()<<"hash:"<<m_localList->at(i).hash;
+            //qDebug()<<"hash:"<<m_localList->at(i).hash;
         }
     }
     else
@@ -138,7 +138,7 @@ void NewDataSync::start(const QString &caseId, const QString &path)
             qDebug()<<"createTime:"<<m_remoteList->at(i).createTime;
             qDebug()<<"updateTime:"<<m_remoteList->at(i).updateTime;
             qDebug()<<"fileUrl:"<<m_remoteList->at(i).fileUrl;
-            qDebug()<<"hash:"<<m_remoteList->at(i).hash;
+            //qDebug()<<"hash:"<<m_remoteList->at(i).hash;
         }
     }
     else
@@ -150,11 +150,24 @@ void NewDataSync::start(const QString &caseId, const QString &path)
     QList<FileStat> *list = m_fileCompare->makeFileCompare(m_operateType, m_localList, m_remoteList);
     if (list)
     {
-        emit setProgressBarMaxValue(list->size(), m_operateType);
-        if (list->size() == 0)
+        if (m_operateType == SyncOperateType::UPLOAD)
         {
-            return;
+            if (m_localList->size() > 0 && list->size() == 0)
+            {
+                emit sendUploadLatest();
+                return;
+            }
         }
+        else if (m_operateType == SyncOperateType::DOWNLOAD)
+        {
+            if (m_remoteList->size() > 0 && list->size() == 0)
+            {
+                emit sendDownloadLatest();
+                return;
+            }
+        }
+
+        emit setProgressBarMaxValue(list->size(), m_operateType);
         for (int i = 0; i < list->size(); ++i)
         {
             qDebug()<<"fileName:"<<list->at(i).fileName;
@@ -164,7 +177,7 @@ void NewDataSync::start(const QString &caseId, const QString &path)
             qDebug()<<"createTime:"<<list->at(i).createTime;
             qDebug()<<"updateTime:"<<list->at(i).updateTime;
             qDebug()<<"fileUrl:"<<list->at(i).fileUrl;
-            qDebug()<<"hash:"<<list->at(i).hash;
+            //qDebug()<<"hash:"<<list->at(i).hash;
         }
     }
 

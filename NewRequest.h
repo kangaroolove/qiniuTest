@@ -8,7 +8,7 @@
 
 #define TEMP_FILE_SUFFIX    "temp"
 
-#define URL "http://172.18.169.111"
+#define URL "http://172.18.169.111:3080"
 #define GET_TOKEN   "/aligner/client/qiNiuToken"
 #define GET_REMOTE_FILE_LIST    "/aligner/client/originalModel/"
 #define UPDATE_REMOTE_SQL   "/aligner/client/file"
