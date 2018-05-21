@@ -32,9 +32,7 @@ signals:
     void startUpload(QList<FileStat> *uploadFileList, QString token);
     void startDownload(QList<FileStat> *downloadFileList);
 
-    void uploadFileSuccessfully();
-    void uploadAllFileSuccessfully();
-    void uploadFileFailed(QList<FileStat> *uploadFailedList);
+    void uploadFinished(QList<FileStat> *uploadFailedList);
 
     void downloadFileSuccessfully();
     void downloadAllFileSuccessfully();

@@ -20,8 +20,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_NewUploadThread_t {
-    QByteArrayData data[11];
-    char stringdata0[171];
+    QByteArrayData data[9];
+    char stringdata0[120];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -31,22 +31,19 @@ struct qt_meta_stringdata_NewUploadThread_t {
 static const qt_meta_stringdata_NewUploadThread_t qt_meta_stringdata_NewUploadThread = {
     {
 QT_MOC_LITERAL(0, 0, 15), // "NewUploadThread"
-QT_MOC_LITERAL(1, 16, 22), // "uploadFileSuccessfully"
-QT_MOC_LITERAL(2, 39, 0), // ""
-QT_MOC_LITERAL(3, 40, 25), // "uploadAllFileSuccessfully"
-QT_MOC_LITERAL(4, 66, 16), // "uploadFileFailed"
-QT_MOC_LITERAL(5, 83, 16), // "QList<FileStat>*"
-QT_MOC_LITERAL(6, 100, 16), // "uploadFailedList"
-QT_MOC_LITERAL(7, 117, 18), // "refreshProgressBar"
-QT_MOC_LITERAL(8, 136, 13), // "onUploadStart"
-QT_MOC_LITERAL(9, 150, 14), // "uploadFileList"
-QT_MOC_LITERAL(10, 165, 5) // "token"
+QT_MOC_LITERAL(1, 16, 18), // "refreshProgressBar"
+QT_MOC_LITERAL(2, 35, 0), // ""
+QT_MOC_LITERAL(3, 36, 14), // "uploadFinished"
+QT_MOC_LITERAL(4, 51, 16), // "QList<FileStat>*"
+QT_MOC_LITERAL(5, 68, 16), // "uploadFailedList"
+QT_MOC_LITERAL(6, 85, 13), // "onUploadStart"
+QT_MOC_LITERAL(7, 99, 14), // "uploadFileList"
+QT_MOC_LITERAL(8, 114, 5) // "token"
 
     },
-    "NewUploadThread\0uploadFileSuccessfully\0"
-    "\0uploadAllFileSuccessfully\0uploadFileFailed\0"
-    "QList<FileStat>*\0uploadFailedList\0"
-    "refreshProgressBar\0onUploadStart\0"
+    "NewUploadThread\0refreshProgressBar\0\0"
+    "uploadFinished\0QList<FileStat>*\0"
+    "uploadFailedList\0onUploadStart\0"
     "uploadFileList\0token"
 };
 #undef QT_MOC_LITERAL
@@ -57,30 +54,26 @@ static const uint qt_meta_data_NewUploadThread[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       4,       // signalCount
+       2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   39,    2, 0x06 /* Public */,
-       3,    0,   40,    2, 0x06 /* Public */,
-       4,    1,   41,    2, 0x06 /* Public */,
-       7,    0,   44,    2, 0x06 /* Public */,
+       1,    0,   29,    2, 0x06 /* Public */,
+       3,    1,   30,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       8,    2,   45,    2, 0x0a /* Public */,
+       6,    2,   33,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 5,    6,
-    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 4,    5,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 5, QMetaType::QString,    9,   10,
+    QMetaType::Void, 0x80000000 | 4, QMetaType::QString,    7,    8,
 
        0        // eod
 };
@@ -91,11 +84,9 @@ void NewUploadThread::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         NewUploadThread *_t = static_cast<NewUploadThread *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->uploadFileSuccessfully(); break;
-        case 1: _t->uploadAllFileSuccessfully(); break;
-        case 2: _t->uploadFileFailed((*reinterpret_cast< QList<FileStat>*(*)>(_a[1]))); break;
-        case 3: _t->refreshProgressBar(); break;
-        case 4: _t->onUploadStart((*reinterpret_cast< QList<FileStat>*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 0: _t->refreshProgressBar(); break;
+        case 1: _t->uploadFinished((*reinterpret_cast< QList<FileStat>*(*)>(_a[1]))); break;
+        case 2: _t->onUploadStart((*reinterpret_cast< QList<FileStat>*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -103,26 +94,14 @@ void NewUploadThread::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         void **func = reinterpret_cast<void **>(_a[1]);
         {
             typedef void (NewUploadThread::*_t)();
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&NewUploadThread::uploadFileSuccessfully)) {
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&NewUploadThread::refreshProgressBar)) {
                 *result = 0;
             }
         }
         {
-            typedef void (NewUploadThread::*_t)();
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&NewUploadThread::uploadAllFileSuccessfully)) {
-                *result = 1;
-            }
-        }
-        {
             typedef void (NewUploadThread::*_t)(QList<FileStat> * );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&NewUploadThread::uploadFileFailed)) {
-                *result = 2;
-            }
-        }
-        {
-            typedef void (NewUploadThread::*_t)();
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&NewUploadThread::refreshProgressBar)) {
-                *result = 3;
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&NewUploadThread::uploadFinished)) {
+                *result = 1;
             }
         }
     }
@@ -153,39 +132,27 @@ int NewUploadThread::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 3;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 5)
+        if (_id < 3)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 5;
+        _id -= 3;
     }
     return _id;
 }
 
 // SIGNAL 0
-void NewUploadThread::uploadFileSuccessfully()
+void NewUploadThread::refreshProgressBar()
 {
     QMetaObject::activate(this, &staticMetaObject, 0, Q_NULLPTR);
 }
 
 // SIGNAL 1
-void NewUploadThread::uploadAllFileSuccessfully()
-{
-    QMetaObject::activate(this, &staticMetaObject, 1, Q_NULLPTR);
-}
-
-// SIGNAL 2
-void NewUploadThread::uploadFileFailed(QList<FileStat> * _t1)
+void NewUploadThread::uploadFinished(QList<FileStat> * _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
-    QMetaObject::activate(this, &staticMetaObject, 2, _a);
-}
-
-// SIGNAL 3
-void NewUploadThread::refreshProgressBar()
-{
-    QMetaObject::activate(this, &staticMetaObject, 3, Q_NULLPTR);
+    QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 QT_END_MOC_NAMESPACE

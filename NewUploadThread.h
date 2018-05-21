@@ -13,10 +13,8 @@ public:
     explicit NewUploadThread(QObject *parent = 0);
     void setCaseId(const QString &caseId);
 signals:
-    void uploadFileSuccessfully();
-    void uploadAllFileSuccessfully();
-    void uploadFileFailed(QList<FileStat> *uploadFailedList);
     void refreshProgressBar();
+    void uploadFinished(QList<FileStat> *uploadFailedList);
 public slots:
     void onUploadStart(QList<FileStat> *uploadFileList, QString token);
 private:

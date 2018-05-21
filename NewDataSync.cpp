@@ -21,9 +21,7 @@ NewDataSync::NewDataSync()
     m_upload = new NewUploadThread;
     m_upload->moveToThread(&m_uploadThread);
     connect(this, SIGNAL(startUpload(QList<FileStat>*,QString)), m_upload, SLOT(onUploadStart(QList<FileStat>*,QString)));
-    connect(m_upload, SIGNAL(uploadFileSuccessfully()), this, SIGNAL(uploadFileSuccessfully()));
-    connect(m_upload, SIGNAL(uploadAllFileSuccessfully()), this, SIGNAL(uploadAllFileSuccessfully()));
-    connect(m_upload, SIGNAL(uploadFileFailed(QList<FileStat>*)), this, SIGNAL(uploadFileFailed(QList<FileStat>*)));
+    connect(m_upload, SIGNAL(uploadFinished(QList<FileStat>*)), this, SIGNAL(uploadFinished(QList<FileStat>*)));
     connect(m_upload, SIGNAL(refreshProgressBar()), this, SIGNAL(refreshProgressBar()));
     m_uploadThread.start();
 
@@ -141,10 +139,6 @@ void NewDataSync::start(const QString &caseId, const QString &path)
             //qDebug()<<"hash:"<<m_remoteList->at(i).hash;
         }
     }
-    else
-    {
-        return;
-    }
 
     qDebug()<<"**********************************************************************************************************";
     QList<FileStat> *list = m_fileCompare->makeFileCompare(m_operateType, m_localList, m_remoteList);
@@ -179,6 +173,11 @@ void NewDataSync::start(const QString &caseId, const QString &path)
             qDebug()<<"fileUrl:"<<list->at(i).fileUrl;
             //qDebug()<<"hash:"<<list->at(i).hash;
         }
+    }
+    else
+    {
+        qDebug()<<"list is empty";
+        return;
     }
 
     if (m_operateType == SyncOperateType::UPLOAD)

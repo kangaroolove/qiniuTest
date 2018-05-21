@@ -10,18 +10,14 @@ Dialog::Dialog(QWidget *parent) :
     ui->setupUi(this);
 
     m_uploadCount = 0;
-    m_uploadSuccessfulCount = 0;
     m_downloadCount = 0;
-    m_downloadSuccessfulCount = 0;
 
     connect(ui->btn_dir, SIGNAL(clicked(bool)), this, SLOT(onBtnDirClicked()));
     connect(ui->btn_upload, SIGNAL(clicked(bool)), this, SLOT(onBtnUploadClicked()));
     connect(ui->btn_download, SIGNAL(clicked(bool)), this, SLOT(onBtnDownloadClicked()));
 
     m_newDataSync = new NewDataSync;
-    connect(m_newDataSync, SIGNAL(uploadFileSuccessfully()), this, SLOT(onFileUploadSuccessfully()));
-    connect(m_newDataSync, SIGNAL(uploadAllFileSuccessfully()), this, SLOT(onAllFileUploadSuccessfully()));
-    connect(m_newDataSync, SIGNAL(uploadFileFailed(QList<FileStat>*)), this, SLOT(onFileUploadFailed(QList<FileStat>*)));
+    connect(m_newDataSync, SIGNAL(uploadFinished(QList<FileStat>*)), this, SLOT(onUploadFinished(QList<FileStat>*)));
 
     connect(m_newDataSync, SIGNAL(downloadFileSuccessfully()), this, SLOT(onFileDownloadSuccessfully()));
     connect(m_newDataSync, SIGNAL(downloadAllFileSuccessfully()), this, SLOT(onAllFileDownloadSuccessfully()));
@@ -33,8 +29,8 @@ Dialog::Dialog(QWidget *parent) :
     connect(m_newDataSync, SIGNAL(sendUploadLatest()), this, SLOT(onUploadLatestSend()));
     connect(m_newDataSync, SIGNAL(sendDownloadLatest()), this, SLOT(onDownloadLatestSend()));
 
-    ui->lab_dir->setText("C:/Users/pangkuanxin/Desktop/1");
-    ui->txt_caseId->setText("2018050001");
+    //ui->lab_dir->setText("C:/Users/pangkuanxin/Desktop/1");
+    //ui->txt_caseId->setText("2018050001");
 }
 
 Dialog::~Dialog()
@@ -47,39 +43,39 @@ Dialog::~Dialog()
     }
 }
 
-void Dialog::onFileUploadSuccessfully()
+void Dialog::onUploadFinished(QList<FileStat> *uploadFailedList)
 {
-    ++m_uploadSuccessfulCount;
-}
-
-void Dialog::onAllFileUploadSuccessfully()
-{
-    QString message("Upload total:" + QString::number(m_uploadCount) + ",successfully count:" + QString::number(m_uploadSuccessfulCount));
-    QMessageBox::information(this,
-                             "Information",
-                             message,
-                             QMessageBox::Ok,
-                             QMessageBox::Ok);
-}
-
-void Dialog::onFileUploadFailed(QList<FileStat> *uploadFailedList)
-{
-    QString message("Upload failed count:");
-    message.append(uploadFailedList->size());
-    for (int i = 0; i < uploadFailedList->size(); ++i)
+    if (uploadFailedList)
     {
-        message.append("\n");
-        message.append(" error code:");
-        message.append(uploadFailedList->at(i).errorCode);
-        message.append(" fileName:");
-        message.append(uploadFailedList->at(i).fileUrl);
-    }
+        if (uploadFailedList->size() != 0)
+        {
+            QString message("Upload total:" + QString::number(m_uploadCount) + "upload failed count:");
+            message.append(uploadFailedList->size());
+            for (int i = 0; i < uploadFailedList->size(); ++i)
+            {
+                message.append("\n");
+                message.append(" error code:");
+                message.append(uploadFailedList->at(i).errorCode);
+                message.append(" fileName:");
+                message.append(uploadFailedList->at(i).fileUrl);
+            }
 
-    QMessageBox::warning(this,
-                         "Warning",
-                         message,
-                         QMessageBox::Ok,
-                         QMessageBox::Ok);
+            QMessageBox::warning(this,
+                                 "Warning",
+                                 message,
+                                 QMessageBox::Ok,
+                                 QMessageBox::Ok);
+        }
+        else
+        {
+            QString message("Upload total:" + QString::number(m_uploadCount) + ",successfully count:" + QString::number(m_uploadCount));
+            QMessageBox::information(this,
+                                     "Information",
+                                     message,
+                                     QMessageBox::Ok,
+                                     QMessageBox::Ok);
+        }
+    }
 }
 
 void Dialog::onProgressBarRefresh()
@@ -87,11 +83,6 @@ void Dialog::onProgressBarRefresh()
     qDebug()<<"update progress";
     int value = ui->progressBar->value();
     ui->progressBar->setValue(++value);
-}
-
-void Dialog::onFileDownloadSuccessfully()
-{
-    ++m_downloadSuccessfulCount;
 }
 
 void Dialog::onAllFileDownloadSuccessfully()
@@ -130,6 +121,7 @@ void Dialog::onBtnUploadClicked()
     QString path = ui->lab_dir->text();
     QString caseId = ui->txt_caseId->text();
 
+    m_uploadCount = 0;
     ui->progressBar->setValue(0);
 
     m_newDataSync->setOperateType(UPLOAD);
@@ -142,6 +134,7 @@ void Dialog::onBtnDownloadClicked()
     QString path = ui->lab_dir->text();
     QString caseId = ui->txt_caseId->text();
 
+    m_downloadCount = 0;
     ui->progressBar->setValue(0);
 
     m_newDataSync->setOperateType(DOWNLOAD);

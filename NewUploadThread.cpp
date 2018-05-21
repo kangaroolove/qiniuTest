@@ -69,11 +69,9 @@ void NewUploadThread::onUploadStart(QList<FileStat> *uploadFileList, QString tok
         else
         {
             qDebug()<<QString("key: %1").arg(putRet.key);
-            //qDebug()<<QString("return hash: %1").arg(putRet.hash);
             if (strcmp(putRet.key, charFileUrl.data()) == 0)
             {
                 qDebug()<<"equal";
-                emit uploadFileSuccessfully();
                 QByteArray data = m_json.generateJson(m_caseId, uploadFileList->at(i));
                 m_request.updateRemoteSql(data);
             }
@@ -84,13 +82,6 @@ void NewUploadThread::onUploadStart(QList<FileStat> *uploadFileList, QString tok
         Qiniu_Client_Cleanup(&client);
     }
 
-    if (m_uploadFailedList->size() != 0)
-    {
-        emit uploadFileFailed(m_uploadFailedList);
-    }
-    else
-    {
-        emit uploadAllFileSuccessfully();
-    }
+    emit uploadFinished(m_uploadFailedList);
 }
 

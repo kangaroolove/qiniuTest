@@ -57,7 +57,9 @@ QList<FileStat> *NewRequest::getRemoteList(const QString &caseId)
                              QMessageBox::Ok,
                              QMessageBox::Ok);
 
-        return NULL;
+
+        QList<FileStat> *list = new QList<FileStat>;
+        return list;
     }
 }
 
