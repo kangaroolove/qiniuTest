@@ -20,8 +20,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Dialog_t {
-    QByteArrayData data[18];
-    char stringdata0[298];
+    QByteArrayData data[15];
+    char stringdata0[226];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,29 +35,24 @@ QT_MOC_LITERAL(1, 7, 16), // "onUploadFinished"
 QT_MOC_LITERAL(2, 24, 0), // ""
 QT_MOC_LITERAL(3, 25, 16), // "QList<FileStat>*"
 QT_MOC_LITERAL(4, 42, 16), // "uploadFailedList"
-QT_MOC_LITERAL(5, 59, 20), // "onProgressBarRefresh"
-QT_MOC_LITERAL(6, 80, 29), // "onAllFileDownloadSuccessfully"
-QT_MOC_LITERAL(7, 110, 20), // "onFileDownloadFailed"
-QT_MOC_LITERAL(8, 131, 18), // "downloadFailedList"
-QT_MOC_LITERAL(9, 150, 18), // "onBtnUploadClicked"
-QT_MOC_LITERAL(10, 169, 20), // "onBtnDownloadClicked"
-QT_MOC_LITERAL(11, 190, 15), // "onBtnDirClicked"
-QT_MOC_LITERAL(12, 206, 24), // "onProgressBarMaxValueSet"
-QT_MOC_LITERAL(13, 231, 5), // "value"
-QT_MOC_LITERAL(14, 237, 15), // "SyncOperateType"
-QT_MOC_LITERAL(15, 253, 4), // "type"
-QT_MOC_LITERAL(16, 258, 18), // "onUploadLatestSend"
-QT_MOC_LITERAL(17, 277, 20) // "onDownloadLatestSend"
+QT_MOC_LITERAL(5, 59, 18), // "onDownloadFinished"
+QT_MOC_LITERAL(6, 78, 18), // "downloadFailedList"
+QT_MOC_LITERAL(7, 97, 20), // "onProgressBarRefresh"
+QT_MOC_LITERAL(8, 118, 18), // "onBtnUploadClicked"
+QT_MOC_LITERAL(9, 137, 20), // "onBtnDownloadClicked"
+QT_MOC_LITERAL(10, 158, 15), // "onBtnDirClicked"
+QT_MOC_LITERAL(11, 174, 24), // "onProgressBarMaxValueSet"
+QT_MOC_LITERAL(12, 199, 5), // "value"
+QT_MOC_LITERAL(13, 205, 15), // "SyncOperateType"
+QT_MOC_LITERAL(14, 221, 4) // "type"
 
     },
     "Dialog\0onUploadFinished\0\0QList<FileStat>*\0"
-    "uploadFailedList\0onProgressBarRefresh\0"
-    "onAllFileDownloadSuccessfully\0"
-    "onFileDownloadFailed\0downloadFailedList\0"
+    "uploadFailedList\0onDownloadFinished\0"
+    "downloadFailedList\0onProgressBarRefresh\0"
     "onBtnUploadClicked\0onBtnDownloadClicked\0"
     "onBtnDirClicked\0onProgressBarMaxValueSet\0"
-    "value\0SyncOperateType\0type\0"
-    "onUploadLatestSend\0onDownloadLatestSend"
+    "value\0SyncOperateType\0type"
 };
 #undef QT_MOC_LITERAL
 
@@ -67,7 +62,7 @@ static const uint qt_meta_data_Dialog[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      10,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -75,28 +70,22 @@ static const uint qt_meta_data_Dialog[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   64,    2, 0x0a /* Public */,
-       5,    0,   67,    2, 0x0a /* Public */,
-       6,    0,   68,    2, 0x0a /* Public */,
-       7,    1,   69,    2, 0x0a /* Public */,
-       9,    0,   72,    2, 0x0a /* Public */,
-      10,    0,   73,    2, 0x0a /* Public */,
-      11,    0,   74,    2, 0x0a /* Public */,
-      12,    2,   75,    2, 0x0a /* Public */,
-      16,    0,   80,    2, 0x0a /* Public */,
-      17,    0,   81,    2, 0x0a /* Public */,
+       1,    1,   49,    2, 0x0a /* Public */,
+       5,    1,   52,    2, 0x0a /* Public */,
+       7,    0,   55,    2, 0x0a /* Public */,
+       8,    0,   56,    2, 0x0a /* Public */,
+       9,    0,   57,    2, 0x0a /* Public */,
+      10,    0,   58,    2, 0x0a /* Public */,
+      11,    2,   59,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
+    QMetaType::Void, 0x80000000 | 3,    6,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 3,    8,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void, QMetaType::Int, 0x80000000 | 14,   13,   15,
-    QMetaType::Void,
-    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int, 0x80000000 | 13,   12,   14,
 
        0        // eod
 };
@@ -108,15 +97,12 @@ void Dialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->onUploadFinished((*reinterpret_cast< QList<FileStat>*(*)>(_a[1]))); break;
-        case 1: _t->onProgressBarRefresh(); break;
-        case 2: _t->onAllFileDownloadSuccessfully(); break;
-        case 3: _t->onFileDownloadFailed((*reinterpret_cast< QList<FileStat>*(*)>(_a[1]))); break;
-        case 4: _t->onBtnUploadClicked(); break;
-        case 5: _t->onBtnDownloadClicked(); break;
-        case 6: _t->onBtnDirClicked(); break;
-        case 7: _t->onProgressBarMaxValueSet((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< SyncOperateType(*)>(_a[2]))); break;
-        case 8: _t->onUploadLatestSend(); break;
-        case 9: _t->onDownloadLatestSend(); break;
+        case 1: _t->onDownloadFinished((*reinterpret_cast< QList<FileStat>*(*)>(_a[1]))); break;
+        case 2: _t->onProgressBarRefresh(); break;
+        case 3: _t->onBtnUploadClicked(); break;
+        case 4: _t->onBtnDownloadClicked(); break;
+        case 5: _t->onBtnDirClicked(); break;
+        case 6: _t->onProgressBarMaxValueSet((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< SyncOperateType(*)>(_a[2]))); break;
         default: ;
         }
     }
@@ -147,13 +133,13 @@ int Dialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 10)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 7;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 10)
+        if (_id < 7)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 10;
+        _id -= 7;
     }
     return _id;
 }

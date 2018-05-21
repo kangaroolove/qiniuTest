@@ -11,18 +11,14 @@ public:
     explicit NewDownloadThread(QObject *parent = 0);
 
 signals:
-    void downloadFileSuccessfully();
-    void downloadAllFileSuccessfully();
-    void downloadFileFailed(QList<FileStat> *downloadFailedList);
+    void downloadFinished(QList<FileStat> *downloadFailedList);
     void refreshProgressBar();
 public slots:
+    void onDownloadFinished(bool successful, FileStat *fileStat);
     void onDownloadStart(QList<FileStat> *downloadFileList);
-    void onDownloadFileSucceessfully();
-    void onDownloadFileFailed(FileStat &fileStat);
 private:
     QList<FileStat> *m_downloadFailedList;
     int m_count;
-    int m_failCount;
     int m_total;
 };
 

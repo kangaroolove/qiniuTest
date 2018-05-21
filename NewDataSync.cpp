@@ -28,9 +28,7 @@ NewDataSync::NewDataSync()
     m_download = new NewDownloadThread;
     m_download->moveToThread(&m_downloadThread);
     connect(this, SIGNAL(startDownload(QList<FileStat>*)), m_download, SLOT(onDownloadStart(QList<FileStat>*)));
-    connect(m_download, SIGNAL(downloadFileSuccessfully()), this, SIGNAL(downloadFileSuccessfully()), Qt::QueuedConnection);
-    connect(m_download, SIGNAL(downloadAllFileSuccessfully()), this, SIGNAL(downloadAllFileSuccessfully()), Qt::QueuedConnection);
-    connect(m_download, SIGNAL(downloadFileFailed(QList<FileStat>*)), this, SIGNAL(downloadFileFailed(QList<FileStat>*)));
+    connect(m_download, SIGNAL(downloadFinished(QList<FileStat>*)), this, SIGNAL(downloadFinished(QList<FileStat>*)));
     connect(m_download, SIGNAL(refreshProgressBar()), this, SIGNAL(refreshProgressBar()), Qt::QueuedConnection);
     m_downloadThread.start();
 }
@@ -148,7 +146,8 @@ void NewDataSync::start(const QString &caseId, const QString &path)
         {
             if (m_localList->size() > 0 && list->size() == 0)
             {
-                emit sendUploadLatest();
+                m_localList->clear();
+                emit uploadFinished(m_localList);
                 return;
             }
         }
@@ -156,7 +155,8 @@ void NewDataSync::start(const QString &caseId, const QString &path)
         {
             if (m_remoteList->size() > 0 && list->size() == 0)
             {
-                emit sendDownloadLatest();
+                m_remoteList->clear();
+                emit downloadFinished(m_remoteList);
                 return;
             }
         }

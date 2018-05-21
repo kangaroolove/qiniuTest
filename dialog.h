@@ -19,16 +19,12 @@ public:
     ~Dialog();
 public slots:
     void onUploadFinished(QList<FileStat> *uploadFailedList);
+    void onDownloadFinished(QList<FileStat> *downloadFailedList);
     void onProgressBarRefresh();
-    //void onFileDownloadSuccessfully();
-    void onAllFileDownloadSuccessfully();
-    void onFileDownloadFailed(QList<FileStat> *downloadFailedList);
     void onBtnUploadClicked();
     void onBtnDownloadClicked();
     void onBtnDirClicked();
     void onProgressBarMaxValueSet(int value, SyncOperateType type);
-    void onUploadLatestSend();
-    void onDownloadLatestSend();
 private:
     Ui::Dialog *ui;
     NewDataSync *m_newDataSync;

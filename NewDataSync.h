@@ -31,12 +31,8 @@ public:
 signals:
     void startUpload(QList<FileStat> *uploadFileList, QString token);
     void startDownload(QList<FileStat> *downloadFileList);
-
     void uploadFinished(QList<FileStat> *uploadFailedList);
-
-    void downloadFileSuccessfully();
-    void downloadAllFileSuccessfully();
-    void downloadFileFailed(QList<FileStat> *uploadFailedList);
+    void downloadFinished(QList<FileStat> *downloadFailedList);
     void refreshProgressBar();
     void setProgressBarMaxValue(int, SyncOperateType type);
     void sendUploadLatest();

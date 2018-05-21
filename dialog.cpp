@@ -18,16 +18,9 @@ Dialog::Dialog(QWidget *parent) :
 
     m_newDataSync = new NewDataSync;
     connect(m_newDataSync, SIGNAL(uploadFinished(QList<FileStat>*)), this, SLOT(onUploadFinished(QList<FileStat>*)));
-
-    connect(m_newDataSync, SIGNAL(downloadFileSuccessfully()), this, SLOT(onFileDownloadSuccessfully()));
-    connect(m_newDataSync, SIGNAL(downloadAllFileSuccessfully()), this, SLOT(onAllFileDownloadSuccessfully()));
-    connect(m_newDataSync, SIGNAL(downloadFileFailed(QList<FileStat>*)), this, SLOT(onFileDownloadFailed(QList<FileStat>*)));
-
+    connect(m_newDataSync, SIGNAL(downloadFinished(QList<FileStat>*)), this, SLOT(onDownloadFinished(QList<FileStat>*)));
     connect(m_newDataSync, SIGNAL(refreshProgressBar()), this, SLOT(onProgressBarRefresh()), Qt::QueuedConnection);
     connect(m_newDataSync, SIGNAL(setProgressBarMaxValue(int, SyncOperateType)), this, SLOT(onProgressBarMaxValueSet(int, SyncOperateType)));
-
-    connect(m_newDataSync, SIGNAL(sendUploadLatest()), this, SLOT(onUploadLatestSend()));
-    connect(m_newDataSync, SIGNAL(sendDownloadLatest()), this, SLOT(onDownloadLatestSend()));
 
     //ui->lab_dir->setText("C:/Users/pangkuanxin/Desktop/1");
     //ui->txt_caseId->setText("2018050001");
@@ -76,6 +69,49 @@ void Dialog::onUploadFinished(QList<FileStat> *uploadFailedList)
                                      QMessageBox::Ok);
         }
     }
+    else
+    {
+        qDebug()<<"uploadFileList is null";
+    }
+}
+
+void Dialog::onDownloadFinished(QList<FileStat> *downloadFailedList)
+{
+    if (downloadFailedList)
+    {
+        if (downloadFailedList->size() != 0)
+        {
+            QString message("Download total:" + QString::number(m_downloadCount) + "download failed count:");
+            message.append(downloadFailedList->size());
+            for (int i = 0; i < downloadFailedList->size(); ++i)
+            {
+                message.append("\n");
+                message.append(" error code:");
+                message.append(downloadFailedList->at(i).errorCode);
+                message.append(" fileName:");
+                message.append(downloadFailedList->at(i).fileUrl);
+            }
+
+            QMessageBox::warning(this,
+                                 "Warning",
+                                 message,
+                                 QMessageBox::Ok,
+                                 QMessageBox::Ok);
+        }
+        else
+        {
+            QString message("Download total:" + QString::number(m_downloadCount) + ",successfully count:" + QString::number(m_downloadCount));
+            QMessageBox::information(this,
+                                     "Information",
+                                     message,
+                                     QMessageBox::Ok,
+                                     QMessageBox::Ok);
+        }
+    }
+    else
+    {
+        qDebug()<<"downloadFailedList is null";
+    }
 }
 
 void Dialog::onProgressBarRefresh()
@@ -83,36 +119,6 @@ void Dialog::onProgressBarRefresh()
     qDebug()<<"update progress";
     int value = ui->progressBar->value();
     ui->progressBar->setValue(++value);
-}
-
-void Dialog::onAllFileDownloadSuccessfully()
-{
-    QString message("Download total:" + QString::number(m_downloadCount) + ",successfully count:" + QString::number(m_downloadSuccessfulCount));
-    QMessageBox::information(this,
-                             "Information",
-                             message,
-                             QMessageBox::Ok,
-                             QMessageBox::Ok);
-}
-
-void Dialog::onFileDownloadFailed(QList<FileStat> *downloadFailedList)
-{
-    QString message("Download failed count:");
-    message.append(downloadFailedList->size());
-    for (int i = 0; i < downloadFailedList->size(); ++i)
-    {
-        message.append("\n");
-        message.append(" error code:");
-        message.append(downloadFailedList->at(i).errorCode);
-        message.append(" fileName:");
-        message.append(downloadFailedList->at(i).fileUrl);
-    }
-
-    QMessageBox::warning(this,
-                         "Warning",
-                         message,
-                         QMessageBox::Ok,
-                         QMessageBox::Ok);
 }
 
 void Dialog::onBtnUploadClicked()
@@ -162,22 +168,4 @@ void Dialog::onProgressBarMaxValueSet(int value, SyncOperateType type)
     }
     ui->progressBar->setValue(0);
     ui->progressBar->setMaximum(value);
-}
-
-void Dialog::onUploadLatestSend()
-{
-    QMessageBox::information(this,
-                             "information",
-                             "Latest, do not need to upload",
-                             QMessageBox::Ok,
-                             QMessageBox::Ok);
-}
-
-void Dialog::onDownloadLatestSend()
-{
-    QMessageBox::information(this,
-                             "information",
-                             "Latest, do not need to download",
-                             QMessageBox::Ok,
-                             QMessageBox::Ok);
 }

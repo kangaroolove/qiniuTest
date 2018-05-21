@@ -19,12 +19,11 @@ void DownloadTask::run()
             srcFile.remove();
         }
         QFile::rename(m_fileStat.filePath + TEMP_FILE_SUFFIX, m_fileStat.filePath);
-        //modifyDownloadFileTime(m_fileStat);
-        emit downloadFileSuccessfully();
+        emit downloadFinished(true);
     }
     else
     {
-        emit downloadFileFailed(m_fileStat);
+        emit downloadFinished(false, &m_fileStat);
     }
 }
 

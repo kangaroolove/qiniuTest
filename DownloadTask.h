@@ -13,10 +13,8 @@ public:
     explicit DownloadTask(FileStat fileStat, QObject *parent = 0);
     void run();
 signals:
-    void downloadFileSuccessfully();
-    void downloadAllFileSuccessfully();
-    void downloadFileFailed(FileStat &fileStat);
     void refreshProgressBar();
+    void downloadFinished(bool successful, FileStat *fileStat = NULL);
 public slots:
 
 private:

@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_DownloadTask_t {
-    QByteArrayData data[8];
-    char stringdata0[124];
+    QByteArrayData data[7];
+    char stringdata0[80];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -30,19 +30,17 @@ struct qt_meta_stringdata_DownloadTask_t {
 static const qt_meta_stringdata_DownloadTask_t qt_meta_stringdata_DownloadTask = {
     {
 QT_MOC_LITERAL(0, 0, 12), // "DownloadTask"
-QT_MOC_LITERAL(1, 13, 24), // "downloadFileSuccessfully"
-QT_MOC_LITERAL(2, 38, 0), // ""
-QT_MOC_LITERAL(3, 39, 27), // "downloadAllFileSuccessfully"
-QT_MOC_LITERAL(4, 67, 18), // "downloadFileFailed"
-QT_MOC_LITERAL(5, 86, 9), // "FileStat&"
-QT_MOC_LITERAL(6, 96, 8), // "fileStat"
-QT_MOC_LITERAL(7, 105, 18) // "refreshProgressBar"
+QT_MOC_LITERAL(1, 13, 18), // "refreshProgressBar"
+QT_MOC_LITERAL(2, 32, 0), // ""
+QT_MOC_LITERAL(3, 33, 16), // "downloadFinished"
+QT_MOC_LITERAL(4, 50, 10), // "successful"
+QT_MOC_LITERAL(5, 61, 9), // "FileStat*"
+QT_MOC_LITERAL(6, 71, 8) // "fileStat"
 
     },
-    "DownloadTask\0downloadFileSuccessfully\0"
-    "\0downloadAllFileSuccessfully\0"
-    "downloadFileFailed\0FileStat&\0fileStat\0"
-    "refreshProgressBar"
+    "DownloadTask\0refreshProgressBar\0\0"
+    "downloadFinished\0successful\0FileStat*\0"
+    "fileStat"
 };
 #undef QT_MOC_LITERAL
 
@@ -52,24 +50,22 @@ static const uint qt_meta_data_DownloadTask[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       4,       // signalCount
+       3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   34,    2, 0x06 /* Public */,
-       3,    0,   35,    2, 0x06 /* Public */,
-       4,    1,   36,    2, 0x06 /* Public */,
-       7,    0,   39,    2, 0x06 /* Public */,
+       1,    0,   29,    2, 0x06 /* Public */,
+       3,    2,   30,    2, 0x06 /* Public */,
+       3,    1,   35,    2, 0x26 /* Public | MethodCloned */,
 
  // signals: parameters
     QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 5,    6,
-    QMetaType::Void,
+    QMetaType::Void, QMetaType::Bool, 0x80000000 | 5,    4,    6,
+    QMetaType::Void, QMetaType::Bool,    4,
 
        0        // eod
 };
@@ -80,10 +76,9 @@ void DownloadTask::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         DownloadTask *_t = static_cast<DownloadTask *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->downloadFileSuccessfully(); break;
-        case 1: _t->downloadAllFileSuccessfully(); break;
-        case 2: _t->downloadFileFailed((*reinterpret_cast< FileStat(*)>(_a[1]))); break;
-        case 3: _t->refreshProgressBar(); break;
+        case 0: _t->refreshProgressBar(); break;
+        case 1: _t->downloadFinished((*reinterpret_cast< bool(*)>(_a[1])),(*reinterpret_cast< FileStat*(*)>(_a[2]))); break;
+        case 2: _t->downloadFinished((*reinterpret_cast< bool(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -91,26 +86,14 @@ void DownloadTask::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         void **func = reinterpret_cast<void **>(_a[1]);
         {
             typedef void (DownloadTask::*_t)();
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&DownloadTask::downloadFileSuccessfully)) {
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&DownloadTask::refreshProgressBar)) {
                 *result = 0;
             }
         }
         {
-            typedef void (DownloadTask::*_t)();
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&DownloadTask::downloadAllFileSuccessfully)) {
+            typedef void (DownloadTask::*_t)(bool , FileStat * );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&DownloadTask::downloadFinished)) {
                 *result = 1;
-            }
-        }
-        {
-            typedef void (DownloadTask::*_t)(FileStat & );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&DownloadTask::downloadFileFailed)) {
-                *result = 2;
-            }
-        }
-        {
-            typedef void (DownloadTask::*_t)();
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&DownloadTask::refreshProgressBar)) {
-                *result = 3;
             }
         }
     }
@@ -143,39 +126,27 @@ int DownloadTask::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 3;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 4)
+        if (_id < 3)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 4;
+        _id -= 3;
     }
     return _id;
 }
 
 // SIGNAL 0
-void DownloadTask::downloadFileSuccessfully()
+void DownloadTask::refreshProgressBar()
 {
     QMetaObject::activate(this, &staticMetaObject, 0, Q_NULLPTR);
 }
 
 // SIGNAL 1
-void DownloadTask::downloadAllFileSuccessfully()
+void DownloadTask::downloadFinished(bool _t1, FileStat * _t2)
 {
-    QMetaObject::activate(this, &staticMetaObject, 1, Q_NULLPTR);
-}
-
-// SIGNAL 2
-void DownloadTask::downloadFileFailed(FileStat & _t1)
-{
-    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
-    QMetaObject::activate(this, &staticMetaObject, 2, _a);
-}
-
-// SIGNAL 3
-void DownloadTask::refreshProgressBar()
-{
-    QMetaObject::activate(this, &staticMetaObject, 3, Q_NULLPTR);
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
+    QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 QT_END_MOC_NAMESPACE
