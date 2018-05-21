@@ -118,6 +118,7 @@ void NewDataSync::start(const QString &caseId, const QString &path)
     }
     else
     {
+        qDebug()<<"local list is null";
         return;
     }
 
@@ -136,6 +137,11 @@ void NewDataSync::start(const QString &caseId, const QString &path)
             qDebug()<<"fileUrl:"<<m_remoteList->at(i).fileUrl;
             //qDebug()<<"hash:"<<m_remoteList->at(i).hash;
         }
+    }
+    else
+    {
+        qDebug()<<"remote list is null";
+        return;
     }
 
     qDebug()<<"**********************************************************************************************************";
@@ -569,6 +575,10 @@ QString NewDataSync::getFileName(const QString &webName, const int &fileType)
             {
                 QFileInfo fileInfo(list.first() + "-" + list[1]);
                 return fileInfo.fileName();
+            }
+            else
+            {
+                return "Undefine";
             }
         }
         default:

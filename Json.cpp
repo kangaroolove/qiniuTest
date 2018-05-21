@@ -10,12 +10,12 @@ Json::Json()
 
 }
 
-bool Json::analysisJson(const QByteArray& reply, QString& message)
+ReplyResult Json::analysisJson(const QByteArray& reply, QString& message)
 {
     if (reply.isNull())
     {
-        message.append("reply is null");
-        return false;
+        message.append("Time out");
+        return TIME_OUT;
     }
 
     QJsonParseError jsonError;
@@ -34,7 +34,7 @@ bool Json::analysisJson(const QByteArray& reply, QString& message)
                     int result = value.toVariant().toInt();
                     if (result == 0)
                     {
-                        return true;
+                        return NORMAL;
                     }
                 }
             }
@@ -44,13 +44,13 @@ bool Json::analysisJson(const QByteArray& reply, QString& message)
                 if (value.isString())
                 {
                     message = value.toString();
-                    return false;
+                    return ERROR;
                 }
             }
         }
     }
 
-    return false;
+    return ERROR;
 }
 
 QString Json::getToken(const QByteArray &reply)

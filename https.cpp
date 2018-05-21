@@ -4,7 +4,7 @@
 Https::Https(QObject *parent) : QObject(parent)
 {
     reply = NULL;
-    m_timer.setInterval(TIMER_INTERVAL);
+    m_timer = NULL;
 }
 
 Https::~Https()
@@ -13,6 +13,12 @@ Https::~Https()
     {
         delete reply;
         reply = NULL;
+    }
+
+    if (m_timer)
+    {
+        delete m_timer;
+        m_timer = NULL;
     }
 }
 
@@ -60,19 +66,21 @@ QList<QNetworkCookie> Https::GetAllCookies()
 
 QByteArray Https::get()
 {
-    m_timer.setSingleShot(true);
+    QTimer timer;
+    timer.setInterval(TIMER_INTERVAL);
+    timer.setSingleShot(true);
 
     QEventLoop loop;
-    connect(&m_timer, SIGNAL(timeout()), &loop, SLOT(quit()));
+    connect(&timer, SIGNAL(timeout()), &loop, SLOT(quit()));
     connect(&manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
     reply = manager.get(request);
-    m_timer.start();
+    timer.start();
 
     loop.exec();
 
-    if (m_timer.isActive())
+    if (timer.isActive())
     {
-        m_timer.stop();
+        timer.stop();
         return getReply();
     }
     else
@@ -87,18 +95,21 @@ QByteArray Https::get()
 
 QByteArray Https::post(QByteArray & byteArray)
 {
-    m_timer.setSingleShot(true);
+    QTimer timer;
+    timer.setInterval(TIMER_INTERVAL);
+    timer.setSingleShot(true);
 
     QEventLoop loop;
+    connect(&timer, SIGNAL(timeout()), &loop, SLOT(quit()));
     connect(&manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
     reply = manager.post(request, byteArray);
-    m_timer.start();
+    timer.start();
 
     loop.exec();
 
-    if (m_timer.isActive())
+    if (timer.isActive())
     {
-        m_timer.stop();
+        timer.stop();
         return getReply();
     }
     else
@@ -114,17 +125,25 @@ QByteArray Https::post(QByteArray & byteArray)
 QByteArray Https::downloadFile()
 {
     QEventLoop loop;
-    connect(&m_timer, SIGNAL(timeout()), &loop, SLOT(quit()));
+    if (m_timer)
+    {
+        delete m_timer;
+        m_timer = NULL;
+    }
+
+    m_timer = new QTimer;
+    m_timer->setInterval(TIMER_INTERVAL);
+    connect(m_timer, SIGNAL(timeout()), &loop, SLOT(quit()));
     connect(&manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
     reply = manager.get(request);
     connect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(onDownloadProgress()));
-    m_timer.start();
+    m_timer->start();
 
     loop.exec();
 
-    if (m_timer.isActive())
+    if (m_timer->isActive())
     {
-        m_timer.stop();
+        m_timer->stop();
         return getReply();
     }
     else
@@ -155,9 +174,9 @@ QByteArray Https::getReply()
 
 void Https::onDownloadProgress()
 {
-    if (m_timer.isActive())
+    if (m_timer && m_timer->isActive())
     {
-        m_timer.start();
+        m_timer->start();
     }
 }
 

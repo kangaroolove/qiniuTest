@@ -20,8 +20,8 @@ QString NewRequest::getToken()
     QString message;
 
     QByteArray reply = http.get();
-
-    if (json.analysisJson(reply, message) == true)
+    ReplyResult result = json.analysisJson(reply, message);
+    if (result == NORMAL)
     {
         return json.getToken(reply);
     }
@@ -45,7 +45,9 @@ QList<FileStat> *NewRequest::getRemoteList(const QString &caseId)
     http.setUrl(url);
     QByteArray reply = http.get();
     QString message;
-    if (json.analysisJson(reply, message) == true)
+
+    ReplyResult result = json.analysisJson(reply, message);
+    if (result == NORMAL)
     {
         return json.getRemoteList(reply);
     }
@@ -57,9 +59,7 @@ QList<FileStat> *NewRequest::getRemoteList(const QString &caseId)
                              QMessageBox::Ok,
                              QMessageBox::Ok);
 
-
-        QList<FileStat> *list = new QList<FileStat>;
-        return list;
+        return NULL;
     }
 }
 
@@ -72,7 +72,9 @@ void NewRequest::updateRemoteSql(QByteArray &data)
     http.setRawHeader("Content-Type", "application/json");
     QByteArray reply = http.post(data);
     QString message;
-    if (json.analysisJson(reply, message) == true)
+
+    ReplyResult result = json.analysisJson(reply, message);
+    if (result == NORMAL)
     {
 
     }

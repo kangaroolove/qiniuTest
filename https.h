@@ -32,7 +32,7 @@ private:
     QNetworkReply* reply;
     QSslConfiguration sslConfig;
     QList<QNetworkCookie> cookieList;
-    QTimer m_timer;
+    QTimer *m_timer;
     QByteArray getReply();
 };
 
