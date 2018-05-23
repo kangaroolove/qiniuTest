@@ -26,14 +26,13 @@ public slots:
     void onDownloadProgress();
     void onNetworkStatusChanged(QNetworkSession::State state);
 private:
-    QUrl url;
-    QNetworkRequest request;
-    QStringList headerList;
-    QNetworkAccessManager manager;
+    QUrl m_url;
+    QNetworkRequest m_request;
+    QNetworkAccessManager m_accessManager;
     QNetworkConfigurationManager m_configManager;
-    QNetworkReply* reply;
-    QSslConfiguration sslConfig;
-    QList<QNetworkCookie> cookieList;
+    QNetworkReply* m_reply;
+    QSslConfiguration m_sslConfig;
+    QList<QNetworkCookie> m_cookieList;
     QNetworkSession *m_session;
     QTimer *m_timer;
     QNetworkSession::State m_networkState;
