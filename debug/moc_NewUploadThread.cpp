@@ -20,8 +20,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_NewUploadThread_t {
-    QByteArrayData data[9];
-    char stringdata0[120];
+    QByteArrayData data[10];
+    char stringdata0[127];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -38,13 +38,14 @@ QT_MOC_LITERAL(4, 51, 16), // "QList<FileStat>*"
 QT_MOC_LITERAL(5, 68, 16), // "uploadFailedList"
 QT_MOC_LITERAL(6, 85, 13), // "onUploadStart"
 QT_MOC_LITERAL(7, 99, 14), // "uploadFileList"
-QT_MOC_LITERAL(8, 114, 5) // "token"
+QT_MOC_LITERAL(8, 114, 5), // "token"
+QT_MOC_LITERAL(9, 120, 6) // "caseId"
 
     },
     "NewUploadThread\0refreshProgressBar\0\0"
     "uploadFinished\0QList<FileStat>*\0"
     "uploadFailedList\0onUploadStart\0"
-    "uploadFileList\0token"
+    "uploadFileList\0token\0caseId"
 };
 #undef QT_MOC_LITERAL
 
@@ -66,14 +67,14 @@ static const uint qt_meta_data_NewUploadThread[] = {
        3,    1,   30,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       6,    2,   33,    2, 0x0a /* Public */,
+       6,    3,   33,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 4,    5,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 4, QMetaType::QString,    7,    8,
+    QMetaType::Void, 0x80000000 | 4, QMetaType::QString, QMetaType::QString,    7,    8,    9,
 
        0        // eod
 };
@@ -86,7 +87,7 @@ void NewUploadThread::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         switch (_id) {
         case 0: _t->refreshProgressBar(); break;
         case 1: _t->uploadFinished((*reinterpret_cast< QList<FileStat>*(*)>(_a[1]))); break;
-        case 2: _t->onUploadStart((*reinterpret_cast< QList<FileStat>*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 2: _t->onUploadStart((*reinterpret_cast< QList<FileStat>*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {

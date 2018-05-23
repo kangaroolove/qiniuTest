@@ -24,15 +24,19 @@ public:
     QByteArray downloadFile();
 public slots:
     void onDownloadProgress();
+    void onNetworkStatusChanged(QNetworkSession::State state);
 private:
     QUrl url;
     QNetworkRequest request;
     QStringList headerList;
     QNetworkAccessManager manager;
+    QNetworkConfigurationManager m_configManager;
     QNetworkReply* reply;
     QSslConfiguration sslConfig;
     QList<QNetworkCookie> cookieList;
+    QNetworkSession *m_session;
     QTimer *m_timer;
+    QNetworkSession::State m_networkState;
     QByteArray getReply();
 };
 

@@ -5,6 +5,11 @@ Https::Https(QObject *parent) : QObject(parent)
 {
     reply = NULL;
     m_timer = NULL;
+    m_session = NULL;
+    m_networkState = QNetworkSession::State::Connected;
+
+    m_session = new QNetworkSession(m_configManager.defaultConfiguration(), this);
+    connect(m_session, SIGNAL(stateChanged(QNetworkSession::State)), this, SLOT(onNetworkStatusChanged(QNetworkSession::State)));
 }
 
 Https::~Https()
@@ -19,6 +24,12 @@ Https::~Https()
     {
         delete m_timer;
         m_timer = NULL;
+    }
+
+    if (m_session)
+    {
+        delete m_session;
+        m_session = NULL;
     }
 }
 
@@ -144,7 +155,14 @@ QByteArray Https::downloadFile()
     if (m_timer->isActive())
     {
         m_timer->stop();
-        return getReply();
+        if (m_networkState == QNetworkSession::State::Connected)
+        {
+            return getReply();
+        }
+        else
+        {
+            return NULL;
+        }
     }
     else
     {
@@ -178,5 +196,10 @@ void Https::onDownloadProgress()
     {
         m_timer->start();
     }
+}
+
+void Https::onNetworkStatusChanged(QNetworkSession::State state)
+{
+    m_networkState = state;
 }
 

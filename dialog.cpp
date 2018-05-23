@@ -40,34 +40,16 @@ void Dialog::onUploadFinished(QList<FileStat> *uploadFailedList)
 {
     if (uploadFailedList)
     {
-        if (uploadFailedList->size() != 0)
-        {
-            QString message("Upload total:" + QString::number(m_uploadCount) + "upload failed count:");
-            message.append(uploadFailedList->size());
-            for (int i = 0; i < uploadFailedList->size(); ++i)
-            {
-                message.append("\n");
-                message.append(" error code:");
-                message.append(uploadFailedList->at(i).errorCode);
-                message.append(" fileName:");
-                message.append(uploadFailedList->at(i).fileUrl);
-            }
+        int failedCount = uploadFailedList->size();
+        QString message("Upload total:" + QString::number(m_uploadCount));
+        message.append(",successfully count:" + QString::number(m_uploadCount - failedCount));
+        message.append(",failed count:" + QString::number(failedCount));
 
-            QMessageBox::warning(this,
-                                 "Warning",
-                                 message,
-                                 QMessageBox::Ok,
-                                 QMessageBox::Ok);
-        }
-        else
-        {
-            QString message("Upload total:" + QString::number(m_uploadCount) + ",successfully count:" + QString::number(m_uploadCount));
-            QMessageBox::information(this,
-                                     "Information",
-                                     message,
-                                     QMessageBox::Ok,
-                                     QMessageBox::Ok);
-        }
+        QMessageBox::warning(this,
+                             "Warning",
+                             message,
+                             QMessageBox::Ok,
+                             QMessageBox::Ok);
     }
     else
     {
@@ -79,34 +61,17 @@ void Dialog::onDownloadFinished(QList<FileStat> *downloadFailedList)
 {
     if (downloadFailedList)
     {
-        if (downloadFailedList->size() != 0)
-        {
-            QString message("Download total:" + QString::number(m_downloadCount) + "download failed count:");
-            message.append(downloadFailedList->size());
-            for (int i = 0; i < downloadFailedList->size(); ++i)
-            {
-                message.append("\n");
-                message.append(" error code:");
-                message.append(downloadFailedList->at(i).errorCode);
-                message.append(" fileName:");
-                message.append(downloadFailedList->at(i).fileUrl);
-            }
+        int failedCount = downloadFailedList->size();
 
-            QMessageBox::warning(this,
-                                 "Warning",
-                                 message,
-                                 QMessageBox::Ok,
-                                 QMessageBox::Ok);
-        }
-        else
-        {
-            QString message("Download total:" + QString::number(m_downloadCount) + ",successfully count:" + QString::number(m_downloadCount));
-            QMessageBox::information(this,
-                                     "Information",
-                                     message,
-                                     QMessageBox::Ok,
-                                     QMessageBox::Ok);
-        }
+        QString message("Download total:" + QString::number(m_downloadCount));
+        message.append(",successfully count:" + QString::number(m_downloadCount - failedCount));
+        message.append(",failed count:" + QString::number(failedCount));
+
+        QMessageBox::warning(this,
+                             "Warning",
+                             message,
+                             QMessageBox::Ok,
+                             QMessageBox::Ok);
     }
     else
     {
@@ -116,7 +81,7 @@ void Dialog::onDownloadFinished(QList<FileStat> *downloadFailedList)
 
 void Dialog::onProgressBarRefresh()
 {
-    qDebug()<<"update progress";
+    //qDebug()<<"update progress";
     int value = ui->progressBar->value();
     ui->progressBar->setValue(++value);
 }
@@ -127,11 +92,21 @@ void Dialog::onBtnUploadClicked()
     QString path = ui->lab_dir->text();
     QString caseId = ui->txt_caseId->text();
 
-    m_uploadCount = 0;
-    ui->progressBar->setValue(0);
-
-    m_newDataSync->setOperateType(UPLOAD);
-    m_newDataSync->start(caseId, path);
+    NewDataSyncStatus status =  m_newDataSync->getStatus();
+    if (status == NewDataSyncStatus::FREE)
+    {
+        m_uploadCount = 0;
+        ui->progressBar->setValue(0);
+        m_newDataSync->setOperateType(UPLOAD);
+        m_newDataSync->start(caseId, path);
+    }
+    else
+    {
+        QMessageBox::information(this,
+                                 "Information",
+                                 "It is working",
+                                 QMessageBox::Ok);
+    }
 }
 
 void Dialog::onBtnDownloadClicked()
@@ -140,11 +115,21 @@ void Dialog::onBtnDownloadClicked()
     QString path = ui->lab_dir->text();
     QString caseId = ui->txt_caseId->text();
 
-    m_downloadCount = 0;
-    ui->progressBar->setValue(0);
-
-    m_newDataSync->setOperateType(DOWNLOAD);
-    m_newDataSync->start(caseId, path);
+    NewDataSyncStatus status =  m_newDataSync->getStatus();
+    if (status == NewDataSyncStatus::FREE)
+    {
+        m_downloadCount = 0;
+        ui->progressBar->setValue(0);
+        m_newDataSync->setOperateType(DOWNLOAD);
+        m_newDataSync->start(caseId, path);
+    }
+    else
+    {
+        QMessageBox::information(this,
+                                 "Information",
+                                 "It is working",
+                                 QMessageBox::Ok);
+    }
 }
 
 void Dialog::onBtnDirClicked()

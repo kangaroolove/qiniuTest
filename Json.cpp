@@ -170,7 +170,7 @@ QByteArray Json::generateJson(const QString &caseId, const FileStat &FileStat)
     QJsonDocument document;
     document.setObject(object);
 
-    qDebug()<<object;
+    //qDebug()<<object;
 
     return document.toJson(QJsonDocument::Compact);
 }

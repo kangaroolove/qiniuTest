@@ -19,6 +19,12 @@ enum SyncOperateType
     DOWNLOAD,
 };
 
+enum NewDataSyncStatus
+{
+    FREE = 0,
+    WORKING,
+};
+
 class FileCompare;
 class NewDataSync : public QObject
 {
@@ -28,15 +34,17 @@ public:
     ~NewDataSync();
     void setOperateType(SyncOperateType type);
     void start(const QString &caseId, const QString &path);
+    NewDataSyncStatus getStatus();
 signals:
-    void startUpload(QList<FileStat> *uploadFileList, QString token);
+    void startUpload(QList<FileStat> *uploadFileList, QString token, QString caseId);
     void startDownload(QList<FileStat> *downloadFileList);
     void uploadFinished(QList<FileStat> *uploadFailedList);
     void downloadFinished(QList<FileStat> *downloadFailedList);
     void refreshProgressBar();
     void setProgressBarMaxValue(int, SyncOperateType type);
-    void sendUploadLatest();
-    void sendDownloadLatest();
+public slots:
+    void onUploadFinished(QList<FileStat> *uploadFailedList);
+    void onDownloadFinished(QList<FileStat> *downloadFailedList);
 private:
     SyncOperateType m_operateType;
     FileCompare *m_fileCompare;
@@ -48,6 +56,7 @@ private:
     NewUploadThread *m_upload;
     NewDownloadThread *m_download;
     QStringList m_suffixType;
+    NewDataSyncStatus m_currentStatus;
     QList<FileStat>* getLocalFile(const QString &caseId, const QString& path, const SyncOperateType &type, const QStringList &suffix);
     QList<FileStat>* getRemoteFile(const QString &caseId, const QString &path);
     QString getFilePath(const QString &webName, const int &fileType, const QString &path, const QString &caseId);

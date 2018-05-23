@@ -94,6 +94,7 @@ QList<FileStat> *FileCompare::getDownloadList(QList<FileStat> *local, QList<File
                 downloadList->push_back(remote->at(i));
             }
         }
+        isContain = false;
     }
 
     return downloadList;

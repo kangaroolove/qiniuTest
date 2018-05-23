@@ -11,12 +11,7 @@ NewUploadThread::NewUploadThread(QObject *parent) : QObject(parent)
     Qiniu_Global_Init(-1);
 }
 
-void NewUploadThread::setCaseId(const QString &caseId)
-{
-    m_caseId = caseId;
-}
-
-void NewUploadThread::onUploadStart(QList<FileStat> *uploadFileList, QString token)
+void NewUploadThread::onUploadStart(QList<FileStat> *uploadFileList, QString token, QString caseId)
 {
     if (token.isNull())
     {
@@ -72,7 +67,7 @@ void NewUploadThread::onUploadStart(QList<FileStat> *uploadFileList, QString tok
             if (strcmp(putRet.key, charFileUrl.data()) == 0)
             {
                 qDebug()<<"equal";
-                QByteArray data = m_json.generateJson(m_caseId, uploadFileList->at(i));
+                QByteArray data = m_json.generateJson(caseId, uploadFileList->at(i));
                 m_request.updateRemoteSql(data);
             }
         }

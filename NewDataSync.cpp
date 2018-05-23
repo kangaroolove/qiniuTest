@@ -12,6 +12,7 @@ NewDataSync::NewDataSync()
     m_localList = NULL;
     m_remoteList = NULL;
     m_operateType = SyncOperateType::NO;
+    m_currentStatus = NewDataSyncStatus::FREE;
 
     m_suffixType.clear();
     m_suffixType<<QString("*.stl")<<QString("*.rtd")<<QString("*.rttsd")<<QString("*.srtd")<<QString("*.dat")<<QString("*.rtp");
@@ -20,15 +21,15 @@ NewDataSync::NewDataSync()
 
     m_upload = new NewUploadThread;
     m_upload->moveToThread(&m_uploadThread);
-    connect(this, SIGNAL(startUpload(QList<FileStat>*,QString)), m_upload, SLOT(onUploadStart(QList<FileStat>*,QString)));
-    connect(m_upload, SIGNAL(uploadFinished(QList<FileStat>*)), this, SIGNAL(uploadFinished(QList<FileStat>*)));
-    connect(m_upload, SIGNAL(refreshProgressBar()), this, SIGNAL(refreshProgressBar()));
+    connect(this, SIGNAL(startUpload(QList<FileStat>*,QString,QString)), m_upload, SLOT(onUploadStart(QList<FileStat>*,QString,QString)));
+    connect(m_upload, SIGNAL(uploadFinished(QList<FileStat>*)), this, SLOT(onUploadFinished(QList<FileStat>*)));
+    connect(m_upload, SIGNAL(refreshProgressBar()), this, SIGNAL(refreshProgressBar()), Qt::QueuedConnection);
     m_uploadThread.start();
 
     m_download = new NewDownloadThread;
     m_download->moveToThread(&m_downloadThread);
     connect(this, SIGNAL(startDownload(QList<FileStat>*)), m_download, SLOT(onDownloadStart(QList<FileStat>*)));
-    connect(m_download, SIGNAL(downloadFinished(QList<FileStat>*)), this, SIGNAL(downloadFinished(QList<FileStat>*)));
+    connect(m_download, SIGNAL(downloadFinished(QList<FileStat>*)), this, SLOT(onDownloadFinished(QList<FileStat>*)));
     connect(m_download, SIGNAL(refreshProgressBar()), this, SIGNAL(refreshProgressBar()), Qt::QueuedConnection);
     m_downloadThread.start();
 }
@@ -76,6 +77,12 @@ void NewDataSync::setOperateType(SyncOperateType type)
 
 void NewDataSync::start(const QString &caseId, const QString &path)
 {
+    if (m_currentStatus != NewDataSyncStatus::FREE)
+    {
+        qDebug()<<"It is working";
+        return;
+    }
+
     if (caseId.isEmpty() || path.isEmpty())
     {
         QMessageBox::warning(NULL,
@@ -86,6 +93,8 @@ void NewDataSync::start(const QString &caseId, const QString &path)
 
         return;
     }
+
+    m_currentStatus = NewDataSyncStatus::WORKING;
 
     if (m_localList)
     {
@@ -148,23 +157,20 @@ void NewDataSync::start(const QString &caseId, const QString &path)
     QList<FileStat> *list = m_fileCompare->makeFileCompare(m_operateType, m_localList, m_remoteList);
     if (list)
     {
-        if (m_operateType == SyncOperateType::UPLOAD)
+        if (list->size() == 0)
         {
-            if (m_localList->size() > 0 && list->size() == 0)
+            if (m_operateType == SyncOperateType::UPLOAD)
             {
                 m_localList->clear();
                 emit uploadFinished(m_localList);
-                return;
             }
-        }
-        else if (m_operateType == SyncOperateType::DOWNLOAD)
-        {
-            if (m_remoteList->size() > 0 && list->size() == 0)
+            else if (m_operateType == SyncOperateType::DOWNLOAD)
             {
                 m_remoteList->clear();
                 emit downloadFinished(m_remoteList);
-                return;
             }
+
+            return;
         }
 
         emit setProgressBarMaxValue(list->size(), m_operateType);
@@ -195,13 +201,29 @@ void NewDataSync::start(const QString &caseId, const QString &path)
             return;
         }
         qDebug()<<"token"<<token;
-        m_upload->setCaseId(caseId);
-        emit startUpload(list, token);
+        emit startUpload(list, token, caseId);
     }
     else if (m_operateType == SyncOperateType::DOWNLOAD)
     {
         emit startDownload(list);
     }
+}
+
+NewDataSyncStatus NewDataSync::getStatus()
+{
+    return m_currentStatus;
+}
+
+void NewDataSync::onUploadFinished(QList<FileStat> *uploadFailedList)
+{
+    m_currentStatus = NewDataSyncStatus::FREE;
+    emit uploadFinished(uploadFailedList);
+}
+
+void NewDataSync::onDownloadFinished(QList<FileStat> *downloadFailedList)
+{
+    m_currentStatus = NewDataSyncStatus::FREE;
+    emit downloadFinished(downloadFailedList);
 }
 
 QList<FileStat> *NewDataSync::getLocalFile(const QString &caseId, const QString &path, const SyncOperateType &type, const QStringList &suffix)

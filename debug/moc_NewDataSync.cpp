@@ -20,8 +20,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_NewDataSync_t {
-    QByteArrayData data[18];
-    char stringdata0[261];
+    QByteArrayData data[19];
+    char stringdata0[268];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -36,27 +36,28 @@ QT_MOC_LITERAL(2, 24, 0), // ""
 QT_MOC_LITERAL(3, 25, 16), // "QList<FileStat>*"
 QT_MOC_LITERAL(4, 42, 14), // "uploadFileList"
 QT_MOC_LITERAL(5, 57, 5), // "token"
-QT_MOC_LITERAL(6, 63, 13), // "startDownload"
-QT_MOC_LITERAL(7, 77, 16), // "downloadFileList"
-QT_MOC_LITERAL(8, 94, 14), // "uploadFinished"
-QT_MOC_LITERAL(9, 109, 16), // "uploadFailedList"
-QT_MOC_LITERAL(10, 126, 16), // "downloadFinished"
-QT_MOC_LITERAL(11, 143, 18), // "downloadFailedList"
-QT_MOC_LITERAL(12, 162, 18), // "refreshProgressBar"
-QT_MOC_LITERAL(13, 181, 22), // "setProgressBarMaxValue"
-QT_MOC_LITERAL(14, 204, 15), // "SyncOperateType"
-QT_MOC_LITERAL(15, 220, 4), // "type"
-QT_MOC_LITERAL(16, 225, 16), // "sendUploadLatest"
-QT_MOC_LITERAL(17, 242, 18) // "sendDownloadLatest"
+QT_MOC_LITERAL(6, 63, 6), // "caseId"
+QT_MOC_LITERAL(7, 70, 13), // "startDownload"
+QT_MOC_LITERAL(8, 84, 16), // "downloadFileList"
+QT_MOC_LITERAL(9, 101, 14), // "uploadFinished"
+QT_MOC_LITERAL(10, 116, 16), // "uploadFailedList"
+QT_MOC_LITERAL(11, 133, 16), // "downloadFinished"
+QT_MOC_LITERAL(12, 150, 18), // "downloadFailedList"
+QT_MOC_LITERAL(13, 169, 18), // "refreshProgressBar"
+QT_MOC_LITERAL(14, 188, 22), // "setProgressBarMaxValue"
+QT_MOC_LITERAL(15, 211, 15), // "SyncOperateType"
+QT_MOC_LITERAL(16, 227, 4), // "type"
+QT_MOC_LITERAL(17, 232, 16), // "onUploadFinished"
+QT_MOC_LITERAL(18, 249, 18) // "onDownloadFinished"
 
     },
     "NewDataSync\0startUpload\0\0QList<FileStat>*\0"
-    "uploadFileList\0token\0startDownload\0"
+    "uploadFileList\0token\0caseId\0startDownload\0"
     "downloadFileList\0uploadFinished\0"
     "uploadFailedList\0downloadFinished\0"
     "downloadFailedList\0refreshProgressBar\0"
     "setProgressBarMaxValue\0SyncOperateType\0"
-    "type\0sendUploadLatest\0sendDownloadLatest"
+    "type\0onUploadFinished\0onDownloadFinished"
 };
 #undef QT_MOC_LITERAL
 
@@ -71,27 +72,31 @@ static const uint qt_meta_data_NewDataSync[] = {
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       8,       // signalCount
+       6,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    2,   54,    2, 0x06 /* Public */,
-       6,    1,   59,    2, 0x06 /* Public */,
-       8,    1,   62,    2, 0x06 /* Public */,
-      10,    1,   65,    2, 0x06 /* Public */,
-      12,    0,   68,    2, 0x06 /* Public */,
-      13,    2,   69,    2, 0x06 /* Public */,
-      16,    0,   74,    2, 0x06 /* Public */,
-      17,    0,   75,    2, 0x06 /* Public */,
+       1,    3,   54,    2, 0x06 /* Public */,
+       7,    1,   61,    2, 0x06 /* Public */,
+       9,    1,   64,    2, 0x06 /* Public */,
+      11,    1,   67,    2, 0x06 /* Public */,
+      13,    0,   70,    2, 0x06 /* Public */,
+      14,    2,   71,    2, 0x06 /* Public */,
+
+ // slots: name, argc, parameters, tag, flags
+      17,    1,   76,    2, 0x0a /* Public */,
+      18,    1,   79,    2, 0x0a /* Public */,
 
  // signals: parameters
-    QMetaType::Void, 0x80000000 | 3, QMetaType::QString,    4,    5,
-    QMetaType::Void, 0x80000000 | 3,    7,
-    QMetaType::Void, 0x80000000 | 3,    9,
-    QMetaType::Void, 0x80000000 | 3,   11,
+    QMetaType::Void, 0x80000000 | 3, QMetaType::QString, QMetaType::QString,    4,    5,    6,
+    QMetaType::Void, 0x80000000 | 3,    8,
+    QMetaType::Void, 0x80000000 | 3,   10,
+    QMetaType::Void, 0x80000000 | 3,   12,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int, 0x80000000 | 14,    2,   15,
-    QMetaType::Void,
-    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int, 0x80000000 | 15,    2,   16,
+
+ // slots: parameters
+    QMetaType::Void, 0x80000000 | 3,   10,
+    QMetaType::Void, 0x80000000 | 3,   12,
 
        0        // eod
 };
@@ -102,21 +107,21 @@ void NewDataSync::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         NewDataSync *_t = static_cast<NewDataSync *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->startUpload((*reinterpret_cast< QList<FileStat>*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 0: _t->startUpload((*reinterpret_cast< QList<FileStat>*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3]))); break;
         case 1: _t->startDownload((*reinterpret_cast< QList<FileStat>*(*)>(_a[1]))); break;
         case 2: _t->uploadFinished((*reinterpret_cast< QList<FileStat>*(*)>(_a[1]))); break;
         case 3: _t->downloadFinished((*reinterpret_cast< QList<FileStat>*(*)>(_a[1]))); break;
         case 4: _t->refreshProgressBar(); break;
         case 5: _t->setProgressBarMaxValue((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< SyncOperateType(*)>(_a[2]))); break;
-        case 6: _t->sendUploadLatest(); break;
-        case 7: _t->sendDownloadLatest(); break;
+        case 6: _t->onUploadFinished((*reinterpret_cast< QList<FileStat>*(*)>(_a[1]))); break;
+        case 7: _t->onDownloadFinished((*reinterpret_cast< QList<FileStat>*(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (NewDataSync::*_t)(QList<FileStat> * , QString );
+            typedef void (NewDataSync::*_t)(QList<FileStat> * , QString , QString );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&NewDataSync::startUpload)) {
                 *result = 0;
             }
@@ -149,18 +154,6 @@ void NewDataSync::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
             typedef void (NewDataSync::*_t)(int , SyncOperateType );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&NewDataSync::setProgressBarMaxValue)) {
                 *result = 5;
-            }
-        }
-        {
-            typedef void (NewDataSync::*_t)();
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&NewDataSync::sendUploadLatest)) {
-                *result = 6;
-            }
-        }
-        {
-            typedef void (NewDataSync::*_t)();
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&NewDataSync::sendDownloadLatest)) {
-                *result = 7;
             }
         }
     }
@@ -203,9 +196,9 @@ int NewDataSync::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void NewDataSync::startUpload(QList<FileStat> * _t1, QString _t2)
+void NewDataSync::startUpload(QList<FileStat> * _t1, QString _t2, QString _t3)
 {
-    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 
@@ -241,17 +234,5 @@ void NewDataSync::setProgressBarMaxValue(int _t1, SyncOperateType _t2)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 5, _a);
-}
-
-// SIGNAL 6
-void NewDataSync::sendUploadLatest()
-{
-    QMetaObject::activate(this, &staticMetaObject, 6, Q_NULLPTR);
-}
-
-// SIGNAL 7
-void NewDataSync::sendDownloadLatest()
-{
-    QMetaObject::activate(this, &staticMetaObject, 7, Q_NULLPTR);
 }
 QT_END_MOC_NAMESPACE
